@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Page Metadata and Styles -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reviews - NextGen Perfumes</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- Header and Navigation -->
+    <header>
+        <h1>Customer Reviews</h1>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="contact.html">Contact</a>
+        </nav>
+    </header>
+    <main>
+        <!-- Reviews Section -->
+        <section id="reviews-section">
+            <h2>Customer Reviews</h2>
+            <div id="reviewsList">
+                <!-- Reviews will be dynamically loaded here -->
+            </div>
+            
+            <!-- Review Form -->
+            <h3>Leave a Review</h3>
+            <form id="reviewForm">
+                <input type="hidden" id="product_id" value="1">
+                <div class="form-group">
+                    <label for="name">Your Name *</label>
+                    <input type="text" id="name" placeholder="Your Name" required>
+                </div>
+                <div class="form-group">
+                    <label for="rating">Rating *</label>
+                    <select id="rating" required>
+                        <option value="">Select a rating</option>
+                        <option value="5">★★★★★ (5 stars)</option>
+                        <option value="4">★★★★☆ (4 stars)</option>
+                        <option value="3">★★★☆☆ (3 stars)</option>
+                        <option value="2">★★☆☆☆ (2 stars)</option>
+                        <option value="1">★☆☆☆☆ (1 star)</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="comment">Your Review *</label>
+                    <textarea id="comment" rows="4" placeholder="Tell us about your experience with our perfumes..." required></textarea>
+                </div>
+                <button type="submit" class="btn">Submit Review</button>
+            </form>
+        </section>
+    </main>
+    <!-- Footer -->
+    <footer>
+        &copy; 2025 NextGen Perfumes. All rights reserved.
+    </footer>
+    <!-- API Integration Scripts -->
+    <script src="js/api.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/auth.js"></script>
+</body>
+</html>

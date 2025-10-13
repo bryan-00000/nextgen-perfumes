@@ -1,0 +1,239 @@
+/* Professional Women's Perfume Styling */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Georgia', serif;
+  line-height: 1.6;
+  color: #fff;
+  background: url('../images/background.jpg') no-repeat center center fixed;
+  background-size: cover;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Header Styles */
+.top-bar {
+  background:black;
+  color: white;
+  text-align: center;
+  padding: 0.8rem;
+  font-size: 0.9rem;
+  letter-spacing: 0.5px;
+}
+
+.navbar {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 1.5rem 2rem;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: #8b4a6b;
+  letter-spacing: 1px;
+}
+
+.navbar h1 {
+  color: #8b4a6b;
+  font-size: 2.2rem;
+  text-align: center;
+  width: 100%;
+  font-weight: 300;
+  letter-spacing: 2px;
+}
+
+/* Best Sellers Section */
+.best-sellers {
+  padding: 4rem 2rem;
+  text-align: center;
+  background: gray;
+  margin: 2rem 0;
+}
+
+.best-sellers h2 {
+  color: #8b4a6b;
+  font-size: 2.5rem;
+  margin-bottom: 3rem;
+  font-weight: 300;
+  letter-spacing: 1px;
+}
+
+.products {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.product {
+  background: transparent;
+  border-radius: 15px;
+  padding: 2rem;
+  box-shadow: 0 8px 25px rgba(139, 74, 107, 0.15);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border: 2px solid #f5e6f0;
+  min-height: 250px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.product:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 35px rgba(139, 74, 107, 0.25);
+}
+
+.product h4 {
+  color: #8b4a6b;
+  font-size: 1.4rem;
+  margin-bottom: 1rem;
+  font-weight: 400;
+}
+
+.product p {
+  color: #d4a574;
+  font-size: 1.3rem;
+  font-weight: bold;
+  margin-bottom: 1.5rem;
+}
+
+.btn {
+  background: linear-gradient(135deg, #8b4a6b, #d4a574);
+  color: white;
+  padding: 0.8rem 2rem;
+  text-decoration: none;
+  border-radius: 25px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  border: none;
+  cursor: pointer;
+}
+
+.btn:hover {
+  background: linear-gradient(135deg, #6d3a52, #b8935f);
+  transform: scale(1.05);
+}
+
+/* Spotlight Section */
+.spotlight {
+  background: linear-gradient(135deg, #8b4a6b, #d4a574);
+  color: white;
+  padding: 4rem 2rem;
+  text-align: center;
+}
+
+.spotlight h2 {
+  font-size: 2.2rem;
+  margin-bottom: 2rem;
+  font-weight: 300;
+}
+
+.spotlight-card {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 2.5rem;
+  border-radius: 15px;
+  max-width: 600px;
+  margin: 0 auto;
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+}
+
+.spotlight-card h3 {
+  font-size: 1.6rem;
+  margin-bottom: 1rem;
+}
+
+.spotlight-card p {
+  margin-bottom: 2rem;
+  font-size: 1.1rem;
+}
+
+/* Newsletter Section */
+.newsletter {
+  background: white;
+  padding: 4rem 2rem;
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.newsletter h2 {
+  color: #8b4a6b;
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  font-weight: 300;
+}
+
+.newsletter p {
+  color: #666;
+  margin-bottom: 2rem;
+  font-size: 1.1rem;
+}
+
+.newsletter-form {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.newsletter input {
+  padding: 1rem;
+  border: 2px solid #f5e6f0;
+  border-radius: 25px;
+  width: 300px;
+  font-size: 1rem;
+  outline: none;
+}
+
+.newsletter input:focus {
+  border-color: #8b4a6b;
+}
+
+/* Footer */
+footer {
+  background: rgba(0, 0, 0, 0.9);
+  color: #dc1212;
+  text-align: center;
+  padding: 1rem;
+  font-size: 0.9rem;
+  margin-top: auto;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .navbar {
+    flex-direction: column;
+    padding: 1rem;
+  }
+  
+  .navbar h1 {
+    font-size: 1.8rem;
+    margin-top: 1rem;
+  }
+  
+  .products {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+  
+  .newsletter-form {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .newsletter input {
+    width: 100%;
+    max-width: 300px;
+  }
+}

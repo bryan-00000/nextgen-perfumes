@@ -1,0 +1,484 @@
+/* ====== Global Styles ====== */
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  line-height: 1.6;
+  color: #fff;
+  background: url('../images/background.jpg') no-repeat center center fixed;
+  background-size: cover;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+}
+
+/* Form Styles */
+form {
+  background: rgba(0, 0, 0, 0.8);
+  padding: 2rem;
+  border-radius: 10px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  max-width: 400px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+form input, form textarea, form select {
+  width: 100%;
+  padding: 0.8rem;
+  margin: 0.5rem 0;
+  border: 1px solid #555;
+  border-radius: 5px;
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+  box-sizing: border-box;
+}
+
+form input::placeholder, form textarea::placeholder {
+  color: #ccc;
+}
+
+form button, form .btn {
+  width: 100%;
+  padding: 0.8rem;
+  background: #dc1212;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 1rem;
+}
+
+form button:hover, form .btn:hover {
+  background: #bb1313;
+}
+
+form label {
+  color: #fff;
+  display: block;
+  margin-top: 1rem;
+}
+
+.form-group {
+  margin-bottom: 1rem;
+}
+
+/* ====== Header Styles ====== */
+header .top-bar {
+  background: url('../images/perfume\ 1.jpg') no-repeat center center;
+  background-size: cover;
+  color: #dc1212;
+  text-align: center;
+  padding: 0.5rem;
+  font-size: 0.9rem;
+}
+
+/* ====== Navbar Styles ====== */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  background: #bb1313;
+  border-bottom: 1px solid #1a1818;
+}
+
+.navbar h1 {
+  text-align: center;
+  width: 100%;
+}
+
+/* Navigation Links */
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 1rem;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: #333;
+}
+
+/* ====== Hero Section ====== */
+.hero {
+  /* Hero background image and layout */
+  background: url('hero.jpg') no-repeat center/cover;
+  color: #dfd3d3;
+  text-align: center;
+  padding: 5rem 1rem;
+}
+
+.hero .btn {
+  display: inline-block;
+  margin-top: 1rem;
+  padding: 0.75rem 1.5rem;
+  background: #e71414;
+  color: #141313;
+  text-decoration: none;
+}
+
+/* ====== Slideshow Section ====== */
+.slideshow-container {
+  padding: 3rem 2rem;
+  text-align: center;
+  background: rgba(0,0,0,0.8);
+  color: white;
+}
+
+.slideshow-container h2 {
+  font-size: 2.5rem;
+  margin-bottom: 2rem;
+  color: #dc1212;
+}
+
+.slideshow {
+  position: relative;
+  max-width: 800px;
+  margin: 0 auto;
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+}
+
+.slide {
+  display: none;
+  position: relative;
+}
+
+.slide.active {
+  display: block;
+}
+
+.slide img {
+  width: 100%;
+  height: 400px;
+  object-fit: cover;
+}
+
+.slide-content {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(transparent, rgba(0,0,0,0.8));
+  padding: 2rem;
+  color: white;
+}
+
+.slide-content h3 {
+  font-size: 1.8rem;
+  margin-bottom: 0.5rem;
+}
+
+.slide-content p {
+  font-size: 1.1rem;
+}
+
+.slide-nav {
+  margin-top: 1rem;
+}
+
+.slide-nav button {
+  background: #dc1212;
+  color: white;
+  border: none;
+  padding: 0.8rem 1.2rem;
+  margin: 0 0.5rem;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 1.2rem;
+  transition: background 0.3s ease;
+}
+
+.slide-nav button:hover {
+  background: #bb1313;
+}
+
+/* ====== Categories Section ====== */
+.categories {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  padding: 2rem;
+}
+
+.category1 {
+  background: url('../images/mens\ perfume.jpg') no-repeat center center;
+  background-size: cover;
+    border: 2px solid #fcfafa;
+    color: rgb(239, 221, 221);
+    text-align: center;
+  padding: 1rem;
+}
+
+.category2 {
+  background: url('../images/womens\ perfume.jpg ') no-repeat center center;
+  background-size: cover;
+    border: 2px solid #f7f5f5;
+    color: rgb(239, 221, 221);
+    text-align: center;
+  padding: 1rem;
+}
+
+.category3 {
+  background: url('../images/unisex\ perfumes.jpg') no-repeat center center;
+  background-size: cover;
+    border: 2px solid #faf8f8;
+    color: rgb(239, 221, 221);
+    text-align: center;
+  padding: 1rem;
+}
+
+.category4 {
+  background: url('../images/gift set\ perfume.jpg') no-repeat center center;
+  background-size: cover;
+    border: 2px solid #f7f4f4;
+    color: rgb(239, 221, 221);
+    text-align: center;
+  padding: 1rem;
+}
+
+/* ====== Main Sections ====== */
+.best-sellers, .spotlight, .testimonials, .why-choose, .newsletter {
+  padding: 2rem;
+  text-align: center;
+  color: white;
+}
+
+/* ====== Products Section ====== */
+.products {
+  display: grid;
+  grid-template-columns: repeat(3, 5fr);
+  gap: 2rem;
+  padding: 1rem;
+}
+
+.product1 {
+  background: url('../images/perfume 2.jpg') no-repeat center center;
+  background-size: cover;
+  border: 2px solid #f5f3f3;
+  color: #1c1a1a;
+  padding: 2rem;
+  min-height: 200px;
+  text-align: center;
+}
+
+.product2 {
+  background: url('../images/perfume 3.jpg') no-repeat center center;
+  background-size: cover;
+  border: 2px solid #ede7e7;
+  color: #1c1a1a;
+  padding: 2rem;
+  min-height: 200px;
+  text-align: center;
+}
+
+.product3 {
+  background: url('../images/perfume 4.jpg') no-repeat center center;
+  background-size: cover;
+  border: 2px solid #f2f1f1;
+  color: #1c1a1a;
+  padding: 2rem;
+  min-height: 200px;
+  text-align: center;
+}
+
+.product4 {
+  background: url('../images/perfume 5.jpg') no-repeat center center;
+  background-size: cover;
+  border: 2px solid #f3ecec;
+  color: #1c1a1a;
+  padding: 2rem;
+  min-height: 200px;
+  text-align: center;
+}
+
+.product5 {
+  background: url('../images/perfume 6.jpg') no-repeat center center;
+  background-size: cover;
+  border: 2px solid #faf8f8;
+  color: #1c1a1a;
+  padding: 2rem;
+  min-height: 200px;
+  text-align: center;
+}
+
+.product6 {
+  background: url('../images/perfume 7.jpg') no-repeat center center;
+  background-size: cover;
+  border: 2px solid #f8f4f4;
+  color: #1c1a1a;
+  padding: 2rem;
+  min-height: 200px;
+  text-align: center;
+}
+
+.product7 {
+  background: url('../images/perfume 8.jpg') no-repeat center center;
+  background-size: cover;
+  border: 2px solid #f4efef;
+  color: #1c1a1a;
+  padding: 2rem;
+  min-height: 200px;
+  text-align: center;
+}
+
+.product8 {
+  background: url('../images/perfume 9.jpg') no-repeat center center;
+  background-size: cover;
+  border: 2px solid #f8f4f4;
+  color: #1c1a1a;
+  padding: 2rem;
+  min-height: 200px;
+  text-align: center;
+}
+
+.product9 {
+  background: url('../images/perfume 10.jpg') no-repeat center center;
+  background-size: cover;
+  border: 2px solid #fcfafa;
+  color: #1c1a1a;
+  padding: 2rem;
+  min-height: 200px;
+  text-align: center;
+}
+
+.product10 {
+  background: url('../images/perfume 11.jpg') no-repeat center center;
+  background-size: cover;
+  border: 2px solid #f8f4f4;
+  color: #1c1a1a;
+  padding: 2rem;
+  min-height: 200px;
+  text-align: center;
+}
+
+/* ====== Spotlight Card ====== */
+.spotlight-card {
+  background: url('../images/perfume 3.jpg') no-repeat center center;
+  background-size: cover;
+  padding: 2rem;
+  min-height: 300px;
+  border-radius: 10px;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+/* ====== Features Section ====== */
+.features {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+}
+
+.feature {
+  flex: 1;
+  background: #d71414;
+  padding: 1rem;
+}
+
+/* ====== Newsletter Section ====== */
+.newsletter {
+  margin-bottom: 3rem;
+}
+
+.newsletter form {
+  margin-top: 1rem;
+}
+
+.newsletter input {
+  padding: 0.5rem;
+  width: 250px;
+}
+
+.newsletter button {
+  padding: 0.5rem 1rem;
+  background: #d61313;
+  color: #171515;
+  border: none;
+}
+
+.newsletter button:hover {
+  background: #e1e1ea;
+}
+
+/* ====== Footer Styles ====== */
+footer {
+  background: rgba(0, 0, 0, 0.9);
+  color: #dc1212;
+  padding: 2rem;
+  margin-top: auto;
+  text-align: center;
+}
+
+footer a {
+  color: #ce2424;
+  text-decoration: none;
+}
+
+.footer-links {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 1rem;
+}
+
+.footer-bottom {
+  text-align: center;
+  margin-top: 1rem;
+  font-size: 0.8rem;
+}
+
+/* ====== Responsive Styles ====== */
+@media (max-width: 768px) {
+  .navbar {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .nav-links {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .categories {
+    grid-template-columns: 1fr;
+  }
+
+  .products {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .features {
+    flex-direction: column;
+  }
+
+  .slideshow-container h2 {
+    font-size: 1.8rem;
+  }
+
+  .slide img {
+    height: 250px;
+  }
+
+  .slide-content {
+    padding: 1rem;
+  }
+
+  .slide-content h3 {
+    font-size: 1.4rem;
+  }
+}

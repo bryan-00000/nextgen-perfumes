@@ -1,0 +1,33 @@
+{
+    "name": "nextgen/perfumes-backend",
+    "type": "project",
+    "description": "NextGen Perfumes Backend API",
+    "require": {
+        "php": "^8.1",
+        "laravel/framework": "^10.44.1",
+        "laravel/sanctum": "^3.2"
+    },
+    "require-dev": {
+        "laravel/sail": "^1.18"
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\": "app/",
+            "Database\\Factories\\": "database/factories/",
+            "Database\\Seeders\\": "database/seeders/"
+        }
+    },
+    "scripts": {
+        "post-autoload-dump": [
+            "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
+            "@php artisan package:discover --ansi"
+        ]
+    },
+    "config": {
+        "optimize-autoloader": true,
+        "preferred-install": "dist",
+        "sort-packages": true
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true
+}

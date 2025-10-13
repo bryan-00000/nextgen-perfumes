@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Checkout - NextGen Perfumes</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="checkout-container">
+        <h1>Checkout</h1>
+        <div class="product-summary" id="productSummary"></div>
+        <form id="checkoutForm">
+            <input type="text" id="customerName" name="customerName" placeholder="Your Name" required>
+            <input type="email" id="customerEmail" name="customerEmail" placeholder="Your Email" required>
+            <input type="text" id="customerPhone" name="customerPhone" placeholder="Your Phone Number" required>
+            <textarea id="customerLocation" name="customerLocation" rows="3" placeholder="Your Location/Address" required></textarea>
+            <button type="submit">Place Order</button>
+        </form>
+        <div class="success-message" id="successMessage"></div>
+    </div>
+    <script>
+        // Display selected product
+        const productSummary = document.getElementById('productSummary');
+        const selectedProduct = JSON.parse(localStorage.getItem('selectedProduct'));
+        if (selectedProduct) {
+            productSummary.textContent = `Product: ${selectedProduct.name} | Price: $${selectedProduct.price}`;
+        } else {
+            productSummary.textContent = "No product selected.";
+        }
+
+        // Handle checkout form submission
+        document.getElementById('checkoutForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const name = document.getElementById('customerName').value.trim();
+            const email = document.getElementById('customerEmail').value.trim();
+            const phone = document.getElementById('customerPhone').value.trim();
+            const location = document.getElementById('customerLocation').value.trim();
+
+            // Compose mailto link
+            const subject = encodeURIComponent('New Perfume Order');
+            const body = encodeURIComponent(
+                `Order Details:\nProduct: ${selectedProduct ? selectedProduct.name : ''}\nPrice: $${selectedProduct ? selectedProduct.price : ''}\n\nCustomer Info:\nName: ${name}\nEmail: ${email}\nPhone: ${phone}\nLocation: ${location}`
+            );
+            window.location.href = `mailto:info@nextgenperfumes.com?subject=${subject}&body=${body}`;
+
+            document.getElementById('successMessage').textContent = "Order details prepared. Please send the email to complete your order!";
+            document.getElementById('checkoutForm').reset();
+            localStorage.removeItem('selectedProduct');
+        });
+    </script>
+</body>
+</html>
