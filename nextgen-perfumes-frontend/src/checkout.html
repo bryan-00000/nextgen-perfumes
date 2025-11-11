@@ -2,52 +2,359 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Checkout - NextGen Perfumes</title>
-    <link rel="stylesheet" href="css/style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping Cart - NextGen Perfumes</title>
+    <meta name="description" content="Review your NextGen Perfumes order and proceed to secure checkout.">
+    <link rel="stylesheet" href="css/main.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
 </head>
 <body>
-    <div class="checkout-container">
-        <h1>Checkout</h1>
-        <div class="product-summary" id="productSummary"></div>
-        <form id="checkoutForm">
-            <input type="text" id="customerName" name="customerName" placeholder="Your Name" required>
-            <input type="email" id="customerEmail" name="customerEmail" placeholder="Your Email" required>
-            <input type="text" id="customerPhone" name="customerPhone" placeholder="Your Phone Number" required>
-            <textarea id="customerLocation" name="customerLocation" rows="3" placeholder="Your Location/Address" required></textarea>
-            <button type="submit">Place Order</button>
-        </form>
-        <div class="success-message" id="successMessage"></div>
-    </div>
+    <!-- Header Section -->
+    <header class="header">
+        <div class="top-bar">Free Delivery on all orders within your region</div>
+        <nav class="navbar">
+            <div class="logo">NextGen Perfumes</div>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="mensperfume.html">Men's</a></li>
+                <li><a href="womensperfume.html">Women's</a></li>
+                <li><a href="unisexperfume.html">Unisex</a></li>
+                <li><a href="giftsets.html">Gift Sets</a></li>
+                <li><a href="reviews.html">Reviews</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+            <div class="nav-icons">
+                <a href="#" title="Search"><i class="bi bi-search"></i></a>
+                <a href="login.html" title="Account"><i class="bi bi-person"></i></a>
+                <a href="checkout.html" title="Cart" class="active"><i class="bi bi-bag"></i></a>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Page Title Section -->
+    <section class="page-title" style="background: url('images/background.jpg') center/cover; padding: 160px 0 80px; text-align: center; position: relative;">
+        <div style="background: rgba(0,0,0,0.6); position: absolute; inset: 0;"></div>
+        <div class="container" style="position: relative; z-index: 2;">
+            <h1 style="color: white; font-size: 42px; font-weight: 700; margin-bottom: 10px;">Shopping Cart</h1>
+            <p style="color: rgba(255,255,255,0.8); font-size: 18px;">Review your items and proceed to checkout</p>
+        </div>
+    </section>
+
+    <!-- Cart Section -->
+    <section style="padding: 80px 0;">
+        <div class="container">
+            <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 3rem;" id="cart-layout">
+                
+                <!-- Cart Items -->
+                <div>
+                    <h2 style="color: #273d4e; margin-bottom: 2rem;">Your Items</h2>
+                    <div id="cart-items">
+                        <!-- Cart items will be populated by JavaScript -->
+                    </div>
+                    
+                    <!-- Empty Cart Message -->
+                    <div id="empty-cart" style="display: none; text-align: center; padding: 3rem;">
+                        <i class="bi bi-bag" style="font-size: 4rem; color: #ccc; margin-bottom: 1rem;"></i>
+                        <h3 style="color: #666; margin-bottom: 1rem;">Your cart is empty</h3>
+                        <p style="color: #999; margin-bottom: 2rem;">Add some amazing fragrances to get started!</p>
+                        <a href="index.html" class="btn">Continue Shopping</a>
+                    </div>
+                </div>
+
+                <!-- Order Summary -->
+                <div>
+                    <div style="background: white; padding: 2rem; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); position: sticky; top: 120px;">
+                        <h3 style="color: #273d4e; margin-bottom: 1.5rem;">Order Summary</h3>
+                        
+                        <div style="border-bottom: 1px solid #eee; padding-bottom: 1rem; margin-bottom: 1rem;">
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                                <span>Subtotal:</span>
+                                <span id="subtotal">$0.00</span>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                                <span>Shipping:</span>
+                                <span id="shipping" style="color: #28a745;">FREE</span>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                                <span>Tax:</span>
+                                <span id="tax">$0.00</span>
+                            </div>
+                        </div>
+                        
+                        <div style="display: flex; justify-content: space-between; font-size: 1.2rem; font-weight: 600; margin-bottom: 2rem;">
+                            <span>Total:</span>
+                            <span id="total" style="color: #dc1212;">$0.00</span>
+                        </div>
+                        
+                        <button class="btn" style="width: 100%; padding: 1rem; margin-bottom: 1rem;" onclick="proceedToCheckout()" id="checkout-btn" disabled>
+                            <i class="bi bi-credit-card" style="margin-right: 0.5rem;"></i>
+                            Proceed to Checkout
+                        </button>
+                        
+                        <div style="text-align: center;">
+                            <a href="index.html" style="color: #dc1212; text-decoration: none; font-size: 0.9rem;">
+                                <i class="bi bi-arrow-left" style="margin-right: 0.5rem;"></i>
+                                Continue Shopping
+                            </a>
+                        </div>
+                        
+                        <!-- Security Badges -->
+                        <div style="margin-top: 2rem; padding-top: 1rem; border-top: 1px solid #eee; text-align: center;">
+                            <small style="color: #666; display: block; margin-bottom: 0.5rem;">Secure Checkout</small>
+                            <div style="display: flex; justify-content: center; gap: 0.5rem; opacity: 0.7;">
+                                <i class="bi bi-shield-check" style="font-size: 1.2rem;"></i>
+                                <i class="bi bi-lock" style="font-size: 1.2rem;"></i>
+                                <i class="bi bi-credit-card" style="font-size: 1.2rem;"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Recommended Products -->
+    <section style="padding: 80px 0; background: #f8f9fa;">
+        <div class="container">
+            <h2 style="text-align: center; margin-bottom: 3rem; color: #273d4e;">You Might Also Like</h2>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem;">
+                
+                <div style="background: white; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
+                    <div style="height: 200px; background: url('images/perfume 2.jpg') center/cover;"></div>
+                    <div style="padding: 1.5rem;">
+                        <h4 style="margin: 0 0 0.5rem; color: #273d4e;">Velvet Rose</h4>
+                        <p style="color: #dc1212; font-weight: 600; margin: 0 0 1rem;">$65</p>
+                        <button class="btn" style="width: 100%; padding: 0.8rem;" onclick="addToCart('velvet-rose', 65)">Add to Cart</button>
+                    </div>
+                </div>
+                
+                <div style="background: white; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
+                    <div style="height: 200px; background: url('images/perfume 4.jpg') center/cover;"></div>
+                    <div style="padding: 1.5rem;">
+                        <h4 style="margin: 0 0 0.5rem; color: #273d4e;">Citrus Zest</h4>
+                        <p style="color: #dc1212; font-weight: 600; margin: 0 0 1rem;">$55</p>
+                        <button class="btn" style="width: 100%; padding: 0.8rem;" onclick="addToCart('citrus-zest', 55)">Add to Cart</button>
+                    </div>
+                </div>
+                
+                <div style="background: white; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
+                    <div style="height: 200px; background: url('images/perfume 6.jpg') center/cover;"></div>
+                    <div style="padding: 1.5rem;">
+                        <h4 style="margin: 0 0 0.5rem; color: #273d4e;">Spiced Amber</h4>
+                        <p style="color: #dc1212; font-weight: 600; margin: 0 0 1rem;">$75</p>
+                        <button class="btn" style="width: 100%; padding: 0.8rem;" onclick="addToCart('spiced-amber', 75)">Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="trust">
+            <span>Free Delivery</span>
+            <span>Secure Payments</span>
+            <span>Easy Returns</span>
+        </div>
+        <div class="footer-links">
+            <div>
+                <h4>Company</h4>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Careers</a></li>
+                    <li><a href="#">Press</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4>Support</h4>
+                <ul>
+                    <li><a href="#">FAQ</a></li>
+                    <li><a href="#">Shipping & Returns</a></li>
+                    <li><a href="contact.html">Contact Us</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4>Connect</h4>
+                <ul>
+                    <li><a href="#">Instagram</a></li>
+                    <li><a href="#">Facebook</a></li>
+                    <li><a href="#">Twitter</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">©2025 NextGen Perfumes — All Rights Reserved | Privacy Policy | Terms & Conditions</div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="js/api.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/auth.js"></script>
+    
     <script>
-        // Display selected product
-        const productSummary = document.getElementById('productSummary');
-        const selectedProduct = JSON.parse(localStorage.getItem('selectedProduct'));
-        if (selectedProduct) {
-            productSummary.textContent = `Product: ${selectedProduct.name} | Price: $${selectedProduct.price}`;
-        } else {
-            productSummary.textContent = "No product selected.";
+        // Cart functionality
+        function loadCart() {
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const cartItemsContainer = document.getElementById('cart-items');
+            const emptyCart = document.getElementById('empty-cart');
+            
+            if (cart.length === 0) {
+                cartItemsContainer.style.display = 'none';
+                emptyCart.style.display = 'block';
+                document.getElementById('cart-layout').style.gridTemplateColumns = '1fr';
+                return;
+            }
+            
+            cartItemsContainer.innerHTML = '';
+            cart.forEach((item, index) => {
+                const cartItem = document.createElement('div');
+                cartItem.style.cssText = `
+                    display: flex; align-items: center; padding: 1.5rem; background: white;
+                    border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); margin-bottom: 1rem;
+                `;
+                
+                cartItem.innerHTML = `
+                    <div style="width: 80px; height: 80px; background: #f8f9fa; border-radius: 8px; margin-right: 1rem; display: flex; align-items: center; justify-content: center;">
+                        <i class="bi bi-bottle" style="font-size: 2rem; color: #dc1212;"></i>
+                    </div>
+                    <div style="flex: 1;">
+                        <h4 style="margin: 0 0 0.5rem; color: #273d4e;">${item.name}</h4>
+                        <p style="color: #666; margin: 0; font-size: 0.9rem;">50ml EDP</p>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 1rem;">
+                        <div style="display: flex; align-items: center; border: 1px solid #ddd; border-radius: 5px;">
+                            <button onclick="updateQuantity(${index}, -1)" style="border: none; background: none; padding: 0.5rem; cursor: pointer;">-</button>
+                            <span style="padding: 0 1rem; min-width: 40px; text-align: center;">${item.quantity}</span>
+                            <button onclick="updateQuantity(${index}, 1)" style="border: none; background: none; padding: 0.5rem; cursor: pointer;">+</button>
+                        </div>
+                        <div style="min-width: 80px; text-align: right;">
+                            <div style="font-weight: 600; color: #dc1212;">$${(item.price * item.quantity).toFixed(2)}</div>
+                            <div style="font-size: 0.8rem; color: #999;">$${item.price} each</div>
+                        </div>
+                        <button onclick="removeItem(${index})" style="border: none; background: none; color: #dc3545; cursor: pointer; padding: 0.5rem;">
+                            <i class="bi bi-trash"></i>
+                        </button>
+                    </div>
+                `;
+                
+                cartItemsContainer.appendChild(cartItem);
+            });
+            
+            updateOrderSummary();
         }
-
-        // Handle checkout form submission
-        document.getElementById('checkoutForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            const name = document.getElementById('customerName').value.trim();
-            const email = document.getElementById('customerEmail').value.trim();
-            const phone = document.getElementById('customerPhone').value.trim();
-            const location = document.getElementById('customerLocation').value.trim();
-
-            // Compose mailto link
-            const subject = encodeURIComponent('New Perfume Order');
-            const body = encodeURIComponent(
-                `Order Details:\nProduct: ${selectedProduct ? selectedProduct.name : ''}\nPrice: $${selectedProduct ? selectedProduct.price : ''}\n\nCustomer Info:\nName: ${name}\nEmail: ${email}\nPhone: ${phone}\nLocation: ${location}`
-            );
-            window.location.href = `mailto:info@nextgenperfumes.com?subject=${subject}&body=${body}`;
-
-            document.getElementById('successMessage').textContent = "Order details prepared. Please send the email to complete your order!";
-            document.getElementById('checkoutForm').reset();
-            localStorage.removeItem('selectedProduct');
+        
+        function updateQuantity(index, change) {
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+            cart[index].quantity += change;
+            
+            if (cart[index].quantity <= 0) {
+                cart.splice(index, 1);
+            }
+            
+            localStorage.setItem('cart', JSON.stringify(cart));
+            loadCart();
+            updateCartCount();
+        }
+        
+        function removeItem(index) {
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+            cart.splice(index, 1);
+            localStorage.setItem('cart', JSON.stringify(cart));
+            loadCart();
+            updateCartCount();
+        }
+        
+        function updateOrderSummary() {
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            const tax = subtotal * 0.08; // 8% tax
+            const total = subtotal + tax;
+            
+            document.getElementById('subtotal').textContent = `$${subtotal.toFixed(2)}`;
+            document.getElementById('tax').textContent = `$${tax.toFixed(2)}`;
+            document.getElementById('total').textContent = `$${total.toFixed(2)}`;
+            
+            const checkoutBtn = document.getElementById('checkout-btn');
+            checkoutBtn.disabled = cart.length === 0;
+        }
+        
+        function addToCart(productId, price) {
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const existingItem = cart.find(item => item.id === productId);
+            
+            if (existingItem) {
+                existingItem.quantity += 1;
+            } else {
+                cart.push({
+                    id: productId,
+                    name: productId.replace('-', ' ').replace(/\b\w/g, l => l.toUpperCase()),
+                    price: price,
+                    quantity: 1
+                });
+            }
+            
+            localStorage.setItem('cart', JSON.stringify(cart));
+            loadCart();
+            updateCartCount();
+            showNotification('Product added to cart!');
+        }
+        
+        function updateCartCount() {
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+            const cartIcon = document.querySelector('.nav-icons a[title="Cart"]');
+            if (cartIcon && totalItems > 0) {
+                cartIcon.style.position = 'relative';
+                let badge = cartIcon.querySelector('.cart-badge');
+                if (!badge) {
+                    badge = document.createElement('span');
+                    badge.className = 'cart-badge';
+                    badge.style.cssText = `
+                        position: absolute; top: -8px; right: -8px; background: #dc1212; color: white;
+                        border-radius: 50%; width: 18px; height: 18px; font-size: 0.7rem;
+                        display: flex; align-items: center; justify-content: center;
+                    `;
+                    cartIcon.appendChild(badge);
+                }
+                badge.textContent = totalItems;
+            }
+        }
+        
+        function showNotification(message) {
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                position: fixed; top: 20px; right: 20px; background: #28a745; color: white;
+                padding: 1rem 1.5rem; border-radius: 5px; z-index: 10000; animation: slideIn 0.3s ease;
+            `;
+            notification.textContent = message;
+            document.body.appendChild(notification);
+            setTimeout(() => notification.remove(), 3000);
+        }
+        
+        function proceedToCheckout() {
+            alert('Redirecting to secure checkout... (This would integrate with your payment processor)');
+        }
+        
+        // Responsive layout
+        function checkLayout() {
+            const cartLayout = document.getElementById('cart-layout');
+            if (window.innerWidth <= 768) {
+                cartLayout.style.gridTemplateColumns = '1fr';
+            } else {
+                const cart = JSON.parse(localStorage.getItem('cart')) || [];
+                if (cart.length > 0) {
+                    cartLayout.style.gridTemplateColumns = '2fr 1fr';
+                }
+            }
+        }
+        
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            loadCart();
+            updateCartCount();
+            checkLayout();
         });
+        
+        window.addEventListener('resize', checkLayout);
     </script>
 </body>
 </html>

@@ -1,82 +1,190 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!-- Page Metadata and Styles -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contact - NextGen Perfumes</title>
-    <link rel="stylesheet" href="css/style.css">
+    <title>Contact Us - NextGen Perfumes</title>
+    <meta name="description" content="Get in touch with NextGen Perfumes. Contact us for inquiries about our luxury fragrances and customer support.">
+    <link rel="stylesheet" href="css/main.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
 </head>
 <body>
-    <!-- Header and Navigation -->
-    <header>
-        <h1>Contact Us</h1>
-        <nav>
-            <a href="index.html">Home</a>
-            <a href="reviews.html">Reviews</a>
+    <!-- Header Section -->
+    <header class="header">
+        <div class="top-bar">Free Delivery on all orders within your region</div>
+        <nav class="navbar">
+            <div class="logo">NextGen Perfumes</div>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="mensperfume.html">Men's</a></li>
+                <li><a href="womensperfume.html">Women's</a></li>
+                <li><a href="unisexperfume.html">Unisex</a></li>
+                <li><a href="giftsets.html">Gift Sets</a></li>
+                <li><a href="reviews.html">Reviews</a></li>
+                <li><a href="contact.html" class="active">Contact</a></li>
+            </ul>
+            <div class="nav-icons">
+                <a href="#" title="Search"><i class="bi bi-search"></i></a>
+                <a href="login.html" title="Account"><i class="bi bi-person"></i></a>
+                <a href="checkout.html" title="Cart"><i class="bi bi-bag"></i></a>
+            </div>
         </nav>
-        <!-- Quick Email Link -->
-        <p>
-            <a href="mailto:info@nextgenperfumes.com" class="contact-link email-link">
-                info@nextgenperfumes.com
-            </a>
-        </p>
     </header>
-    <main>
-        <!-- Contact Information Section -->
-        <section class="contact-section">
-            <p>
-                <a href="tel:+1234567890" class="contact-link">+1 (234) 567-890</a>
-            </p>
-            <p>
-                <a href="mailto:info@nextgenperfumes.com" class="contact-link highlight-email">
-                    info@nextgenperfumes.com
-                </a>
-            </p>
-        </section>
-        <!-- Phone Section -->
-        <section class="contact-section">
-            <h2>Phone</h2>
-            <p>
-                <a href="tel:+1234567890" class="contact-phone">
-                    +1 (234) 567-890
-                </a>
-            </p>
-        </section>
-        <!-- Contact Form Section -->
-        <section class="contact-form-section">
-            <h2>Send us a Message</h2>
-            <form id="contact-form">
-                <div class="form-group">
-                    <label for="name">Name *</label>
-                    <input type="text" id="name" name="name" required>
+
+    <!-- Page Title Section -->
+    <section class="page-title" style="background: url('images/background.jpg') center/cover; padding: 160px 0 80px; text-align: center; position: relative;">
+        <div style="background: rgba(0,0,0,0.6); position: absolute; inset: 0;"></div>
+        <div class="container" style="position: relative; z-index: 2;">
+            <h1 style="color: white; font-size: 42px; font-weight: 700; margin-bottom: 10px;">Contact Us</h1>
+            <p style="color: rgba(255,255,255,0.8); font-size: 18px;">Get in touch with our fragrance experts</p>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section style="padding: 80px 0; background: #ffffff;">
+        <div class="container">
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 3rem; margin-bottom: 4rem;">
+                
+                <!-- Contact Info Items -->
+                <div class="contact-info-item" style="background: #ffffff; box-shadow: 0 4px 15px rgba(0,0,0,0.1); padding: 2rem; text-align: center; border-radius: 8px;">
+                    <div style="width: 56px; height: 56px; background: rgba(220,18,18,0.1); border: 2px dotted rgba(220,18,18,0.4); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem;">
+                        <i class="bi bi-geo-alt" style="font-size: 24px; color: #dc1212;"></i>
+                    </div>
+                    <h3 style="font-size: 18px; font-weight: 700; margin: 10px 0; color: #273d4e;">Address</h3>
+                    <p style="margin: 0; font-size: 14px; color: #444444;">123 Fragrance Street<br>Perfume District, PD 12345<br>United States</p>
                 </div>
-                <div class="form-group">
-                    <label for="email">Email *</label>
-                    <input type="email" id="email" name="email" required>
+
+                <div class="contact-info-item" style="background: #ffffff; box-shadow: 0 4px 15px rgba(0,0,0,0.1); padding: 2rem; text-align: center; border-radius: 8px;">
+                    <div style="width: 56px; height: 56px; background: rgba(220,18,18,0.1); border: 2px dotted rgba(220,18,18,0.4); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem;">
+                        <i class="bi bi-telephone" style="font-size: 24px; color: #dc1212;"></i>
+                    </div>
+                    <h3 style="font-size: 18px; font-weight: 700; margin: 10px 0; color: #273d4e;">Call Us</h3>
+                    <p style="margin: 0; font-size: 14px; color: #444444;">
+                        <a href="tel:+1234567890" style="color: #dc1212; text-decoration: none;">+1 (234) 567-890</a><br>
+                        Mon-Fri 9AM-6PM EST
+                    </p>
                 </div>
-                <div class="form-group">
-                    <label for="phone">Phone *</label>
-                    <input type="tel" id="phone" name="phone" required>
+
+                <div class="contact-info-item" style="background: #ffffff; box-shadow: 0 4px 15px rgba(0,0,0,0.1); padding: 2rem; text-align: center; border-radius: 8px;">
+                    <div style="width: 56px; height: 56px; background: rgba(220,18,18,0.1); border: 2px dotted rgba(220,18,18,0.4); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem;">
+                        <i class="bi bi-envelope" style="font-size: 24px; color: #dc1212;"></i>
+                    </div>
+                    <h3 style="font-size: 18px; font-weight: 700; margin: 10px 0; color: #273d4e;">Email Us</h3>
+                    <p style="margin: 0; font-size: 14px; color: #444444;">
+                        <a href="mailto:info@nextgenperfumes.com" style="color: #dc1212; text-decoration: none;">info@nextgenperfumes.com</a><br>
+                        <a href="mailto:support@nextgenperfumes.com" style="color: #dc1212; text-decoration: none;">support@nextgenperfumes.com</a>
+                    </p>
                 </div>
-                <div class="form-group">
-                    <label for="message">Message *</label>
-                    <textarea id="message" name="message" rows="5" required></textarea>
+            </div>
+
+            <!-- Contact Form -->
+            <div style="display: grid; grid-template-columns: 1fr; max-width: 800px; margin: 0 auto;">
+                <div style="background: #ffffff; box-shadow: 0 4px 15px rgba(0,0,0,0.1); padding: 3rem; border-radius: 8px;">
+                    <h2 style="text-align: center; margin-bottom: 2rem; color: #273d4e; font-size: 28px;">Send us a Message</h2>
+                    
+                    <form id="contact-form" style="background: none; box-shadow: none; padding: 0; border-radius: 0;">
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; margin-bottom: 1.5rem;">
+                            <div class="form-group">
+                                <label for="name" style="display: block; margin-bottom: 0.5rem; color: #273d4e; font-weight: 500;">Name *</label>
+                                <input type="text" id="name" name="name" required style="width: 100%; padding: 0.8rem; border: 1px solid #ddd; border-radius: 5px; background: #ffffff; color: #444444; font-size: 1rem;">
+                            </div>
+                            <div class="form-group">
+                                <label for="email" style="display: block; margin-bottom: 0.5rem; color: #273d4e; font-weight: 500;">Email *</label>
+                                <input type="email" id="email" name="email" required style="width: 100%; padding: 0.8rem; border: 1px solid #ddd; border-radius: 5px; background: #ffffff; color: #444444; font-size: 1rem;">
+                            </div>
+                        </div>
+                        
+                        <div class="form-group" style="margin-bottom: 1.5rem;">
+                            <label for="subject" style="display: block; margin-bottom: 0.5rem; color: #273d4e; font-weight: 500;">Subject</label>
+                            <input type="text" id="subject" name="subject" style="width: 100%; padding: 0.8rem; border: 1px solid #ddd; border-radius: 5px; background: #ffffff; color: #444444; font-size: 1rem;">
+                        </div>
+                        
+                        <div class="form-group" style="margin-bottom: 2rem;">
+                            <label for="message" style="display: block; margin-bottom: 0.5rem; color: #273d4e; font-weight: 500;">Message *</label>
+                            <textarea id="message" name="message" rows="6" required style="width: 100%; padding: 0.8rem; border: 1px solid #ddd; border-radius: 5px; background: #ffffff; color: #444444; font-size: 1rem; resize: vertical;"></textarea>
+                        </div>
+                        
+                        <div style="text-align: center;">
+                            <button type="submit" class="btn" style="padding: 1rem 3rem; font-size: 1rem;">Send Message</button>
+                        </div>
+                    </form>
                 </div>
-                <button type="submit" class="btn">Send Message</button>
-            </form>
-        </section>
-        
-        <!-- Address Button -->
-        <button class="address-btn" onclick="window.location.href='address.html'">View Our Address</button>
-    </main>
+            </div>
+        </div>
+    </section>
+
     <!-- Footer -->
     <footer>
-        &copy; 2025 NextGen Perfumes. All rights reserved.
+        <div class="trust">
+            <span>Free Delivery</span>
+            <span>Secure Payments</span>
+            <span>Easy Returns</span>
+        </div>
+        <div class="footer-links">
+            <div>
+                <h4>Company</h4>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Careers</a></li>
+                    <li><a href="#">Press</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4>Support</h4>
+                <ul>
+                    <li><a href="#">FAQ</a></li>
+                    <li><a href="#">Shipping & Returns</a></li>
+                    <li><a href="contact.html">Contact Us</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4>Connect</h4>
+                <ul>
+                    <li><a href="#">Instagram</a></li>
+                    <li><a href="#">Facebook</a></li>
+                    <li><a href="#">Twitter</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">©2025 NextGen Perfumes — All Rights Reserved | Privacy Policy | Terms & Conditions</div>
     </footer>
-    <!-- API Integration Scripts -->
+
+    <!-- Scripts -->
     <script src="js/api.js"></script>
     <script src="js/main.js"></script>
     <script src="js/auth.js"></script>
+    
+    <script>
+        // Contact form handling
+        document.getElementById('contact-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Get form data
+            const formData = new FormData(this);
+            const data = Object.fromEntries(formData);
+            
+            // Here you would typically send the data to your backend
+            console.log('Contact form submitted:', data);
+            
+            // Show success message (you can customize this)
+            alert('Thank you for your message! We will get back to you soon.');
+            
+            // Reset form
+            this.reset();
+        });
+
+        // Add focus styles for form inputs
+        document.querySelectorAll('input, textarea').forEach(input => {
+            input.addEventListener('focus', function() {
+                this.style.borderColor = '#dc1212';
+                this.style.boxShadow = '0 0 0 2px rgba(220, 18, 18, 0.2)';
+            });
+            
+            input.addEventListener('blur', function() {
+                this.style.borderColor = '#ddd';
+                this.style.boxShadow = 'none';
+            });
+        });
+    </script>
 </body>
 </html>

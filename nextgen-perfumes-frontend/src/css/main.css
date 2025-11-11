@@ -1,0 +1,838 @@
+/**
+* NextGen Perfumes - Integrated Template
+* Based on Dewi Template by BootstrapMade.com
+* Customized for NextGen Perfumes Brand
+*/
+
+/*--------------------------------------------------------------
+# Font & Color Variables - NextGen Perfumes Theme
+--------------------------------------------------------------*/
+:root {
+  --default-font: "Roboto", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --heading-font: "Raleway", sans-serif;
+  --nav-font: "Inter", sans-serif;
+}
+
+/* NextGen Perfumes Brand Colors */
+:root { 
+  --background-color: #ffffff;
+  --default-color: #444444;
+  --heading-color: #273d4e;
+  --accent-color: #dc1212; /* NextGen Red */
+  --accent-hover: #bb1313; /* Darker Red */
+  --surface-color: #ffffff;
+  --contrast-color: #ffffff;
+}
+
+/* Navigation Colors */
+:root {
+  --nav-color: #e5eaee;
+  --nav-hover-color: #dc1212;
+  --nav-mobile-background-color: #ffffff;
+  --nav-dropdown-background-color: #ffffff;
+  --nav-dropdown-color: #444444;
+  --nav-dropdown-hover-color: #dc1212;
+}
+
+/* Color Presets */
+.light-background {
+  --background-color: #f1f4fa;
+  --surface-color: #ffffff;
+}
+
+.dark-background {
+  --background-color: #000910;
+  --default-color: #ffffff;
+  --heading-color: #ffffff;
+  --surface-color: #28323a;
+  --contrast-color: #ffffff;
+}
+
+/* Smooth scroll */
+:root {
+  scroll-behavior: smooth;
+}
+
+/*--------------------------------------------------------------
+# General Styling & Shared Classes
+--------------------------------------------------------------*/
+* {
+  box-sizing: border-box;
+}
+
+body {
+  color: var(--default-color);
+  background-color: var(--background-color);
+  font-family: var(--default-font);
+  margin: 0;
+  line-height: 1.6;
+}
+
+a {
+  color: var(--accent-color);
+  text-decoration: none;
+  transition: 0.3s;
+}
+
+a:hover {
+  color: var(--accent-hover);
+  text-decoration: none;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: var(--heading-color);
+  font-family: var(--heading-font);
+}
+
+.btn {
+  display: inline-block;
+  padding: 0.75rem 1.5rem;
+  background: var(--accent-color);
+  color: var(--contrast-color);
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: 0.3s;
+  text-decoration: none;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.btn:hover {
+  background: var(--accent-hover);
+  color: var(--contrast-color);
+}
+
+/*--------------------------------------------------------------
+# Global Header
+--------------------------------------------------------------*/
+.header {
+  background-color: rgba(0, 0, 0, 0.9);
+  color: var(--contrast-color);
+  padding: 20px 0;
+  transition: all 0.5s;
+  z-index: 997;
+  position: fixed;
+  width: 100%;
+  top: 0;
+}
+
+.header .top-bar {
+  background: var(--accent-color);
+  color: var(--contrast-color);
+  text-align: center;
+  padding: 0.5rem;
+  font-size: 0.9rem;
+}
+
+.header .logo {
+  line-height: 1;
+}
+
+.header .logo h1 {
+  font-size: 30px;
+  margin: 0;
+  font-weight: 700;
+  color: var(--contrast-color);
+}
+
+.scrolled .header {
+  background-color: rgba(21, 34, 43, 0.95);
+  box-shadow: 0px 0 18px rgba(0, 0, 0, 0.1);
+}
+
+/*--------------------------------------------------------------
+# Navigation Menu
+--------------------------------------------------------------*/
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  background: rgba(187, 19, 19, 0.95);
+  backdrop-filter: blur(10px);
+}
+
+.navbar .logo {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--contrast-color);
+}
+
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 2rem;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-links a {
+  color: var(--contrast-color);
+  font-size: 13px;
+  font-family: var(--nav-font);
+  font-weight: 500;
+  text-transform: uppercase;
+  transition: 0.3s;
+  position: relative;
+}
+
+.nav-links a:before {
+  content: "";
+  position: absolute;
+  height: 2px;
+  bottom: -6px;
+  left: 0;
+  background-color: var(--contrast-color);
+  visibility: hidden;
+  width: 0px;
+  transition: all 0.3s ease-in-out;
+}
+
+.nav-links a:hover:before {
+  visibility: visible;
+  width: 100%;
+}
+
+.nav-icons {
+  display: flex;
+  gap: 1rem;
+}
+
+.nav-icons a {
+  color: var(--contrast-color);
+  font-size: 1.2rem;
+  transition: 0.3s;
+}
+
+.nav-icons a:hover {
+  color: var(--accent-color);
+}
+
+/* Mobile Navigation */
+@media (max-width: 1199px) {
+  .navbar {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 1rem;
+  }
+
+  .nav-links {
+    flex-direction: column;
+    gap: 0.5rem;
+    width: 100%;
+    margin-top: 1rem;
+  }
+
+  .nav-icons {
+    margin-top: 1rem;
+  }
+}
+
+/*--------------------------------------------------------------
+# Hero Section
+--------------------------------------------------------------*/
+.hero {
+  width: 100%;
+  min-height: 100vh;
+  position: relative;
+  padding: 120px 0 80px 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: url('../images/background.jpg') no-repeat center center;
+  background-size: cover;
+  background-attachment: fixed;
+}
+
+.hero:before {
+  content: "";
+  background: rgba(0, 0, 0, 0.4);
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+
+.hero .container {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  color: var(--contrast-color);
+}
+
+.hero h1 {
+  margin: 0;
+  font-size: 48px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--contrast-color);
+}
+
+.hero p {
+  color: rgba(255, 255, 255, 0.8);
+  margin: 10px 0 30px 0;
+  font-size: 24px;
+}
+
+@media (max-width: 768px) {
+  .hero {
+    padding: 100px 0 60px 0;
+  }
+  
+  .hero h1 {
+    font-size: 32px;
+  }
+
+  .hero p {
+    font-size: 18px;
+  }
+}
+
+/*--------------------------------------------------------------
+# Slideshow Section
+--------------------------------------------------------------*/
+.slideshow-container {
+  padding: 80px 0;
+  text-align: center;
+  background: rgba(0, 0, 0, 0.9);
+  color: var(--contrast-color);
+}
+
+.slideshow-container h2 {
+  font-size: 36px;
+  font-weight: 800;
+  margin-bottom: 60px;
+  color: var(--accent-color);
+  text-transform: uppercase;
+}
+
+.slideshow {
+  position: relative;
+  max-width: 800px;
+  margin: 0 auto;
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+.slide {
+  display: none;
+  position: relative;
+}
+
+.slide.active {
+  display: block;
+}
+
+.slide img {
+  width: 100%;
+  height: 400px;
+  object-fit: cover;
+}
+
+.slide-content {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
+  padding: 2rem;
+  color: var(--contrast-color);
+}
+
+.slide-content h3 {
+  font-size: 1.8rem;
+  margin-bottom: 0.5rem;
+  color: var(--contrast-color);
+}
+
+.slide-nav {
+  margin-top: 2rem;
+}
+
+.slide-nav button {
+  background: var(--accent-color);
+  color: var(--contrast-color);
+  border: none;
+  padding: 0.8rem 1.2rem;
+  margin: 0 0.5rem;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 1.2rem;
+  transition: background 0.3s ease;
+}
+
+.slide-nav button:hover {
+  background: var(--accent-hover);
+}
+
+/*--------------------------------------------------------------
+# Categories Section
+--------------------------------------------------------------*/
+.categories {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+  padding: 80px 2rem;
+  background: var(--surface-color);
+}
+
+.category {
+  position: relative;
+  min-height: 300px;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+}
+
+.category:hover {
+  transform: translateY(-5px);
+}
+
+.category h3 {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  color: var(--contrast-color);
+  font-size: 1.5rem;
+  margin: 0;
+  z-index: 2;
+}
+
+.category .btn {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  z-index: 2;
+}
+
+.category1 {
+  background: url('../images/mens perfume.jpg') no-repeat center center;
+  background-size: cover;
+}
+
+.category2 {
+  background: url('../images/womens perfume.jpg') no-repeat center center;
+  background-size: cover;
+}
+
+.category3 {
+  background: url('../images/unisex perfumes.jpg') no-repeat center center;
+  background-size: cover;
+}
+
+.category4 {
+  background: url('../images/gift set perfume.jpg') no-repeat center center;
+  background-size: cover;
+}
+
+/*--------------------------------------------------------------
+# Products Section
+--------------------------------------------------------------*/
+.best-sellers {
+  padding: 80px 2rem;
+  text-align: center;
+  background: var(--surface-color);
+}
+
+.best-sellers h2 {
+  font-size: 36px;
+  font-weight: 800;
+  margin-bottom: 60px;
+  color: var(--heading-color);
+  text-transform: uppercase;
+}
+
+.products {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.product-item {
+  background: var(--surface-color);
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+}
+
+.product-item:hover {
+  transform: translateY(-5px);
+}
+
+.product {
+  height: 200px;
+  background-size: cover;
+  background-position: center;
+}
+
+.product-item h4 {
+  padding: 1rem;
+  margin: 0;
+  color: var(--heading-color);
+}
+
+.product-item p {
+  padding: 0 1rem;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--accent-color);
+}
+
+.product-item .btn {
+  margin: 1rem;
+  width: calc(100% - 2rem);
+}
+
+/*--------------------------------------------------------------
+# Spotlight Section
+--------------------------------------------------------------*/
+.spotlight {
+  padding: 80px 2rem;
+  text-align: center;
+  background: var(--accent-color);
+  color: var(--contrast-color);
+}
+
+.spotlight h2 {
+  font-size: 36px;
+  font-weight: 800;
+  margin-bottom: 40px;
+  color: var(--contrast-color);
+}
+
+.spotlight-card {
+  max-width: 400px;
+  margin: 0 auto;
+  background: var(--surface-color);
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.spotlight1 {
+  height: 300px;
+  background: url('../images/perfume 3.jpg') no-repeat center center;
+  background-size: cover;
+}
+
+.spotlight-card h3,
+.spotlight-card p {
+  padding: 1rem;
+  color: var(--heading-color);
+}
+
+/*--------------------------------------------------------------
+# Testimonials Section
+--------------------------------------------------------------*/
+.testimonials {
+  padding: 80px 2rem;
+  text-align: center;
+  background: var(--surface-color);
+}
+
+.testimonials h2 {
+  font-size: 36px;
+  font-weight: 800;
+  margin-bottom: 60px;
+  color: var(--heading-color);
+}
+
+.testimonials blockquote {
+  font-style: italic;
+  font-size: 1.2rem;
+  margin: 2rem auto;
+  max-width: 600px;
+  color: var(--default-color);
+}
+
+/*--------------------------------------------------------------
+# Features Section
+--------------------------------------------------------------*/
+.why-choose {
+  padding: 80px 2rem;
+  text-align: center;
+  background: var(--accent-color);
+  color: var(--contrast-color);
+}
+
+.why-choose h2 {
+  font-size: 36px;
+  font-weight: 800;
+  margin-bottom: 60px;
+  color: var(--contrast-color);
+}
+
+.features {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.feature {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 2rem;
+  border-radius: 8px;
+  backdrop-filter: blur(10px);
+}
+
+.feature h3 {
+  color: var(--contrast-color);
+  margin-bottom: 1rem;
+}
+
+/*--------------------------------------------------------------
+# Newsletter Section
+--------------------------------------------------------------*/
+.newsletter {
+  padding: 80px 2rem;
+  text-align: center;
+  background: var(--surface-color);
+}
+
+.newsletter h2 {
+  font-size: 36px;
+  font-weight: 800;
+  margin-bottom: 20px;
+  color: var(--heading-color);
+}
+
+.newsletter form {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 2rem;
+  max-width: 500px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.newsletter input {
+  flex: 1;
+  padding: 0.8rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
+.newsletter button {
+  padding: 0.8rem 2rem;
+  background: var(--accent-color);
+  color: var(--contrast-color);
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 500;
+  text-transform: uppercase;
+}
+
+.newsletter button:hover {
+  background: var(--accent-hover);
+}
+
+/*--------------------------------------------------------------
+# Footer
+--------------------------------------------------------------*/
+footer {
+  background: rgba(0, 0, 0, 0.9);
+  color: var(--contrast-color);
+  padding: 60px 2rem 20px;
+}
+
+.trust {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+}
+
+.trust span {
+  color: var(--accent-color);
+  font-weight: 600;
+}
+
+.footer-links {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
+
+.footer-links h4 {
+  color: var(--accent-color);
+  margin-bottom: 1rem;
+}
+
+.footer-links ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.footer-links li {
+  margin-bottom: 0.5rem;
+}
+
+.footer-links a {
+  color: var(--contrast-color);
+  transition: 0.3s;
+}
+
+.footer-links a:hover {
+  color: var(--accent-color);
+}
+
+.footer-bottom {
+  text-align: center;
+  padding-top: 2rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+/*--------------------------------------------------------------
+# Form Styles
+--------------------------------------------------------------*/
+.form-container {
+  max-width: 500px;
+  margin: 120px auto 40px;
+  padding: 2rem;
+  background: rgba(0, 0, 0, 0.8);
+  border-radius: 10px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+.form-container h2 {
+  text-align: center;
+  color: var(--contrast-color);
+  margin-bottom: 2rem;
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: var(--contrast-color);
+  font-weight: 500;
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select {
+  width: 100%;
+  padding: 0.8rem;
+  border: 1px solid #555;
+  border-radius: 5px;
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--contrast-color);
+  font-size: 1rem;
+}
+
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+  color: #ccc;
+}
+
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus {
+  outline: none;
+  border-color: var(--accent-color);
+  box-shadow: 0 0 0 2px rgba(220, 18, 18, 0.2);
+}
+
+/*--------------------------------------------------------------
+# Responsive Design
+--------------------------------------------------------------*/
+@media (max-width: 768px) {
+  .slideshow-container h2 {
+    font-size: 24px;
+  }
+
+  .slide img {
+    height: 250px;
+  }
+
+  .slide-content {
+    padding: 1rem;
+  }
+
+  .slide-content h3 {
+    font-size: 1.4rem;
+  }
+
+  .categories {
+    grid-template-columns: 1fr;
+    padding: 40px 1rem;
+  }
+
+  .products {
+    grid-template-columns: 1fr;
+  }
+
+  .features {
+    grid-template-columns: 1fr;
+  }
+
+  .newsletter form {
+    flex-direction: column;
+  }
+
+  .trust {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .footer-links {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+}
+
+/*--------------------------------------------------------------
+# Utility Classes
+--------------------------------------------------------------*/
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.mt-4 {
+  margin-top: 2rem;
+}
+
+.mb-4 {
+  margin-bottom: 2rem;
+}
+
+.d-flex {
+  display: flex;
+}
+
+.justify-center {
+  justify-content: center;
+}
+
+.align-center {
+  align-items: center;
+}
+
+.gap-2 {
+  gap: 1rem;
+}

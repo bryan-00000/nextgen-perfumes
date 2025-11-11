@@ -1,108 +1,346 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>NextGen Perfumes</title>
-  <link rel="stylesheet" href="css/style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unisex Perfumes - NextGen Perfumes</title>
+    <meta name="description" content="Explore our versatile unisex fragrance collection. Perfect scents for everyone, transcending traditional boundaries.">
+    <link rel="stylesheet" href="css/main.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
 </head>
 <body>
-  <header>
-    <div class="top-bar">Free Delivery on all orders within your region</div>
-    <nav class="navbar">
-       <a href="index.html">Home</a>
-      <a href="mensperfume.html">Men's Perfume</a>
-      <a href="womensperfume.html">Women's Perfume</a>
-      <a href="unisexperfume.html">Unisex Perfume</a>
-      <a href="giftsets.html">Gift Sets</a>
-      <div class="logo">NextGen Perfumes</div>
-     <h1>Unisex Perfume</h1>
-  </header>
-      <section class="best-sellers">
-    <h2>Best Sellers — Loved by Our Customers</h2>
-    <div class="products">
-      <div class="product-item">
-      <div class="product product1"></div>
-        <h4>Fresh Breeze</h4>
-        <p>$50</p>
-        <a href="#" class="btn">Add to Cart</a>
-      </div>
-      <div class="product-item">
-      <div class="product product2"></div>
-        <h4>Urban Essence</h4>
-        <p>$65</p>
-        <a href="#" class="btn">Add to Cart</a>
-      </div>
-      <div class="product-item">
-      <div class="product product3"></div>
-        <h4>Citrus Harmony</h4>
-        <p>$45</p>
-        <a href="#" class="btn">Add to Cart</a>
-      </div>
-      <div class="product-item">
-      <div class="product product4"></div>
-        <h4>Mystic Woods</h4>
-        <p>$70</p>
-        <a href="#" class="btn">Add to Cart</a>
-      </div>
-      <div class="product-item">
-      <div class="product product5"></div>
-        <h4>Ocean Waves</h4>
-        <p>$55</p>
-        <a href="#" class="btn">Add to Cart</a>
-      </div>
-      <div class="product-item">
-      <div class="product product6"></div>
-        <h4>Pure Energy</h4>
-        <p>$60</p>
-        <a href="#" class="btn">Add to Cart</a>
-      </div>
-      <div class="product-item">
-      <div class="product product7"></div>
-        <h4>Wild Spirit</h4>
-        <p>$75</p>
-        <a href="#" class="btn">Add to Cart</a>
-      </div>
-      <div class="product-item">
-      <div class="product product8"></div>
-        <h4>Clean Slate</h4>
-        <p>$40</p>
-        <a href="#" class="btn">Add to Cart</a>
-      </div>
-      <div class="product-item">
-      <div class="product product9"></div>
-        <h4>Natural Blend</h4>
-        <p>$65</p>
-        <a href="#" class="btn">Add to Cart</a>
-      </div>
-      <div class="product-item">
-      <div class="product product10"></div>
-        <h4>Timeless</h4>
-        <p>$85</p>
-        <a href="#" class="btn">Add to Cart</a>
-      </div>
-    </div>
-  </section>
-</body>
-</html>
+    <!-- Header Section -->
+    <header class="header">
+        <div class="top-bar">Free Delivery on all orders within your region</div>
+        <nav class="navbar">
+            <div class="logo">NextGen Perfumes</div>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="mensperfume.html">Men's</a></li>
+                <li><a href="womensperfume.html">Women's</a></li>
+                <li><a href="unisexperfume.html" class="active">Unisex</a></li>
+                <li><a href="giftsets.html">Gift Sets</a></li>
+                <li><a href="reviews.html">Reviews</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+            <div class="nav-icons">
+                <a href="#" title="Search"><i class="bi bi-search"></i></a>
+                <a href="login.html" title="Account"><i class="bi bi-person"></i></a>
+                <a href="checkout.html" title="Cart"><i class="bi bi-bag"></i></a>
+            </div>
+        </nav>
+    </header>
 
-     
-  <style>
-    /* center page text and align product items nicely */
-    body { text-align: center; }
-    .products { text-align: center; }
-    .product-item { display: inline-block; vertical-align: top; margin: 0 10px; }
-    .newsletter-form { text-align: center; }
-  </style>
-  <section class="newsletter">
-    <h2>Stay Updated with NextGen Perfumes</h2>
-    <p>Subscribe to our newsletter for the latest arrivals, exclusive offers, and fragrance tips.</p>
-    <form class="newsletter-form">
-      <input type="email" placeholder="Enter your email" required>
-      <button type="submit" class="btn">Subscribe</button>
+    <!-- Page Title Section -->
+    <section class="page-title" style="background: url('images/unisex perfumes.jpg') center/cover; padding: 160px 0 80px; text-align: center; position: relative;">
+        <div style="background: rgba(0,0,0,0.6); position: absolute; inset: 0;"></div>
+        <div class="container" style="position: relative; z-index: 2;">
+            <h1 style="color: white; font-size: 42px; font-weight: 700; margin-bottom: 10px;">Unisex Perfumes</h1>
+            <p style="color: rgba(255,255,255,0.8); font-size: 18px;">Versatile fragrances that transcend boundaries</p>
+        </div>
+    </section>
 
-  <footer>
-    &copy; 2025 NextGen Perfumes. All rights reserved.
-  </footer>
+    <!-- Filter Section -->
+    <section style="padding: 40px 0; background: #f8f9fa;">
+        <div class="container">
+            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+                <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+                    <select style="padding: 0.5rem 1rem; border: 1px solid #ddd; border-radius: 5px; background: white;">
+                        <option>Sort by Price</option>
+                        <option>Low to High</option>
+                        <option>High to Low</option>
+                    </select>
+                    <select style="padding: 0.5rem 1rem; border: 1px solid #ddd; border-radius: 5px; background: white;">
+                        <option>All Categories</option>
+                        <option>Fresh</option>
+                        <option>Citrus</option>
+                        <option>Woody</option>
+                        <option>Aromatic</option>
+                    </select>
+                </div>
+                <div style="color: #666;">
+                    Showing 1-12 of 18 products
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Products Section -->
+    <section class="best-sellers" style="padding: 80px 0;">
+        <div class="container">
+            <div class="products" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem;">
+                
+                <!-- Product 1 -->
+                <div class="product-item" style="background: white; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.1); transition: transform 0.3s ease;">
+                    <div style="position: relative; overflow: hidden;">
+                        <div class="product product3" style="height: 250px; background: url('images/perfume 4.jpg') center/cover;"></div>
+                        <div style="position: absolute; top: 10px; right: 10px; background: #dc1212; color: white; padding: 0.3rem 0.8rem; border-radius: 15px; font-size: 0.8rem; font-weight: 600;">
+                            Best Seller
+                        </div>
+                        <div style="position: absolute; top: 10px; left: 10px; background: rgba(0,0,0,0.7); color: white; padding: 0.3rem 0.8rem; border-radius: 15px; font-size: 0.8rem;">
+                            <i class="bi bi-star-fill" style="color: #ffc107;"></i> 4.8
+                        </div>
+                    </div>
+                    <div style="padding: 1.5rem;">
+                        <h4 style="margin: 0 0 0.5rem; color: #273d4e; font-size: 1.2rem;">Citrus Zest</h4>
+                        <p style="color: #666; font-size: 0.9rem; margin: 0 0 1rem;">Fresh • Energizing • Universal</p>
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                            <span style="font-size: 1.3rem; font-weight: 700; color: #dc1212;">$55</span>
+                            <span style="font-size: 0.9rem; color: #999; text-decoration: line-through;">$70</span>
+                        </div>
+                        <button class="btn" style="width: 100%; padding: 0.8rem;" onclick="addToCart('citrus-zest', 55)">
+                            <i class="bi bi-bag-plus" style="margin-right: 0.5rem;"></i>
+                            Add to Cart
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Product 2 -->
+                <div class="product-item" style="background: white; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.1); transition: transform 0.3s ease;">
+                    <div style="position: relative; overflow: hidden;">
+                        <div class="product product2" style="height: 250px; background: url('images/perfume 3.jpg') center/cover;"></div>
+                        <div style="position: absolute; top: 10px; left: 10px; background: rgba(0,0,0,0.7); color: white; padding: 0.3rem 0.8rem; border-radius: 15px; font-size: 0.8rem;">
+                            <i class="bi bi-star-fill" style="color: #ffc107;"></i> 4.9
+                        </div>
+                    </div>
+                    <div style="padding: 1.5rem;">
+                        <h4 style="margin: 0 0 0.5rem; color: #273d4e; font-size: 1.2rem;">Midnight Bloom</h4>
+                        <p style="color: #666; font-size: 0.9rem; margin: 0 0 1rem;">Mysterious • Sophisticated • Timeless</p>
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                            <span style="font-size: 1.3rem; font-weight: 700; color: #dc1212;">$72</span>
+                        </div>
+                        <button class="btn" style="width: 100%; padding: 0.8rem;" onclick="addToCart('midnight-bloom', 72)">
+                            <i class="bi bi-bag-plus" style="margin-right: 0.5rem;"></i>
+                            Add to Cart
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Product 3 -->
+                <div class="product-item" style="background: white; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.1); transition: transform 0.3s ease;">
+                    <div style="position: relative; overflow: hidden;">
+                        <div class="product product4" style="height: 250px; background: url('images/perfume 5.jpg') center/cover;"></div>
+                        <div style="position: absolute; top: 10px; right: 10px; background: #28a745; color: white; padding: 0.3rem 0.8rem; border-radius: 15px; font-size: 0.8rem; font-weight: 600;">
+                            New
+                        </div>
+                        <div style="position: absolute; top: 10px; left: 10px; background: rgba(0,0,0,0.7); color: white; padding: 0.3rem 0.8rem; border-radius: 15px; font-size: 0.8rem;">
+                            <i class="bi bi-star-fill" style="color: #ffc107;"></i> 4.7
+                        </div>
+                    </div>
+                    <div style="padding: 1.5rem;">
+                        <h4 style="margin: 0 0 0.5rem; color: #273d4e; font-size: 1.2rem;">Ocean Breeze</h4>
+                        <p style="color: #666; font-size: 0.9rem; margin: 0 0 1rem;">Aquatic • Clean • Refreshing</p>
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                            <span style="font-size: 1.3rem; font-weight: 700; color: #dc1212;">$60</span>
+                        </div>
+                        <button class="btn" style="width: 100%; padding: 0.8rem;" onclick="addToCart('ocean-breeze', 60)">
+                            <i class="bi bi-bag-plus" style="margin-right: 0.5rem;"></i>
+                            Add to Cart
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Product 4 -->
+                <div class="product-item" style="background: white; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.1); transition: transform 0.3s ease;">
+                    <div style="position: relative; overflow: hidden;">
+                        <div class="product product9" style="height: 250px; background: url('images/perfume 10.jpg') center/cover;"></div>
+                        <div style="position: absolute; top: 10px; left: 10px; background: rgba(0,0,0,0.7); color: white; padding: 0.3rem 0.8rem; border-radius: 15px; font-size: 0.8rem;">
+                            <i class="bi bi-star-fill" style="color: #ffc107;"></i> 4.6
+                        </div>
+                    </div>
+                    <div style="padding: 1.5rem;">
+                        <h4 style="margin: 0 0 0.5rem; color: #273d4e; font-size: 1.2rem;">Ocean Mist</h4>
+                        <p style="color: #666; font-size: 0.9rem; margin: 0 0 1rem;">Marine • Balanced • Modern</p>
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                            <span style="font-size: 1.3rem; font-weight: 700; color: #dc1212;">$68</span>
+                        </div>
+                        <button class="btn" style="width: 100%; padding: 0.8rem;" onclick="addToCart('ocean-mist', 68)">
+                            <i class="bi bi-bag-plus" style="margin-right: 0.5rem;"></i>
+                            Add to Cart
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Product 5 -->
+                <div class="product-item" style="background: white; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.1); transition: transform 0.3s ease;">
+                    <div style="position: relative; overflow: hidden;">
+                        <div class="product product5" style="height: 250px; background: url('images/perfume 6.jpg') center/cover;"></div>
+                        <div style="position: absolute; top: 10px; left: 10px; background: rgba(0,0,0,0.7); color: white; padding: 0.3rem 0.8rem; border-radius: 15px; font-size: 0.8rem;">
+                            <i class="bi bi-star-fill" style="color: #ffc107;"></i> 4.5
+                        </div>
+                    </div>
+                    <div style="padding: 1.5rem;">
+                        <h4 style="margin: 0 0 0.5rem; color: #273d4e; font-size: 1.2rem;">Urban Harmony</h4>
+                        <p style="color: #666; font-size: 0.9rem; margin: 0 0 1rem;">Woody • Versatile • Contemporary</p>
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                            <span style="font-size: 1.3rem; font-weight: 700; color: #dc1212;">$65</span>
+                        </div>
+                        <button class="btn" style="width: 100%; padding: 0.8rem;" onclick="addToCart('urban-harmony', 65)">
+                            <i class="bi bi-bag-plus" style="margin-right: 0.5rem;"></i>
+                            Add to Cart
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Product 6 -->
+                <div class="product-item" style="background: white; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.1); transition: transform 0.3s ease;">
+                    <div style="position: relative; overflow: hidden;">
+                        <div class="product product7" style="height: 250px; background: url('images/perfume 8.jpg') center/cover;"></div>
+                        <div style="position: absolute; top: 10px; left: 10px; background: rgba(0,0,0,0.7); color: white; padding: 0.3rem 0.8rem; border-radius: 15px; font-size: 0.8rem;">
+                            <i class="bi bi-star-fill" style="color: #ffc107;"></i> 4.4
+                        </div>
+                    </div>
+                    <div style="padding: 1.5rem;">
+                        <h4 style="margin: 0 0 0.5rem; color: #273d4e; font-size: 1.2rem;">Green Essence</h4>
+                        <p style="color: #666; font-size: 0.9rem; margin: 0 0 1rem;">Green • Natural • Unisex</p>
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                            <span style="font-size: 1.3rem; font-weight: 700; color: #dc1212;">$58</span>
+                        </div>
+                        <button class="btn" style="width: 100%; padding: 0.8rem;" onclick="addToCart('green-essence', 58)">
+                            <i class="bi bi-bag-plus" style="margin-right: 0.5rem;"></i>
+                            Add to Cart
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Load More Button -->
+            <div style="text-align: center; margin-top: 3rem;">
+                <button class="btn" style="padding: 1rem 2rem; background: transparent; border: 2px solid #dc1212; color: #dc1212;" onclick="loadMoreProducts()">
+                    Load More Products
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter Section -->
+    <section class="newsletter">
+        <div class="container">
+            <h2>Stay Updated with NextGen Perfumes</h2>
+            <p>Subscribe to our newsletter for the latest arrivals, exclusive offers, and fragrance tips.</p>
+            <form class="newsletter-form">
+                <input type="email" placeholder="Enter your email" required>
+                <button type="submit" class="btn">Subscribe</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="trust">
+            <span>Free Delivery</span>
+            <span>Secure Payments</span>
+            <span>Easy Returns</span>
+        </div>
+        <div class="footer-links">
+            <div>
+                <h4>Company</h4>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Careers</a></li>
+                    <li><a href="#">Press</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4>Support</h4>
+                <ul>
+                    <li><a href="#">FAQ</a></li>
+                    <li><a href="#">Shipping & Returns</a></li>
+                    <li><a href="contact.html">Contact Us</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4>Connect</h4>
+                <ul>
+                    <li><a href="#">Instagram</a></li>
+                    <li><a href="#">Facebook</a></li>
+                    <li><a href="#">Twitter</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">©2025 NextGen Perfumes — All Rights Reserved | Privacy Policy | Terms & Conditions</div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="js/api.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/auth.js"></script>
+    
+    <script>
+        function addToCart(productId, price) {
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const existingItem = cart.find(item => item.id === productId);
+            
+            if (existingItem) {
+                existingItem.quantity += 1;
+            } else {
+                cart.push({
+                    id: productId,
+                    name: event.target.closest('.product-item').querySelector('h4').textContent,
+                    price: price,
+                    quantity: 1
+                });
+            }
+            
+            localStorage.setItem('cart', JSON.stringify(cart));
+            showNotification('Product added to cart!');
+            updateCartCount();
+        }
+
+        function showNotification(message) {
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                position: fixed; top: 20px; right: 20px; background: #28a745; color: white;
+                padding: 1rem 1.5rem; border-radius: 5px; z-index: 10000; animation: slideIn 0.3s ease;
+            `;
+            notification.textContent = message;
+            document.body.appendChild(notification);
+            setTimeout(() => notification.remove(), 3000);
+        }
+
+        function updateCartCount() {
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+            const cartIcon = document.querySelector('.nav-icons a[title="Cart"]');
+            if (cartIcon && totalItems > 0) {
+                cartIcon.style.position = 'relative';
+                let badge = cartIcon.querySelector('.cart-badge');
+                if (!badge) {
+                    badge = document.createElement('span');
+                    badge.className = 'cart-badge';
+                    badge.style.cssText = `
+                        position: absolute; top: -8px; right: -8px; background: #dc1212; color: white;
+                        border-radius: 50%; width: 18px; height: 18px; font-size: 0.7rem;
+                        display: flex; align-items: center; justify-content: center;
+                    `;
+                    cartIcon.appendChild(badge);
+                }
+                badge.textContent = totalItems;
+            }
+        }
+
+        function loadMoreProducts() {
+            alert('Loading more products... (This would load additional products from your API)');
+        }
+
+        document.querySelectorAll('.product-item').forEach(item => {
+            item.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-5px)';
+            });
+            item.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0)';
+            });
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            updateCartCount();
+        });
+
+        document.querySelector('.newsletter form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            showNotification('Thank you for subscribing!');
+            this.reset();
+        });
+    </script>
 </body>
 </html>

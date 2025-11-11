@@ -1,63 +1,225 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!-- Page Metadata and Styles -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Reviews - NextGen Perfumes</title>
-    <link rel="stylesheet" href="css/style.css">
+    <title>Customer Reviews - NextGen Perfumes</title>
+    <meta name="description" content="Read authentic customer reviews and testimonials about NextGen Perfumes. See what our customers say about our fragrances.">
+    <link rel="stylesheet" href="css/main.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
 </head>
 <body>
-    <!-- Header and Navigation -->
-    <header>
-        <h1>Customer Reviews</h1>
-        <nav>
-            <a href="index.html">Home</a>
-            <a href="contact.html">Contact</a>
+    <!-- Header Section -->
+    <header class="header">
+        <div class="top-bar">Free Delivery on all orders within your region</div>
+        <nav class="navbar">
+            <div class="logo">NextGen Perfumes</div>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="mensperfume.html">Men's</a></li>
+                <li><a href="womensperfume.html">Women's</a></li>
+                <li><a href="unisexperfume.html">Unisex</a></li>
+                <li><a href="giftsets.html">Gift Sets</a></li>
+                <li><a href="reviews.html" class="active">Reviews</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+            <div class="nav-icons">
+                <a href="#" title="Search"><i class="bi bi-search"></i></a>
+                <a href="login.html" title="Account"><i class="bi bi-person"></i></a>
+                <a href="checkout.html" title="Cart"><i class="bi bi-bag"></i></a>
+            </div>
         </nav>
     </header>
-    <main>
-        <!-- Reviews Section -->
-        <section id="reviews-section">
-            <h2>Customer Reviews</h2>
-            <div id="reviewsList">
-                <!-- Reviews will be dynamically loaded here -->
+
+    <!-- Page Title Section -->
+    <section class="page-title" style="background: url('images/background.jpg') center/cover; padding: 160px 0 80px; text-align: center; position: relative;">
+        <div style="background: rgba(0,0,0,0.6); position: absolute; inset: 0;"></div>
+        <div class="container" style="position: relative; z-index: 2;">
+            <h1 style="color: white; font-size: 42px; font-weight: 700; margin-bottom: 10px;">Customer Reviews</h1>
+            <p style="color: rgba(255,255,255,0.8); font-size: 18px;">What our customers say about NextGen Perfumes</p>
+        </div>
+    </section>
+
+    <!-- Reviews Stats Section -->
+    <section style="padding: 60px 0; background: #f8f9fa;">
+        <div class="container">
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem; text-align: center;">
+                <div>
+                    <h3 style="font-size: 3rem; color: #dc1212; margin: 0;">4.8</h3>
+                    <div style="color: #ffc107; font-size: 1.5rem; margin: 0.5rem 0;">★★★★★</div>
+                    <p style="color: #666; margin: 0;">Average Rating</p>
+                </div>
+                <div>
+                    <h3 style="font-size: 3rem; color: #dc1212; margin: 0;">2,847</h3>
+                    <p style="color: #666; margin: 0.5rem 0 0;">Total Reviews</p>
+                </div>
+                <div>
+                    <h3 style="font-size: 3rem; color: #dc1212; margin: 0;">96%</h3>
+                    <p style="color: #666; margin: 0.5rem 0 0;">Recommend Us</p>
+                </div>
+                <div>
+                    <h3 style="font-size: 3rem; color: #dc1212; margin: 0;">4.9</h3>
+                    <p style="color: #666; margin: 0.5rem 0 0;">Delivery Rating</p>
+                </div>
             </div>
-            
-            <!-- Review Form -->
-            <h3>Leave a Review</h3>
-            <form id="reviewForm">
-                <input type="hidden" id="product_id" value="1">
-                <div class="form-group">
-                    <label for="name">Your Name *</label>
-                    <input type="text" id="name" placeholder="Your Name" required>
+        </div>
+    </section>
+
+    <!-- Reviews Section -->
+    <section style="padding: 80px 0;">
+        <div class="container">
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 2rem;">
+                
+                <!-- Review 1 -->
+                <div style="background: white; padding: 2rem; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
+                    <div style="display: flex; align-items: center; margin-bottom: 1rem;">
+                        <div style="width: 50px; height: 50px; background: #dc1212; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: 600; margin-right: 1rem;">S</div>
+                        <div>
+                            <h4 style="margin: 0; color: #273d4e;">Sarah Johnson</h4>
+                            <div style="color: #ffc107; font-size: 0.9rem;">★★★★★</div>
+                        </div>
+                    </div>
+                    <h5 style="color: #273d4e; margin-bottom: 0.5rem;">Velvet Rose EDP</h5>
+                    <p style="color: #666; line-height: 1.6; margin-bottom: 1rem;">"Absolutely love this fragrance! The scent is sophisticated and lasts all day. I've received so many compliments. Will definitely be ordering again!"</p>
+                    <small style="color: #999;">Verified Purchase • 2 weeks ago</small>
                 </div>
-                <div class="form-group">
-                    <label for="rating">Rating *</label>
-                    <select id="rating" required>
-                        <option value="">Select a rating</option>
-                        <option value="5">★★★★★ (5 stars)</option>
-                        <option value="4">★★★★☆ (4 stars)</option>
-                        <option value="3">★★★☆☆ (3 stars)</option>
-                        <option value="2">★★☆☆☆ (2 stars)</option>
-                        <option value="1">★☆☆☆☆ (1 star)</option>
-                    </select>
+
+                <!-- Review 2 -->
+                <div style="background: white; padding: 2rem; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
+                    <div style="display: flex; align-items: center; margin-bottom: 1rem;">
+                        <div style="width: 50px; height: 50px; background: #28a745; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: 600; margin-right: 1rem;">M</div>
+                        <div>
+                            <h4 style="margin: 0; color: #273d4e;">Michael Chen</h4>
+                            <div style="color: #ffc107; font-size: 0.9rem;">★★★★★</div>
+                        </div>
+                    </div>
+                    <h5 style="color: #273d4e; margin-bottom: 0.5rem;">Midnight Essence</h5>
+                    <p style="color: #666; line-height: 1.6; margin-bottom: 1rem;">"Perfect for evening wear. The woody notes are incredible and the longevity is amazing. Fast shipping and great packaging too!"</p>
+                    <small style="color: #999;">Verified Purchase • 1 month ago</small>
                 </div>
-                <div class="form-group">
-                    <label for="comment">Your Review *</label>
-                    <textarea id="comment" rows="4" placeholder="Tell us about your experience with our perfumes..." required></textarea>
+
+                <!-- Review 3 -->
+                <div style="background: white; padding: 2rem; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
+                    <div style="display: flex; align-items: center; margin-bottom: 1rem;">
+                        <div style="width: 50px; height: 50px; background: #6f42c1; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: 600; margin-right: 1rem;">E</div>
+                        <div>
+                            <h4 style="margin: 0; color: #273d4e;">Emma Wilson</h4>
+                            <div style="color: #ffc107; font-size: 0.9rem;">★★★★★</div>
+                        </div>
+                    </div>
+                    <h5 style="color: #273d4e; margin-bottom: 0.5rem;">Ocean Breeze Gift Set</h5>
+                    <p style="color: #666; line-height: 1.6; margin-bottom: 1rem;">"Bought this as a gift for my husband and he absolutely loves it! The presentation was beautiful and the quality is outstanding."</p>
+                    <small style="color: #999;">Verified Purchase • 3 weeks ago</small>
                 </div>
-                <button type="submit" class="btn">Submit Review</button>
-            </form>
-        </section>
-    </main>
+
+                <!-- Review 4 -->
+                <div style="background: white; padding: 2rem; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
+                    <div style="display: flex; align-items: center; margin-bottom: 1rem;">
+                        <div style="width: 50px; height: 50px; background: #fd7e14; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: 600; margin-right: 1rem;">A</div>
+                        <div>
+                            <h4 style="margin: 0; color: #273d4e;">Alex Rodriguez</h4>
+                            <div style="color: #ffc107; font-size: 0.9rem;">★★★★☆</div>
+                        </div>
+                    </div>
+                    <h5 style="color: #273d4e; margin-bottom: 0.5rem;">Citrus Zest</h5>
+                    <p style="color: #666; line-height: 1.6; margin-bottom: 1rem;">"Great fresh scent for daily wear. Perfect for the office. Only wish it lasted a bit longer, but overall very satisfied with the purchase."</p>
+                    <small style="color: #999;">Verified Purchase • 1 week ago</small>
+                </div>
+
+                <!-- Review 5 -->
+                <div style="background: white; padding: 2rem; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
+                    <div style="display: flex; align-items: center; margin-bottom: 1rem;">
+                        <div style="width: 50px; height: 50px; background: #e83e8c; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: 600; margin-right: 1rem;">L</div>
+                        <div>
+                            <h4 style="margin: 0; color: #273d4e;">Lisa Thompson</h4>
+                            <div style="color: #ffc107; font-size: 0.9rem;">★★★★★</div>
+                        </div>
+                    </div>
+                    <h5 style="color: #273d4e; margin-bottom: 0.5rem;">Jasmine Whisper</h5>
+                    <p style="color: #666; line-height: 1.6; margin-bottom: 1rem;">"This has become my signature scent! So elegant and feminine. The customer service was also excellent when I had questions."</p>
+                    <small style="color: #999;">Verified Purchase • 2 months ago</small>
+                </div>
+
+                <!-- Review 6 -->
+                <div style="background: white; padding: 2rem; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
+                    <div style="display: flex; align-items: center; margin-bottom: 1rem;">
+                        <div style="width: 50px; height: 50px; background: #20c997; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: 600; margin-right: 1rem;">D</div>
+                        <div>
+                            <h4 style="margin: 0; color: #273d4e;">David Kim</h4>
+                            <div style="color: #ffc107; font-size: 0.9rem;">★★★★★</div>
+                        </div>
+                    </div>
+                    <h5 style="color: #273d4e; margin-bottom: 0.5rem;">Noir Essence</h5>
+                    <p style="color: #666; line-height: 1.6; margin-bottom: 1rem;">"Incredible depth and complexity. This is luxury at its finest. Worth every penny and the bottle design is stunning too!"</p>
+                    <small style="color: #999;">Verified Purchase • 1 month ago</small>
+                </div>
+            </div>
+
+            <!-- Load More Reviews -->
+            <div style="text-align: center; margin-top: 3rem;">
+                <button class="btn" style="padding: 1rem 2rem; background: transparent; border: 2px solid #dc1212; color: #dc1212;" onclick="loadMoreReviews()">
+                    Load More Reviews
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Write Review Section -->
+    <section style="padding: 80px 0; background: #f8f9fa;">
+        <div class="container">
+            <div style="max-width: 600px; margin: 0 auto; text-align: center;">
+                <h2 style="color: #273d4e; margin-bottom: 1rem;">Share Your Experience</h2>
+                <p style="color: #666; margin-bottom: 2rem;">Help other customers by writing a review of your NextGen Perfumes purchase.</p>
+                <a href="login.html" class="btn" style="padding: 1rem 2rem;">Write a Review</a>
+            </div>
+        </div>
+    </section>
+
     <!-- Footer -->
     <footer>
-        &copy; 2025 NextGen Perfumes. All rights reserved.
+        <div class="trust">
+            <span>Free Delivery</span>
+            <span>Secure Payments</span>
+            <span>Easy Returns</span>
+        </div>
+        <div class="footer-links">
+            <div>
+                <h4>Company</h4>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Careers</a></li>
+                    <li><a href="#">Press</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4>Support</h4>
+                <ul>
+                    <li><a href="#">FAQ</a></li>
+                    <li><a href="#">Shipping & Returns</a></li>
+                    <li><a href="contact.html">Contact Us</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4>Connect</h4>
+                <ul>
+                    <li><a href="#">Instagram</a></li>
+                    <li><a href="#">Facebook</a></li>
+                    <li><a href="#">Twitter</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">©2025 NextGen Perfumes — All Rights Reserved | Privacy Policy | Terms & Conditions</div>
     </footer>
-    <!-- API Integration Scripts -->
+
+    <!-- Scripts -->
     <script src="js/api.js"></script>
     <script src="js/main.js"></script>
     <script src="js/auth.js"></script>
+    
+    <script>
+        function loadMoreReviews() {
+            alert('Loading more reviews... (This would load additional reviews from your API)');
+        }
+    </script>
 </body>
 </html>

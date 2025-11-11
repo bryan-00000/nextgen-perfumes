@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Velvet Rose EDP - NextGen Perfumes</title>
+    <meta name="description" content="Discover Velvet Rose EDP - an elegant floral fragrance with romantic notes. Perfect for special occasions and everyday elegance.">
+    <link rel="stylesheet" href="css/main.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Header Section -->
+    <header class="header">
+        <div class="top-bar">Free Delivery on all orders within your region</div>
+        <nav class="navbar">
+            <div class="logo">NextGen Perfumes</div>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="mensperfume.html">Men's</a></li>
+                <li><a href="womensperfume.html">Women's</a></li>
+                <li><a href="unisexperfume.html">Unisex</a></li>
+                <li><a href="giftsets.html">Gift Sets</a></li>
+                <li><a href="reviews.html">Reviews</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+            <div class="nav-icons">
+                <a href="#" title="Search"><i class="bi bi-search"></i></a>
+                <a href="login.html" title="Account"><i class="bi bi-person"></i></a>
+                <a href="checkout.html" title="Cart"><i class="bi bi-bag"></i></a>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Breadcrumb -->
+    <section style="padding: 140px 0 20px; background: #f8f9fa;">
+        <div class="container">
+            <nav style="font-size: 0.9rem; color: #666;">
+                <a href="index.html" style="color: #dc1212; text-decoration: none;">Home</a> 
+                <span style="margin: 0 0.5rem;">/</span>
+                <a href="womensperfume.html" style="color: #dc1212; text-decoration: none;">Women's Perfumes</a>
+                <span style="margin: 0 0.5rem;">/</span>
+                <span>Velvet Rose EDP</span>
+            </nav>
+        </div>
+    </section>
+
+    <!-- Product Detail Section -->
+    <section style="padding: 40px 0 80px;">
+        <div class="container">
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start;" id="product-layout">
+                
+                <!-- Product Images -->
+                <div>
+                    <div style="position: relative; margin-bottom: 1rem;">
+                        <img src="images/perfume 3.jpg" alt="Velvet Rose EDP" style="width: 100%; height: 500px; object-fit: cover; border-radius: 8px;" id="main-image">
+                        <div style="position: absolute; top: 15px; right: 15px; background: #dc1212; color: white; padding: 0.5rem 1rem; border-radius: 20px; font-size: 0.9rem; font-weight: 600;">
+                            Best Seller
+                        </div>
+                    </div>
+                    
+                    <!-- Thumbnail Images -->
+                    <div style="display: flex; gap: 1rem;">
+                        <img src="images/perfume 3.jpg" alt="Velvet Rose" style="width: 80px; height: 80px; object-fit: cover; border-radius: 8px; cursor: pointer; border: 2px solid #dc1212;" onclick="changeImage(this)">
+                        <img src="images/perfume 2.jpg" alt="Velvet Rose" style="width: 80px; height: 80px; object-fit: cover; border-radius: 8px; cursor: pointer; border: 2px solid transparent;" onclick="changeImage(this)">
+                        <img src="images/perfume 7.jpg" alt="Velvet Rose" style="width: 80px; height: 80px; object-fit: cover; border-radius: 8px; cursor: pointer; border: 2px solid transparent;" onclick="changeImage(this)">
+                    </div>
+                </div>
+
+                <!-- Product Info -->
+                <div>
+                    <div style="margin-bottom: 1rem;">
+                        <span style="background: #f8f9fa; color: #666; padding: 0.3rem 0.8rem; border-radius: 15px; font-size: 0.8rem; text-transform: uppercase;">Women's Collection</span>
+                    </div>
+                    
+                    <h1 style="color: #273d4e; font-size: 2.5rem; margin-bottom: 1rem;">Velvet Rose EDP</h1>
+                    
+                    <div style="display: flex; align-items: center; margin-bottom: 1rem;">
+                        <div style="color: #ffc107; font-size: 1.2rem; margin-right: 0.5rem;">★★★★★</div>
+                        <span style="color: #666; font-size: 0.9rem;">(127 reviews)</span>
+                    </div>
+                    
+                    <div style="margin-bottom: 2rem;">
+                        <span style="font-size: 2rem; font-weight: 700; color: #dc1212;">$65.00</span>
+                        <span style="font-size: 1.2rem; color: #999; text-decoration: line-through; margin-left: 1rem;">$85.00</span>
+                        <span style="background: #28a745; color: white; padding: 0.3rem 0.8rem; border-radius: 15px; font-size: 0.8rem; margin-left: 1rem;">Save 24%</span>
+                    </div>
+                    
+                    <p style="color: #666; line-height: 1.6; margin-bottom: 2rem;">
+                        Experience the timeless elegance of Velvet Rose, a sophisticated floral fragrance that captures the essence of romance. 
+                        With top notes of fresh bergamot, heart notes of Bulgarian rose, and base notes of warm sandalwood, this EDP creates 
+                        an unforgettable signature scent.
+                    </p>
+                    
+                    <!-- Size Selection -->
+                    <div style="margin-bottom: 2rem;">
+                        <h4 style="color: #273d4e; margin-bottom: 1rem;">Size</h4>
+                        <div style="display: flex; gap: 1rem;">
+                            <button class="size-btn active" data-size="30ml" data-price="45" style="padding: 0.8rem 1.5rem; border: 2px solid #dc1212; background: #dc1212; color: white; border-radius: 8px; cursor: pointer;">30ml - $45</button>
+                            <button class="size-btn" data-size="50ml" data-price="65" style="padding: 0.8rem 1.5rem; border: 2px solid #ddd; background: white; color: #666; border-radius: 8px; cursor: pointer;">50ml - $65</button>
+                            <button class="size-btn" data-size="100ml" data-price="95" style="padding: 0.8rem 1.5rem; border: 2px solid #ddd; background: white; color: #666; border-radius: 8px; cursor: pointer;">100ml - $95</button>
+                        </div>
+                    </div>
+                    
+                    <!-- Quantity -->
+                    <div style="margin-bottom: 2rem;">
+                        <h4 style="color: #273d4e; margin-bottom: 1rem;">Quantity</h4>
+                        <div style="display: flex; align-items: center; border: 2px solid #ddd; border-radius: 8px; width: fit-content;">
+                            <button onclick="changeQuantity(-1)" style="border: none; background: none; padding: 1rem; cursor: pointer; font-size: 1.2rem;">-</button>
+                            <span id="quantity" style="padding: 0 1.5rem; font-weight: 600; min-width: 40px; text-align: center;">1</span>
+                            <button onclick="changeQuantity(1)" style="border: none; background: none; padding: 1rem; cursor: pointer; font-size: 1.2rem;">+</button>
+                        </div>
+                    </div>
+                    
+                    <!-- Add to Cart -->
+                    <div style="display: flex; gap: 1rem; margin-bottom: 2rem;">
+                        <button class="btn" style="flex: 1; padding: 1rem; font-size: 1.1rem;" onclick="addToCart()">
+                            <i class="bi bi-bag-plus" style="margin-right: 0.5rem;"></i>
+                            Add to Cart
+                        </button>
+                        <button style="padding: 1rem; border: 2px solid #dc1212; background: white; color: #dc1212; border-radius: 8px; cursor: pointer;" onclick="toggleWishlist()">
+                            <i class="bi bi-heart" id="wishlist-icon"></i>
+                        </button>
+                    </div>
+                    
+                    <!-- Product Features -->
+                    <div style="background: #f8f9fa; padding: 1.5rem; border-radius: 8px;">
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1rem;">
+                            <div style="text-align: center;">
+                                <i class="bi bi-truck" style="font-size: 1.5rem; color: #dc1212; margin-bottom: 0.5rem;"></i>
+                                <div style="font-size: 0.9rem; color: #666;">Free Shipping</div>
+                            </div>
+                            <div style="text-align: center;">
+                                <i class="bi bi-arrow-clockwise" style="font-size: 1.5rem; color: #dc1212; margin-bottom: 0.5rem;"></i>
+                                <div style="font-size: 0.9rem; color: #666;">Easy Returns</div>
+                            </div>
+                            <div style="text-align: center;">
+                                <i class="bi bi-shield-check" style="font-size: 1.5rem; color: #dc1212; margin-bottom: 0.5rem;"></i>
+                                <div style="font-size: 0.9rem; color: #666;">Authentic</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Product Details Tabs -->
+    <section style="padding: 80px 0; background: #f8f9fa;">
+        <div class="container">
+            <div style="display: flex; justify-content: center; margin-bottom: 2rem; border-bottom: 1px solid #ddd;">
+                <button class="tab-btn active" onclick="showTab('description')" style="padding: 1rem 2rem; border: none; background: none; color: #dc1212; border-bottom: 2px solid #dc1212; cursor: pointer;">Description</button>
+                <button class="tab-btn" onclick="showTab('notes')" style="padding: 1rem 2rem; border: none; background: none; color: #666; cursor: pointer;">Fragrance Notes</button>
+                <button class="tab-btn" onclick="showTab('reviews')" style="padding: 1rem 2rem; border: none; background: none; color: #666; cursor: pointer;">Reviews (127)</button>
+            </div>
+            
+            <div id="description" class="tab-content">
+                <div style="max-width: 800px; margin: 0 auto; text-align: center;">
+                    <h3 style="color: #273d4e; margin-bottom: 1rem;">About Velvet Rose</h3>
+                    <p style="color: #666; line-height: 1.8; margin-bottom: 2rem;">
+                        Velvet Rose is a masterpiece of perfumery, crafted for the modern woman who appreciates timeless elegance. 
+                        This sophisticated fragrance opens with sparkling bergamot and fresh pear, leading to a heart of exquisite 
+                        Bulgarian rose and jasmine. The base notes of sandalwood, vanilla, and white musk create a lasting impression 
+                        that's both romantic and contemporary.
+                    </p>
+                    <p style="color: #666; line-height: 1.8;">
+                        Perfect for both day and evening wear, Velvet Rose embodies femininity and grace. Each bottle is carefully 
+                        crafted with premium ingredients sourced from the finest perfume houses in France, ensuring exceptional 
+                        quality and longevity.
+                    </p>
+                </div>
+            </div>
+            
+            <div id="notes" class="tab-content" style="display: none;">
+                <div style="max-width: 600px; margin: 0 auto;">
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 2rem; text-align: center;">
+                        <div>
+                            <h4 style="color: #dc1212; margin-bottom: 1rem;">Top Notes</h4>
+                            <p style="color: #666;">Bergamot, Fresh Pear, Pink Pepper</p>
+                        </div>
+                        <div>
+                            <h4 style="color: #dc1212; margin-bottom: 1rem;">Heart Notes</h4>
+                            <p style="color: #666;">Bulgarian Rose, Jasmine, Peony</p>
+                        </div>
+                        <div>
+                            <h4 style="color: #dc1212; margin-bottom: 1rem;">Base Notes</h4>
+                            <p style="color: #666;">Sandalwood, Vanilla, White Musk</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="reviews" class="tab-content" style="display: none;">
+                <div style="max-width: 800px; margin: 0 auto;">
+                    <div style="text-align: center; margin-bottom: 2rem;">
+                        <div style="font-size: 3rem; color: #dc1212; margin-bottom: 0.5rem;">4.9</div>
+                        <div style="color: #ffc107; font-size: 1.5rem; margin-bottom: 0.5rem;">★★★★★</div>
+                        <p style="color: #666;">Based on 127 reviews</p>
+                    </div>
+                    
+                    <div style="display: grid; gap: 1.5rem;">
+                        <div style="background: white; padding: 1.5rem; border-radius: 8px;">
+                            <div style="display: flex; align-items: center; margin-bottom: 1rem;">
+                                <div style="width: 40px; height: 40px; background: #dc1212; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: 600; margin-right: 1rem;">S</div>
+                                <div>
+                                    <h5 style="margin: 0; color: #273d4e;">Sarah M.</h5>
+                                    <div style="color: #ffc107; font-size: 0.9rem;">★★★★★</div>
+                                </div>
+                            </div>
+                            <p style="color: #666; margin: 0;">"Absolutely love this fragrance! It's elegant, long-lasting, and I get compliments every time I wear it."</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Related Products -->
+    <section style="padding: 80px 0;">
+        <div class="container">
+            <h2 style="text-align: center; margin-bottom: 3rem; color: #273d4e;">Related Products</h2>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem;">
+                
+                <div style="background: white; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
+                    <div style="height: 200px; background: url('images/perfume 7.jpg') center/cover;"></div>
+                    <div style="padding: 1.5rem;">
+                        <h4 style="margin: 0 0 0.5rem; color: #273d4e;">Jasmine Whisper</h4>
+                        <p style="color: #dc1212; font-weight: 600; margin: 0 0 1rem;">$55</p>
+                        <button class="btn" style="width: 100%; padding: 0.8rem;">Add to Cart</button>
+                    </div>
+                </div>
+                
+                <div style="background: white; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
+                    <div style="height: 200px; background: url('images/perfume 9.jpg') center/cover;"></div>
+                    <div style="padding: 1.5rem;">
+                        <h4 style="margin: 0 0 0.5rem; color: #273d4e;">Petals of Bloom</h4>
+                        <p style="color: #dc1212; font-weight: 600; margin: 0 0 1rem;">$45</p>
+                        <button class="btn" style="width: 100%; padding: 0.8rem;">Add to Cart</button>
+                    </div>
+                </div>
+                
+                <div style="background: white; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
+                    <div style="height: 200px; background: url('images/perfume 2.jpg') center/cover;"></div>
+                    <div style="padding: 1.5rem;">
+                        <h4 style="margin: 0 0 0.5rem; color: #273d4e;">Rose Whisper</h4>
+                        <p style="color: #dc1212; font-weight: 600; margin: 0 0 1rem;">$75</p>
+                        <button class="btn" style="width: 100%; padding: 0.8rem;">Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="trust">
+            <span>Free Delivery</span>
+            <span>Secure Payments</span>
+            <span>Easy Returns</span>
+        </div>
+        <div class="footer-links">
+            <div>
+                <h4>Company</h4>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Careers</a></li>
+                    <li><a href="#">Press</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4>Support</h4>
+                <ul>
+                    <li><a href="#">FAQ</a></li>
+                    <li><a href="#">Shipping & Returns</a></li>
+                    <li><a href="contact.html">Contact Us</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4>Connect</h4>
+                <ul>
+                    <li><a href="#">Instagram</a></li>
+                    <li><a href="#">Facebook</a></li>
+                    <li><a href="#">Twitter</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">©2025 NextGen Perfumes — All Rights Reserved | Privacy Policy | Terms & Conditions</div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="js/api.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/auth.js"></script>
+    
+    <script>
+        let currentPrice = 45;
+        let currentSize = '30ml';
+        let quantity = 1;
+        
+        // Size selection
+        document.querySelectorAll('.size-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.size-btn').forEach(b => {
+                    b.style.background = 'white';
+                    b.style.color = '#666';
+                    b.style.borderColor = '#ddd';
+                    b.classList.remove('active');
+                });
+                
+                this.style.background = '#dc1212';
+                this.style.color = 'white';
+                this.style.borderColor = '#dc1212';
+                this.classList.add('active');
+                
+                currentPrice = parseInt(this.dataset.price);
+                currentSize = this.dataset.size;
+            });
+        });
+        
+        // Quantity controls
+        function changeQuantity(change) {
+            quantity = Math.max(1, quantity + change);
+            document.getElementById('quantity').textContent = quantity;
+        }
+        
+        // Image gallery
+        function changeImage(img) {
+            document.getElementById('main-image').src = img.src;
+            document.querySelectorAll('img[onclick]').forEach(thumb => {
+                thumb.style.borderColor = 'transparent';
+            });
+            img.style.borderColor = '#dc1212';
+        }
+        
+        // Tabs
+        function showTab(tabName) {
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.style.display = 'none';
+            });
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.style.color = '#666';
+                btn.style.borderBottom = 'none';
+                btn.classList.remove('active');
+            });
+            
+            document.getElementById(tabName).style.display = 'block';
+            event.target.style.color = '#dc1212';
+            event.target.style.borderBottom = '2px solid #dc1212';
+            event.target.classList.add('active');
+        }
+        
+        // Add to cart
+        function addToCart() {
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const productId = `velvet-rose-${currentSize}`;
+            const existingItem = cart.find(item => item.id === productId);
+            
+            if (existingItem) {
+                existingItem.quantity += quantity;
+            } else {
+                cart.push({
+                    id: productId,
+                    name: `Velvet Rose EDP ${currentSize}`,
+                    price: currentPrice,
+                    quantity: quantity
+                });
+            }
+            
+            localStorage.setItem('cart', JSON.stringify(cart));
+            showNotification(`Added ${quantity} x Velvet Rose ${currentSize} to cart!`);
+            updateCartCount();
+        }
+        
+        // Wishlist toggle
+        function toggleWishlist() {
+            const icon = document.getElementById('wishlist-icon');
+            if (icon.classList.contains('bi-heart')) {
+                icon.classList.remove('bi-heart');
+                icon.classList.add('bi-heart-fill');
+                showNotification('Added to wishlist!');
+            } else {
+                icon.classList.remove('bi-heart-fill');
+                icon.classList.add('bi-heart');
+                showNotification('Removed from wishlist!');
+            }
+        }
+        
+        function showNotification(message) {
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                position: fixed; top: 20px; right: 20px; background: #28a745; color: white;
+                padding: 1rem 1.5rem; border-radius: 5px; z-index: 10000; animation: slideIn 0.3s ease;
+            `;
+            notification.textContent = message;
+            document.body.appendChild(notification);
+            setTimeout(() => notification.remove(), 3000);
+        }
+        
+        function updateCartCount() {
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+            const cartIcon = document.querySelector('.nav-icons a[title="Cart"]');
+            if (cartIcon && totalItems > 0) {
+                cartIcon.style.position = 'relative';
+                let badge = cartIcon.querySelector('.cart-badge');
+                if (!badge) {
+                    badge = document.createElement('span');
+                    badge.className = 'cart-badge';
+                    badge.style.cssText = `
+                        position: absolute; top: -8px; right: -8px; background: #dc1212; color: white;
+                        border-radius: 50%; width: 18px; height: 18px; font-size: 0.7rem;
+                        display: flex; align-items: center; justify-content: center;
+                    `;
+                    cartIcon.appendChild(badge);
+                }
+                badge.textContent = totalItems;
+            }
+        }
+        
+        // Responsive layout
+        function checkLayout() {
+            const productLayout = document.getElementById('product-layout');
+            if (window.innerWidth <= 768) {
+                productLayout.style.gridTemplateColumns = '1fr';
+            } else {
+                productLayout.style.gridTemplateColumns = '1fr 1fr';
+            }
+        }
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            updateCartCount();
+            checkLayout();
+        });
+        
+        window.addEventListener('resize', checkLayout);
+    </script>
+</body>
+</html>
