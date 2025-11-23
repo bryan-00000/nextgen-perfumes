@@ -22,6 +22,12 @@
             </div>
 
             <form id="signup-form">
+                <input type="hidden" name="_token" id="csrf-token">
+                <div style="margin-bottom: 20px;">
+                    <label for="name" style="display: block; margin-bottom: 5px; font-weight: 500; color: white;">Full Name</label>
+                    <input type="text" id="name" name="name" required style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 5px; font-size: 16px;">
+                </div>
+                
                 <div style="margin-bottom: 20px;">
                     <label for="username" style="display: block; margin-bottom: 5px; font-weight: 500; color: white;">Username</label>
                     <input type="text" id="username" name="username" required style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 5px; font-size: 16px;">
@@ -34,7 +40,13 @@
                 
                 <div style="margin-bottom: 20px;">
                     <label for="password" style="display: block; margin-bottom: 5px; font-weight: 500; color: white;">Password</label>
-                    <input type="password" id="password" name="password" required minlength="6" style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 5px; font-size: 16px;">
+                    <input type="password" id="password" name="password" required style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 5px; font-size: 16px;">
+                    <small style="color: #ccc; font-size: 12px;">8+ characters, uppercase, lowercase, number</small>
+                </div>
+                
+                <div style="margin-bottom: 20px;">
+                    <label for="password_confirmation" style="display: block; margin-bottom: 5px; font-weight: 500; color: white;">Confirm Password</label>
+                    <input type="password" id="password_confirmation" name="password_confirmation" required style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 5px; font-size: 16px;">
                 </div>
                 
                 <button type="submit" class="btn" style="width: 100%; margin-bottom: 20px;">
@@ -61,16 +73,36 @@
     </footer>
 
     <script src="../js/api.js"></script>
+    <script src="../js/validation.js"></script>
+    <script src="../js/csrf.js"></script>
     <script>
         document.getElementById('signup-form').addEventListener('submit', async (e) => {
             e.preventDefault();
             
             const formData = new FormData(e.target);
             const userData = {
+                name: formData.get('name'),
                 username: formData.get('username'),
                 email: formData.get('email'),
-                password: formData.get('password')
+                password: formData.get('password'),
+                password_confirmation: formData.get('password_confirmation')
             };
+
+            // Clear previous errors
+            ['name', 'username', 'email', 'password', 'password_confirmation'].forEach(field => {
+                FormValidator.clearError(field);
+            });
+            document.getElementById('error-message').style.display = 'none';
+
+            // Validate form
+            const errors = FormValidator.validateSignupForm(userData);
+            
+            if (Object.keys(errors).length > 0) {
+                Object.keys(errors).forEach(field => {
+                    FormValidator.showError(field, errors[field]);
+                });
+                return;
+            }
 
             try {
                 const response = await window.api.register(userData);
@@ -85,8 +117,15 @@
                 }, 2000);
             } catch (error) {
                 const errorDiv = document.getElementById('error-message');
-                errorDiv.textContent = error.message || 'Registration failed';
-                errorDiv.style.display = 'block';
+                if (error.errors) {
+                    // Display Laravel validation errors
+                    Object.keys(error.errors).forEach(field => {
+                        FormValidator.showError(field, error.errors[field][0]);
+                    });
+                } else {
+                    errorDiv.textContent = error.message || 'Registration failed';
+                    errorDiv.style.display = 'block';
+                }
             }
         });
     </script>

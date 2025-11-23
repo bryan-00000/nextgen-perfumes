@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Rate Limiting Test</title>
+</head>
+<body>
+    <h1>Rate Limiting Test</h1>
+    <button onclick="testLogin()">Test Login Rate Limit (5/min)</button>
+    <button onclick="testProducts()">Test Products Rate Limit (60/min)</button>
+    <div id="results"></div>
+
+    <script>
+        const API_BASE = 'http://localhost:8000/api';
+        
+        async function testLogin() {
+            const results = document.getElementById('results');
+            results.innerHTML = '<h3>Testing Login Rate Limit...</h3>';
+            
+            for (let i = 1; i <= 10; i++) {
+                try {
+                    const response = await fetch(`${API_BASE}/login`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ username: 'test', password: 'test' })
+                    });
+                    
+                    results.innerHTML += `<p>Request ${i}: ${response.status} - ${response.statusText}</p>`;
+                    
+                    if (response.status === 429) {
+                        results.innerHTML += '<p><strong>✅ Rate limiting working! Got 429 Too Many Requests</strong></p>';
+                        break;
+                    }
+                } catch (error) {
+                    results.innerHTML += `<p>Request ${i}: Error - ${error.message}</p>`;
+                }
+                
+                await new Promise(resolve => setTimeout(resolve, 100));
+            }
+        }
+        
+        async function testProducts() {
+            const results = document.getElementById('results');
+            results.innerHTML = '<h3>Testing Products Rate Limit...</h3>';
+            
+            for (let i = 1; i <= 70; i++) {
+                try {
+                    const response = await fetch(`${API_BASE}/products`);
+                    
+                    if (i % 10 === 0 || response.status === 429) {
+                        results.innerHTML += `<p>Request ${i}: ${response.status} - ${response.statusText}</p>`;
+                    }
+                    
+                    if (response.status === 429) {
+                        results.innerHTML += '<p><strong>✅ Rate limiting working! Got 429 Too Many Requests</strong></p>';
+                        break;
+                    }
+                } catch (error) {
+                    results.innerHTML += `<p>Request ${i}: Error - ${error.message}</p>`;
+                }
+                
+                await new Promise(resolve => setTimeout(resolve, 50));
+            }
+        }
+    </script>
+</body>
+</html>
