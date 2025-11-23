@@ -55,6 +55,7 @@
     </footer>
 
     <script src="../js/api.js"></script>
+    <script src="../js/validation.js"></script>
     <script>
         document.getElementById('login-form').addEventListener('submit', async (e) => {
             e.preventDefault();
@@ -64,6 +65,21 @@
                 username: formData.get('username'),
                 password: formData.get('password')
             };
+
+            // Clear previous errors
+            FormValidator.clearError('username');
+            FormValidator.clearError('password');
+            document.getElementById('error-message').style.display = 'none';
+
+            // Validate form
+            const errors = FormValidator.validateLoginForm(credentials);
+            
+            if (Object.keys(errors).length > 0) {
+                Object.keys(errors).forEach(field => {
+                    FormValidator.showError(field, errors[field]);
+                });
+                return;
+            }
 
             try {
                 const response = await window.api.login(credentials);

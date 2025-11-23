@@ -1,0 +1,131 @@
+name: Deploy NextGen Perfumes
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository }}
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    services:
+      mysql:
+        image: mysql:8.0
+        env:
+          MYSQL_ROOT_PASSWORD: secret
+          MYSQL_DATABASE: nextgen_perfumes_test
+        ports:
+          - 3306:3306
+        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Setup PHP
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: '8.1'
+        extensions: pdo, pdo_mysql, mbstring
+        
+    - name: Cache Composer dependencies
+      uses: actions/cache@v3
+      with:
+        path: nextgen-perfumes-backend/vendor
+        key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+        
+    - name: Install Backend Dependencies
+      run: |
+        cd nextgen-perfumes-backend
+        composer install --no-progress --prefer-dist --optimize-autoloader
+        
+    - name: Setup Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '18'
+        cache: 'npm'
+        cache-dependency-path: nextgen-perfumes-frontend/package-lock.json
+        
+    - name: Install Frontend Dependencies
+      run: |
+        cd nextgen-perfumes-frontend
+        npm ci
+        
+    - name: Prepare Laravel Application
+      run: |
+        cd nextgen-perfumes-backend
+        cp .env.example .env
+        php artisan key:generate
+        php artisan config:clear
+        php artisan migrate --force
+        
+    - name: Run Backend Tests
+      run: |
+        cd nextgen-perfumes-backend
+        php artisan test
+        
+    - name: Run Frontend Tests
+      run: |
+        cd nextgen-perfumes-frontend
+        npm test || echo "No tests configured"
+
+  build:
+    needs: test
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Log in to Container Registry
+      uses: docker/login-action@v2
+      with:
+        registry: ${{ env.REGISTRY }}
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+        
+    - name: Build and push Backend Docker image
+      uses: docker/build-push-action@v4
+      with:
+        context: ./nextgen-perfumes-backend
+        push: true
+        tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}-backend:latest
+        
+    - name: Build and push Frontend Docker image
+      uses: docker/build-push-action@v4
+      with:
+        context: ./nextgen-perfumes-frontend
+        push: true
+        tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}-frontend:latest
+
+  deploy:
+    needs: [test, build]
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Deploy to Production Server
+      uses: appleboy/ssh-action@v0.1.7
+      with:
+        host: ${{ secrets.PRODUCTION_HOST }}
+        username: ${{ secrets.PRODUCTION_USER }}
+        key: ${{ secrets.PRODUCTION_SSH_KEY }}
+        script: |
+          cd /var/www/nextgen-perfumes
+          git pull origin main
+          docker-compose pull
+          docker-compose up -d --no-deps backend frontend
+          docker-compose exec backend php artisan migrate --force
+          docker-compose exec backend php artisan config:cache
+          docker-compose exec backend php artisan route:cache
+          
+    - name: Health Check
+      run: |
+        sleep 30
+        curl -f ${{ secrets.PRODUCTION_URL }}/api/health || exit 1

@@ -12,14 +12,16 @@ class AuthController extends Controller
     public function register(Request $request)
     {
         $request->validate([
-            'username' => 'required|string|unique:users',
-            'email' => 'required|email|unique:users',
-            'password' => 'required|string|min:6',
+            'username' => 'required|string|max:255|unique:users|alpha_dash',
+            'email' => 'required|email|max:255|unique:users',
+            'password' => 'required|string|min:8|confirmed|regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/',
+            'name' => 'required|string|max:255',
         ]);
 
         $user = User::create([
             'username' => $request->username,
             'email' => $request->email,
+            'name' => $request->name,
             'password' => Hash::make($request->password),
         ]);
 
@@ -34,8 +36,8 @@ class AuthController extends Controller
     public function login(Request $request)
     {
         $request->validate([
-            'username' => 'required|string',
-            'password' => 'required|string',
+            'username' => 'required|string|max:255',
+            'password' => 'required|string|max:255',
         ]);
 
         $user = User::where('username', $request->username)->first();
@@ -46,6 +48,13 @@ class AuthController extends Controller
             ]);
         }
 
+        if ($user->is_suspended) {
+            throw ValidationException::withMessages([
+                'username' => ['Your account has been suspended.'],
+            ]);
+        }
+
+        $user->update(['last_login' => now()]);
         $token = $user->createToken('auth_token')->plainTextToken;
 
         return response()->json([

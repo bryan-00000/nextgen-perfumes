@@ -1,5 +1,6 @@
 node_modules/
 .env
+nextgen-perfumes-backend/.env
 vendor/
 bootstrap/cache/
 storage/logs/
