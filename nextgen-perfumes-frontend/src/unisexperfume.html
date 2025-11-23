@@ -262,9 +262,10 @@
     </footer>
 
     <!-- Scripts -->
-    <script src="js/api.js"></script>
-    <script src="js/main.js"></script>
-    <script src="js/auth.js"></script>
+    <script src="../js/api.js"></script>
+    <script src="../js/main.js"></script>
+    <script src="../js/auth.js"></script>
+    <script src="../js/cart.js"></script>
     
     <script>
         function addToCart(productId, price) {
@@ -319,8 +320,107 @@
             }
         }
 
-        function loadMoreProducts() {
-            alert('Loading more products... (This would load additional products from your API)');
+        let currentPage = 1;
+        let isLoading = false;
+        let hasMoreProducts = true;
+
+        async function loadMoreProducts() {
+            if (isLoading || !hasMoreProducts) return;
+            
+            isLoading = true;
+            const loadMoreBtn = document.querySelector('button[onclick="loadMoreProducts()"]');
+            const originalText = loadMoreBtn.innerHTML;
+            loadMoreBtn.innerHTML = '<i class="bi bi-arrow-clockwise" style="animation: spin 1s linear infinite;"></i> Loading...';
+            loadMoreBtn.disabled = true;
+            
+            try {
+                currentPage++;
+                const response = await window.api.getProducts('unisex', 6, currentPage);
+                
+                if (response.data && response.data.length > 0) {
+                    displayProducts(response.data);
+                    
+                    if (response.current_page >= response.last_page) {
+                        hasMoreProducts = false;
+                        loadMoreBtn.style.display = 'none';
+                    }
+                } else {
+                    hasMoreProducts = false;
+                    loadMoreBtn.style.display = 'none';
+                }
+            } catch (error) {
+                console.error('Error loading products:', error);
+                console.error('Error details:', {
+                    message: error.message,
+                    stack: error.stack,
+                    category: 'unisex',
+                    page: currentPage,
+                    url: `${window.api.baseURL}/products?category=unisex&per_page=6&page=${currentPage}`
+                });
+                showNotification(`Error: ${error.message}`);
+                currentPage--;
+            } finally {
+                isLoading = false;
+                loadMoreBtn.innerHTML = originalText;
+                loadMoreBtn.disabled = false;
+            }
+        }
+
+        function displayProducts(products) {
+            const productsContainer = document.querySelector('.products');
+            const fallbackImages = [
+                'images/perfume 4.jpg', 'images/perfume 5.jpg', 'images/perfume 6.jpg',
+                'images/perfume 10.jpg', 'images/perfume 8.jpg', 'images/perfume 3.jpg'
+            ];
+            
+            products.forEach((product, index) => {
+                const productElement = document.createElement('div');
+                productElement.className = 'product-item';
+                productElement.style.cssText = 'background: white; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.1); transition: transform 0.3s ease;';
+                
+                let imageUrl = product.image_url;
+                
+                // Check if it's an uploaded image stored in localStorage
+                if (imageUrl && imageUrl.startsWith('uploads/')) {
+                    const fileName = imageUrl.split('/')[1];
+                    const storedImage = localStorage.getItem(`image_${fileName}`);
+                    if (storedImage) {
+                        imageUrl = storedImage;
+                    } else {
+                        imageUrl = fallbackImages[index % fallbackImages.length];
+                    }
+                } else if (!imageUrl) {
+                    imageUrl = fallbackImages[index % fallbackImages.length];
+                }
+                productElement.innerHTML = `
+                    <div style="position: relative; overflow: hidden;">
+                        <div class="product" style="height: 250px; background: url('${imageUrl}') center/cover; background-color: #f0f0f0;"></div>
+                        <div style="position: absolute; top: 10px; left: 10px; background: rgba(0,0,0,0.7); color: white; padding: 0.3rem 0.8rem; border-radius: 15px; font-size: 0.8rem;">
+                            <i class="bi bi-star-fill" style="color: #ffc107;"></i> ${product.rating || '4.5'}
+                        </div>
+                    </div>
+                    <div style="padding: 1.5rem;">
+                        <h4 style="margin: 0 0 0.5rem; color: #273d4e; font-size: 1.2rem;">${product.name}</h4>
+                        <p style="color: #666; font-size: 0.9rem; margin: 0 0 1rem;">${product.description || 'Premium fragrance'}</p>
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                            <span style="font-size: 1.3rem; font-weight: 700; color: #dc1212;">$${product.price}</span>
+                        </div>
+                        <button class="btn" style="width: 100%; padding: 0.8rem;" onclick="addToCart('${product.id}', ${product.price})">
+                            <i class="bi bi-bag-plus" style="margin-right: 0.5rem;"></i>
+                            Add to Cart
+                        </button>
+                    </div>
+                `;
+                
+                productElement.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-5px)';
+                });
+                productElement.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0)';
+                });
+                
+                productsContainer.appendChild(productElement);
+            });
         }
 
         document.querySelectorAll('.product-item').forEach(item => {

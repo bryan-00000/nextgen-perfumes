@@ -29,6 +29,7 @@
     25 => 'Termwind\\Laravel\\TermwindServiceProvider',
     26 => 'Laravel\\Sanctum\\SanctumServiceProvider',
     27 => 'App\\Providers\\AppServiceProvider',
+    28 => 'App\\Providers\\RouteServiceProvider',
   ),
   'eager' => 
   array (
@@ -47,6 +48,7 @@
     12 => 'Termwind\\Laravel\\TermwindServiceProvider',
     13 => 'Laravel\\Sanctum\\SanctumServiceProvider',
     14 => 'App\\Providers\\AppServiceProvider',
+    15 => 'App\\Providers\\RouteServiceProvider',
   ),
   'deferred' => 
   array (

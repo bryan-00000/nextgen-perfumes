@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test Women's Products API</title>
+</head>
+<body>
+    <h1>Women's Products API Test</h1>
+    <button onclick="testPage1()">Test Page 1</button>
+    <button onclick="testPage2()">Test Page 2</button>
+    <div id="result"></div>
+
+    <script>
+        async function testPage1() {
+            const result = document.getElementById('result');
+            result.innerHTML = 'Testing Page 1...';
+            
+            try {
+                const response = await fetch('http://localhost:8000/api/products?category=womens&per_page=6&page=1');
+                const data = await response.json();
+                
+                result.innerHTML = `
+                    <h3>Page 1 Results:</h3>
+                    <p>Total Products: ${data.total}</p>
+                    <p>Current Page: ${data.current_page}</p>
+                    <p>Last Page: ${data.last_page}</p>
+                    <p>Products on this page: ${data.data.length}</p>
+                    <pre>${JSON.stringify(data.data, null, 2)}</pre>
+                `;
+            } catch (error) {
+                result.innerHTML = `<h3>Error!</h3><p>${error.message}</p>`;
+            }
+        }
+
+        async function testPage2() {
+            const result = document.getElementById('result');
+            result.innerHTML = 'Testing Page 2...';
+            
+            try {
+                const response = await fetch('http://localhost:8000/api/products?category=womens&per_page=6&page=2');
+                const data = await response.json();
+                
+                result.innerHTML = `
+                    <h3>Page 2 Results:</h3>
+                    <p>Total Products: ${data.total}</p>
+                    <p>Current Page: ${data.current_page}</p>
+                    <p>Last Page: ${data.last_page}</p>
+                    <p>Products on this page: ${data.data.length}</p>
+                    <pre>${JSON.stringify(data.data, null, 2)}</pre>
+                `;
+            } catch (error) {
+                result.innerHTML = `<h3>Error!</h3><p>${error.message}</p>`;
+            }
+        }
+    </script>
+</body>
+</html>

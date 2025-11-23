@@ -3,171 +3,78 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - NextGen Perfumes</title>
-    <meta name="description" content="Login to your NextGen Perfumes account to access exclusive offers and manage your orders.">
+    <title>NextGen Perfumes - Login</title>
     <link rel="stylesheet" href="css/main.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
 </head>
-<body style="background: url('images/background.jpg') center/cover fixed;">
-    
-    <!-- Header Section -->
+<body>
     <header class="header">
-        <div class="top-bar">Free Delivery on all orders within your region</div>
-        <nav class="navbar">
+        <nav class="navbar" style="justify-content: center; padding: 20px 0;">
             <div class="logo">NextGen Perfumes</div>
-            <ul class="nav-links">
-                <li><a href="index.html">Home</a></li>
-                <li><a href="mensperfume.html">Men's</a></li>
-                <li><a href="womensperfume.html">Women's</a></li>
-                <li><a href="unisexperfume.html">Unisex</a></li>
-                <li><a href="giftsets.html">Gift Sets</a></li>
-                <li><a href="reviews.html">Reviews</a></li>
-                <li><a href="contact.html">Contact</a></li>
-            </ul>
-            <div class="nav-icons">
-                <a href="#" title="Search"><i class="bi bi-search"></i></a>
-                <a href="login.html" title="Account" class="active"><i class="bi bi-person"></i></a>
-                <a href="checkout.html" title="Cart"><i class="bi bi-bag"></i></a>
-            </div>
         </nav>
     </header>
 
-    <!-- Login Section -->
-    <main style="min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 140px 2rem 2rem;">
-        <div class="form-container" style="max-width: 450px; width: 100%;">
-            <div style="text-align: center; margin-bottom: 2rem;">
-                <i class="bi bi-person-circle" style="font-size: 4rem; color: #dc1212; margin-bottom: 1rem;"></i>
-                <h2 style="color: white; margin: 0;">Welcome Back</h2>
-                <p style="color: rgba(255,255,255,0.8); margin: 0.5rem 0 0;">Sign in to your NextGen Perfumes account</p>
+    <section class="hero" style="min-height: 80vh; display: flex; align-items: center; justify-content: center;">
+        <div class="container" style="max-width: 400px; background: #273d4e; padding: 40px; border-radius: 10px; box-shadow: 0 10px 30px rgba(0,0,0,0.3);">
+            <div style="text-align: center; margin-bottom: 30px;">
+                <h1 style="margin-bottom: 10px; color: white;">Customer Login</h1>
+                <p style="color: #ccc;">Access your account</p>
             </div>
 
             <form id="login-form">
-                <div class="form-group">
-                    <label for="email">Email Address</label>
-                    <div style="position: relative;">
-                        <input type="email" id="email" name="email" required placeholder="Enter your email">
-                        <i class="bi bi-envelope" style="position: absolute; right: 1rem; top: 50%; transform: translateY(-50%); color: #ccc;"></i>
-                    </div>
+                <div style="margin-bottom: 20px;">
+                    <label for="username" style="display: block; margin-bottom: 5px; font-weight: 500; color: white;">Username</label>
+                    <input type="text" id="username" name="username" required style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 5px; font-size: 16px;">
                 </div>
-
-                <div class="form-group">
-                    <label for="password">Password</label>
-                    <div style="position: relative;">
-                        <input type="password" id="password" name="password" required placeholder="Enter your password">
-                        <i class="bi bi-lock" style="position: absolute; right: 1rem; top: 50%; transform: translateY(-50%); color: #ccc; cursor: pointer;" onclick="togglePassword()"></i>
-                    </div>
+                
+                <div style="margin-bottom: 20px;">
+                    <label for="password" style="display: block; margin-bottom: 5px; font-weight: 500; color: white;">Password</label>
+                    <input type="password" id="password" name="password" required style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 5px; font-size: 16px;">
                 </div>
-
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
-                    <label style="display: flex; align-items: center; color: white; font-size: 0.9rem;">
-                        <input type="checkbox" id="remember" name="remember" style="margin-right: 0.5rem;">
-                        Remember me
-                    </label>
-                    <a href="#" style="color: #dc1212; font-size: 0.9rem; text-decoration: none;">Forgot Password?</a>
-                </div>
-
-                <button type="submit" class="btn" style="width: 100%; padding: 1rem; font-size: 1rem; margin-bottom: 1.5rem;">
-                    <i class="bi bi-box-arrow-in-right" style="margin-right: 0.5rem;"></i>
-                    Sign In
+                
+                <button type="submit" class="btn" style="width: 100%; margin-bottom: 20px;">
+                    Login
                 </button>
-
-                <div style="text-align: center; padding-top: 1.5rem; border-top: 1px solid rgba(255,255,255,0.2);">
-                    <p style="color: rgba(255,255,255,0.8); margin: 0;">
-                        Don't have an account? 
-                        <a href="signup.html" style="color: #dc1212; text-decoration: none; font-weight: 500;">Create Account</a>
-                    </p>
-                </div>
             </form>
 
-            <!-- Social Login Options -->
-            <div style="margin-top: 2rem;">
-                <div style="text-align: center; margin-bottom: 1rem;">
-                    <span style="color: rgba(255,255,255,0.6); font-size: 0.9rem;">Or continue with</span>
-                </div>
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
-                    <button type="button" style="padding: 0.8rem; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); border-radius: 5px; color: white; cursor: pointer; transition: 0.3s;">
-                        <i class="bi bi-google" style="margin-right: 0.5rem;"></i>
-                        Google
-                    </button>
-                    <button type="button" style="padding: 0.8rem; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); border-radius: 5px; color: white; cursor: pointer; transition: 0.3s;">
-                        <i class="bi bi-facebook" style="margin-right: 0.5rem;"></i>
-                        Facebook
-                    </button>
-                </div>
+            <div style="text-align: center;">
+                <p style="margin: 0; color: #ccc;">Don't have an account? <a href="signup.html" style="color: #dc1212; text-decoration: none;">Sign up</a></p>
             </div>
-        </div>
-    </main>
 
-    <!-- Footer -->
-    <footer style="margin-top: 0;">
-        <div class="footer-bottom" style="padding: 1rem; text-align: center;">
-            ©2025 NextGen Perfumes — All Rights Reserved | 
-            <a href="#" style="color: #dc1212;">Privacy Policy</a> | 
-            <a href="#" style="color: #dc1212;">Terms & Conditions</a>
+            <div id="error-message" style="display: none; background: #f8d7da; color: #721c24; padding: 10px; border-radius: 5px; margin-top: 15px;"></div>
         </div>
+    </section>
+
+    <footer>
+        <div class="trust">
+            <span>Free Delivery</span>
+            <span>Secure Payments</span>
+            <span>Easy Returns</span>
+        </div>
+        <div class="footer-bottom">©2025 NextGen Perfumes — All Rights Reserved</div>
     </footer>
 
-    <!-- Scripts -->
-    <script src="js/api.js"></script>
-    <script src="js/auth.js"></script>
-    
+    <script src="../js/api.js"></script>
     <script>
-        // Toggle password visibility
-        function togglePassword() {
-            const passwordInput = document.getElementById('password');
-            const icon = passwordInput.nextElementSibling;
-            
-            if (passwordInput.type === 'password') {
-                passwordInput.type = 'text';
-                icon.className = 'bi bi-unlock';
-            } else {
-                passwordInput.type = 'password';
-                icon.className = 'bi bi-lock';
-            }
-        }
-
-        // Login form handling
-        document.getElementById('login-form').addEventListener('submit', function(e) {
+        document.getElementById('login-form').addEventListener('submit', async (e) => {
             e.preventDefault();
             
-            const formData = new FormData(this);
-            const data = Object.fromEntries(formData);
-            
-            // Show loading state
-            const submitBtn = this.querySelector('button[type="submit"]');
-            const originalText = submitBtn.innerHTML;
-            submitBtn.innerHTML = '<i class="bi bi-hourglass-split"></i> Signing In...';
-            submitBtn.disabled = true;
-            
-            // Simulate API call (replace with actual authentication)
-            setTimeout(() => {
-                console.log('Login attempt:', data);
-                
-                // Reset button
-                submitBtn.innerHTML = originalText;
-                submitBtn.disabled = false;
-                
-                // Redirect on success (customize based on your needs)
-                if (data.email && data.password) {
-                    alert('Login successful! Redirecting to dashboard...');
-                    window.location.href = 'admin-dashboard.html';
-                } else {
-                    alert('Please fill in all required fields.');
-                }
-            }, 2000);
-        });
+            const formData = new FormData(e.target);
+            const credentials = {
+                username: formData.get('username'),
+                password: formData.get('password')
+            };
 
-        // Add hover effects to social buttons
-        document.querySelectorAll('button[type="button"]').forEach(btn => {
-            btn.addEventListener('mouseenter', function() {
-                this.style.background = 'rgba(255,255,255,0.2)';
-                this.style.borderColor = 'rgba(255,255,255,0.4)';
-            });
-            
-            btn.addEventListener('mouseleave', function() {
-                this.style.background = 'rgba(255,255,255,0.1)';
-                this.style.borderColor = 'rgba(255,255,255,0.2)';
-            });
+            try {
+                const response = await window.api.login(credentials);
+                
+                // Redirect to customer account page
+                window.location.href = 'index.html';
+            } catch (error) {
+                const errorDiv = document.getElementById('error-message');
+                errorDiv.textContent = error.message || 'Login failed';
+                errorDiv.style.display = 'block';
+            }
         });
     </script>
 </body>

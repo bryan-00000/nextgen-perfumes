@@ -105,6 +105,14 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Load reviews from API
     async function loadReviews() {
+        try {
+            const reviews = await window.api.getReviews();
+            displayReviews(reviews);
+        } catch (error) {
+            console.error('Failed to load reviews:', error);
+        }
+    }
+
     // Display products in the UI
     function displayProducts(products) {
         const productsContainer = document.querySelector('.products');
@@ -140,6 +148,12 @@ document.addEventListener('DOMContentLoaded', function() {
             productDiv.appendChild(productImage);
             productDiv.appendChild(productName);
             productDiv.appendChild(productPrice);
+            productDiv.appendChild(addButton);
+            
+            productsContainer.appendChild(productDiv);
+        });
+    }
+
     // Display reviews in the UI
     function displayReviews(reviews) {
         if (!reviewsList || !reviews.length) return;
@@ -151,33 +165,16 @@ document.addEventListener('DOMContentLoaded', function() {
             
             const nameDiv = document.createElement('div');
             nameDiv.className = 'name';
-            // use textContent to avoid inserting HTML and provide a fallback
             nameDiv.textContent = review.name || 'Anonymous';
             
             const ratingDiv = document.createElement('div');
             ratingDiv.className = 'rating';
-            // Ensure rating is a safe integer between 0 and 5
             const rating = Math.max(0, Math.min(5, parseInt(review.rating, 10) || 0));
             ratingDiv.textContent = '★'.repeat(rating) + '☆'.repeat(5 - rating);
             
             const commentDiv = document.createElement('div');
             commentDiv.className = 'comment';
-            // use textContent to prevent XSS from review content
             commentDiv.textContent = review.comment || '';
-            
-            reviewDiv.appendChild(nameDiv);
-            reviewDiv.appendChild(ratingDiv);
-            reviewDiv.appendChild(commentDiv);
-            
-            reviewsList.appendChild(reviewDiv);
-        });
-    }
-            ratingDiv.className = 'rating';
-            ratingDiv.textContent = '★'.repeat(review.rating) + '☆'.repeat(5-review.rating);
-            
-            const commentDiv = document.createElement('div');
-            commentDiv.className = 'comment';
-            commentDiv.textContent = review.comment;
             
             reviewDiv.appendChild(nameDiv);
             reviewDiv.appendChild(ratingDiv);

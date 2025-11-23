@@ -1,242 +1,347 @@
-/* Dashboard Styles for NextGen Perfumes */
+/*--------------------------------------------------------------
+# Admin Dashboard Styles using Dewi Template Variables
+--------------------------------------------------------------*/
+
+/* Dashboard Layout */
 body {
-    background: url('../images/background.jpg') no-repeat center center fixed;
-    background-size: cover;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    color: #333;
-    min-height: 100vh;
+  background-color: var(--background-color, #f1f4fa);
+  font-family: var(--default-font);
+  color: var(--default-color);
 }
 
-.container-fluid {
-    background: rgba(255, 255, 255, 0.95);
-    min-height: 100vh;
-    padding: 2rem;
+/* Apply light background theme */
+body {
+  --background-color: #f1f4fa;
+  --surface-color: #ffffff;
 }
 
-/* Card Animations */
-.card-animate {
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+/* Header Styling */
+.header {
+  background-color: var(--surface-color) !important;
+  color: var(--default-color) !important;
+  box-shadow: 0px 2px 15px rgba(0, 0, 0, 0.1);
 }
 
-.card-animate:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
-}
-
-/* Custom Card Styling */
-.card {
-    border: none;
-    border-radius: 12px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-    -webkit-backdrop-filter: blur(10px);
-    backdrop-filter: blur(10px);
-    background: rgba(255, 255, 255, 0.9);
-}
-
-.card-body {
-    padding: 1.5rem;
+.header .logo h1 {
+  color: var(--heading-color) !important;
+  font-family: var(--heading-font);
 }
 
 /* Stats Cards */
+.card {
+  background-color: var(--surface-color);
+  border: 1px solid color-mix(in srgb, var(--default-color), transparent 85%);
+  border-radius: 8px;
+  box-shadow: 0px 0 25px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.card:hover {
+  box-shadow: 0px 0 30px rgba(0, 0, 0, 0.15);
+  transform: translateY(-2px);
+}
+
+.card-animate {
+  transition: all 0.3s ease;
+}
+
+.card-title {
+  color: var(--heading-color);
+  font-family: var(--heading-font);
+  font-weight: 600;
+}
+
+/* Avatar Icons */
+.avatar-sm {
+  width: 56px;
+  height: 56px;
+}
+
 .avatar-title {
-    width: 48px;
-    height: 48px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  font-size: 24px;
 }
 
 .bg-success-subtle {
-    background-color: rgba(10, 179, 156, 0.1) !important;
+  background-color: color-mix(in srgb, #059652, transparent 85%) !important;
 }
 
 .bg-info-subtle {
-    background-color: rgba(41, 156, 219, 0.1) !important;
+  background-color: color-mix(in srgb, #17a2b8, transparent 85%) !important;
 }
 
 .bg-warning-subtle {
-    background-color: rgba(247, 184, 75, 0.1) !important;
+  background-color: color-mix(in srgb, #ffc107, transparent 85%) !important;
 }
 
 .bg-primary-subtle {
-    background-color: rgba(64, 81, 137, 0.1) !important;
+  background-color: color-mix(in srgb, var(--accent-color), transparent 85%) !important;
 }
 
-.bg-danger-subtle {
-    background-color: rgba(240, 101, 72, 0.1) !important;
+.text-success {
+  color: #059652 !important;
 }
 
-/* Counter Animation */
-.counter-value {
-    font-weight: 600;
+.text-info {
+  color: #17a2b8 !important;
 }
 
-/* Perfume Icons */
-.perfume-icon {
-    font-size: 1.5rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    height: 100%;
+.text-warning {
+  color: #ffc107 !important;
 }
 
-/* Category Stats */
-.category-stats {
-    padding: 1rem 0;
-}
-
-.category-item {
-    margin-bottom: 1.5rem;
-}
-
-.progress {
-    border-radius: 10px;
-    overflow: hidden;
-}
-
-.progress-bar {
-    border-radius: 10px;
-    transition: width 0.6s ease;
-}
-
-/* Table Styling */
-.table-card {
-    border-radius: 8px;
-}
-
-.table th {
-    border-top: none;
-    font-weight: 600;
-    text-transform: uppercase;
-    font-size: 0.75rem;
-    letter-spacing: 0.5px;
-}
-
-.table td {
-    border-top: 1px solid rgba(0, 0, 0, 0.05);
-    vertical-align: middle;
-}
-
-/* Badges */
-.badge {
-    font-size: 0.75rem;
-    padding: 0.35rem 0.65rem;
-    border-radius: 6px;
+.text-primary {
+  color: var(--accent-color) !important;
 }
 
 /* Buttons */
 .btn {
-    border-radius: 8px;
-    font-weight: 500;
-    transition: all 0.3s ease;
+  border-radius: 4px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  font-size: 13px;
 }
 
 .btn-soft-success {
-    background-color: rgba(10, 179, 156, 0.1);
-    border-color: rgba(10, 179, 156, 0.2);
-    color: #0ab39c;
+  background-color: color-mix(in srgb, #059652, transparent 85%);
+  border-color: color-mix(in srgb, #059652, transparent 70%);
+  color: #059652;
 }
 
 .btn-soft-success:hover {
-    background-color: rgba(10, 179, 156, 0.2);
-    border-color: rgba(10, 179, 156, 0.3);
-    color: #0ab39c;
+  background-color: #059652;
+  border-color: #059652;
+  color: var(--contrast-color);
 }
 
 .btn-soft-primary {
-    background-color: rgba(64, 81, 137, 0.1);
-    border-color: rgba(64, 81, 137, 0.2);
-    color: #405189;
+  background-color: color-mix(in srgb, var(--accent-color), transparent 85%);
+  border-color: color-mix(in srgb, var(--accent-color), transparent 70%);
+  color: var(--accent-color);
+}
+
+.btn-soft-primary:hover {
+  background-color: var(--accent-color);
+  border-color: var(--accent-color);
+  color: var(--contrast-color);
 }
 
 .btn-soft-info {
-    background-color: rgba(41, 156, 219, 0.1);
-    border-color: rgba(41, 156, 219, 0.2);
-    color: #299cdb;
+  background-color: color-mix(in srgb, #17a2b8, transparent 85%);
+  border-color: color-mix(in srgb, #17a2b8, transparent 70%);
+  color: #17a2b8;
 }
 
-/* Input Styling */
-.form-control {
-    border-radius: 8px;
-    border: 1px solid rgba(0, 0, 0, 0.1);
-    transition: all 0.3s ease;
+.btn-soft-info:hover {
+  background-color: #17a2b8;
+  border-color: #17a2b8;
+  color: var(--contrast-color);
 }
 
-.form-control:focus {
-    border-color: #405189;
-    box-shadow: 0 0 0 0.2rem rgba(64, 81, 137, 0.25);
+/* Form Controls */
+.form-control,
+.form-select {
+  border: 1px solid color-mix(in srgb, var(--default-color), transparent 80%);
+  border-radius: 4px;
+  color: var(--default-color);
+  background-color: var(--surface-color);
 }
 
-.input-group-text {
-    border-radius: 0 8px 8px 0;
+.form-control:focus,
+.form-select:focus {
+  border-color: var(--accent-color);
+  box-shadow: 0 0 0 0.2rem color-mix(in srgb, var(--accent-color), transparent 75%);
+}
+
+/* Tables */
+.table {
+  color: var(--default-color);
+}
+
+.table-light {
+  background-color: color-mix(in srgb, var(--default-color), transparent 95%);
+}
+
+.table th {
+  color: var(--heading-color);
+  font-weight: 600;
+  border-bottom: 2px solid color-mix(in srgb, var(--default-color), transparent 85%);
+}
+
+.table td {
+  border-bottom: 1px solid color-mix(in srgb, var(--default-color), transparent 90%);
+}
+
+.table-hover tbody tr:hover {
+  background-color: color-mix(in srgb, var(--accent-color), transparent 95%);
+}
+
+/* Badges */
+.badge {
+  font-weight: 500;
+  border-radius: 4px;
+}
+
+.bg-success-subtle.text-success {
+  background-color: color-mix(in srgb, #059652, transparent 85%) !important;
+  color: #059652 !important;
+}
+
+.bg-warning-subtle.text-warning {
+  background-color: color-mix(in srgb, #ffc107, transparent 85%) !important;
+  color: #ffc107 !important;
+}
+
+.bg-info-subtle.text-info {
+  background-color: color-mix(in srgb, #17a2b8, transparent 85%) !important;
+  color: #17a2b8 !important;
+}
+
+.bg-danger-subtle.text-danger {
+  background-color: color-mix(in srgb, #dc3545, transparent 85%) !important;
+  color: #dc3545 !important;
+}
+
+/* Progress Bars */
+.progress {
+  background-color: color-mix(in srgb, var(--default-color), transparent 90%);
+  border-radius: 4px;
+}
+
+.progress-bar {
+  border-radius: 4px;
+}
+
+.bg-primary {
+  background-color: var(--accent-color) !important;
+}
+
+/* Links */
+.link-primary {
+  color: var(--accent-color);
+  text-decoration: none;
+}
+
+.link-primary:hover {
+  color: color-mix(in srgb, var(--accent-color), transparent 25%);
+  text-decoration: underline;
+}
+
+/* Perfume Icons */
+.perfume-icon {
+  font-size: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
 }
 
 /* Header Styling */
 .fs-16 {
-    font-size: 1.25rem !important;
+  font-size: 16px;
+}
+
+.fs-14 {
+  font-size: 14px;
+}
+
+.fs-22 {
+  font-size: 22px;
+}
+
+.ff-secondary {
+  font-family: var(--heading-font);
+}
+
+/* Modal */
+.modal-content {
+  background-color: var(--surface-color);
+  border: 1px solid color-mix(in srgb, var(--default-color), transparent 85%);
+  border-radius: 8px;
+}
+
+.modal-header {
+  border-bottom: 1px solid color-mix(in srgb, var(--default-color), transparent 85%);
+}
+
+.modal-footer {
+  border-top: 1px solid color-mix(in srgb, var(--default-color), transparent 85%);
+}
+
+.modal-title {
+  color: var(--heading-color);
+  font-family: var(--heading-font);
+}
+
+/* Dropdown */
+.dropdown-menu {
+  background-color: var(--surface-color);
+  border: 1px solid color-mix(in srgb, var(--default-color), transparent 85%);
+  border-radius: 4px;
+  box-shadow: 0px 0 25px rgba(0, 0, 0, 0.1);
+}
+
+.dropdown-item {
+  color: var(--default-color);
+}
+
+.dropdown-item:hover {
+  background-color: color-mix(in srgb, var(--accent-color), transparent 90%);
+  color: var(--accent-color);
+}
+
+/* Counter Animation */
+.counter-value {
+  font-weight: 700;
+  color: var(--heading-color);
+}
+
+/* Category Stats */
+.category-stats .category-item {
+  margin-bottom: 1rem;
 }
 
 /* Responsive Design */
 @media (max-width: 768px) {
-    .container-fluid {
-        padding: 1rem;
-    }
-    
-    .d-flex.flex-lg-row {
-        flex-direction: column !important;
-    }
-    
-    .row.g-3 {
-        flex-direction: column;
-    }
-    
-    .col-sm-auto, .col-auto {
-        width: 100%;
-        margin-bottom: 1rem;
-    }
+  .card {
+    margin-bottom: 1rem;
+  }
+  
+  .table-responsive {
+    font-size: 14px;
+  }
+  
+  .btn {
+    font-size: 12px;
+    padding: 6px 12px;
+  }
 }
 
-/* Custom Perfume Theme Colors */
-:root {
-    --perfume-primary: #dc1212;
-    --perfume-secondary: #bb1313;
-    --perfume-accent: #405189;
-    --perfume-success: #0ab39c;
-    --perfume-warning: #f7b84b;
-    --perfume-info: #299cdb;
-    --perfume-danger: #f06548;
+/* Input Group */
+.input-group-text {
+  background-color: var(--accent-color);
+  border-color: var(--accent-color);
+  color: var(--contrast-color);
 }
 
-/* Link Styling */
-.link-primary {
-    color: var(--perfume-primary) !important;
-    text-decoration: none;
+/* Material Shadow */
+.material-shadow-none {
+  box-shadow: none !important;
 }
 
-.link-primary:hover {
-    color: var(--perfume-secondary) !important;
-    text-decoration: underline;
+/* Avatar Circle */
+.avatar-xs {
+  width: 32px;
+  height: 32px;
+  font-size: 12px;
+  font-weight: 600;
 }
 
-/* Text Colors */
-.text-success {
-    color: var(--perfume-success) !important;
-}
-
-.text-primary {
-    color: var(--perfume-accent) !important;
-}
-
-.text-warning {
-    color: var(--perfume-warning) !important;
-}
-
-.text-info {
-    color: var(--perfume-info) !important;
-}
-
-.text-danger {
-    color: var(--perfume-danger) !important;
+.rounded-circle {
+  border-radius: 50% !important;
 }

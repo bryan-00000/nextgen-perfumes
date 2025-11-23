@@ -72,13 +72,20 @@ class NextGenAPI {
     }
 
     // Product methods
-    async getProducts(filters = {}) {
-        const params = new URLSearchParams(filters);
+    async getProducts(category = null, per_page = 12, page = 1) {
+        const params = new URLSearchParams();
+        if (category) params.append('category', category);
+        params.append('per_page', per_page);
+        params.append('page', page);
         return await this.request(`/products?${params}`);
     }
 
     async getProduct(id) {
         return await this.request(`/products/${id}`);
+    }
+
+    async getAllProducts() {
+        return await this.request('/products?per_page=100');
     }
 
     // Review methods
@@ -119,6 +126,48 @@ class NextGenAPI {
 
     async getOrders() {
         return await this.request('/orders');
+    }
+
+    // Admin methods
+    async getDashboardStats() {
+        return await this.request('/admin/dashboard');
+    }
+
+    async createProduct(productData) {
+        return await this.request('/products', {
+            method: 'POST',
+            body: JSON.stringify(productData)
+        });
+    }
+
+    async updateProduct(id, productData) {
+        return await this.request(`/products/${id}`, {
+            method: 'PUT',
+            body: JSON.stringify(productData)
+        });
+    }
+
+    async deleteProduct(id) {
+        return await this.request(`/products/${id}`, {
+            method: 'DELETE'
+        });
+    }
+
+    // User management methods
+    async getUsers() {
+        return await this.request('/admin/users');
+    }
+
+    async suspendUser(userId) {
+        return await this.request(`/admin/users/${userId}/suspend`, {
+            method: 'POST'
+        });
+    }
+
+    async forceLogoutUser(userId) {
+        return await this.request(`/admin/users/${userId}/logout`, {
+            method: 'POST'
+        });
     }
 
     // Utility methods

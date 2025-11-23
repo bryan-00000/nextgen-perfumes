@@ -15,6 +15,8 @@ class User extends Authenticatable
         'username',
         'email',
         'password',
+        'is_suspended',
+        'last_login',
     ];
 
     protected $hidden = [
@@ -24,6 +26,8 @@ class User extends Authenticatable
 
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'last_login' => 'datetime',
+        'is_suspended' => 'boolean',
     ];
 
     public function reviews()

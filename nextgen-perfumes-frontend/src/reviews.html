@@ -170,7 +170,7 @@
             <div style="max-width: 600px; margin: 0 auto; text-align: center;">
                 <h2 style="color: #273d4e; margin-bottom: 1rem;">Share Your Experience</h2>
                 <p style="color: #666; margin-bottom: 2rem;">Help other customers by writing a review of your NextGen Perfumes purchase.</p>
-                <a href="login.html" class="btn" style="padding: 1rem 2rem;">Write a Review</a>
+                <button class="btn" style="padding: 1rem 2rem;" onclick="writeReview()">Write a Review</button>
             </div>
         </div>
     </section>
@@ -215,10 +215,29 @@
     <script src="js/api.js"></script>
     <script src="js/main.js"></script>
     <script src="js/auth.js"></script>
+    <script src="js/cart.js"></script>
     
     <script>
         function loadMoreReviews() {
             alert('Loading more reviews... (This would load additional reviews from your API)');
+        }
+
+        function writeReview() {
+            // Check if user is logged in
+            const isLoggedIn = !!localStorage.getItem('auth_token');
+            
+            if (!isLoggedIn) {
+                // Store current page for redirect after login
+                localStorage.setItem('redirect_after_login', 'reviews.html');
+                
+                // Show message and redirect to signup
+                alert('Please create an account or login to write a review.');
+                window.location.href = 'signup.html';
+            } else {
+                // User is logged in, show review form (placeholder for now)
+                alert('Review form will be implemented here. User is authenticated!');
+                // TODO: Implement actual review form
+            }
         }
     </script>
 </body>

@@ -1,246 +1,445 @@
-// Dashboard JavaScript for NextGen Perfumes Admin
-class PerfumeDashboard {
+// Admin Dashboard JavaScript
+class AdminDashboard {
     constructor() {
-        this.apiBase = 'http://localhost:8000/api';
         this.init();
     }
 
-    init() {
-        this.animateCounters();
-        this.loadDashboardData();
+    async init() {
+        await this.loadDashboardData();
         this.setupEventListeners();
     }
 
-    // Animate counter values
-    animateCounters() {
-        const counters = document.querySelectorAll('.counter-value');
-        counters.forEach(counter => {
-            const target = parseInt(counter.textContent.replace(/,/g, ''));
-            const increment = target / 100;
-            let current = 0;
-            
-            const timer = setInterval(() => {
-                current += increment;
-                if (current >= target) {
-                    counter.textContent = target.toLocaleString();
-                    clearInterval(timer);
-                } else {
-                    counter.textContent = Math.floor(current).toLocaleString();
-                }
-            }, 20);
-        });
-    }
-
-    // Load dashboard data from API
     async loadDashboardData() {
         try {
-            const token = localStorage.getItem('auth_token');
-            if (!token) {
-                console.log('No auth token found');
+            const data = await window.api.getDashboardStats();
+            this.updateStats(data.stats);
+            this.updateBestSelling(data.best_selling);
+            this.updateRecentOrders(data.recent_orders);
+            await this.loadUsers();
+        } catch (error) {
+            if (error.message === 'Unauthenticated.') {
+                window.location.href = 'admin-login.html';
                 return;
             }
-
-            // Load recent orders
-            await this.loadRecentOrders();
-            
-            // Load product stats
-            await this.loadProductStats();
-            
-        } catch (error) {
-            console.error('Error loading dashboard data:', error);
+            console.error('Failed to load dashboard data:', error);
         }
     }
 
-    // Load recent orders
-    async loadRecentOrders() {
-        try {
-            const response = await fetch(`${this.apiBase}/orders`, {
-                headers: {
-                    'Authorization': `Bearer ${localStorage.getItem('auth_token')}`,
-                    'Accept': 'application/json'
-                }
-            });
+    updateStats(stats) {
+        const salesElement = document.querySelector('.counter-value');
+        if (salesElement) {
+            salesElement.textContent = this.formatCurrency(stats.total_sales);
+        }
 
-            if (response.ok) {
-                const orders = await response.json();
-                this.updateOrdersTable(orders.data || []);
-            }
-        } catch (error) {
-            console.error('Error loading orders:', error);
+        const ordersElements = document.querySelectorAll('.counter-value');
+        if (ordersElements[1]) {
+            ordersElements[1].textContent = stats.total_orders.toLocaleString();
+        }
+
+        if (ordersElements[2]) {
+            ordersElements[2].textContent = stats.total_customers.toLocaleString();
+        }
+
+        if (ordersElements[3]) {
+            ordersElements[3].textContent = stats.total_stock.toLocaleString();
         }
     }
 
-    // Load product statistics
-    async loadProductStats() {
-        try {
-            const response = await fetch(`${this.apiBase}/products`, {
-                headers: {
-                    'Authorization': `Bearer ${localStorage.getItem('auth_token')}`,
-                    'Accept': 'application/json'
-                }
-            });
+    updateBestSelling(products) {
+        const tbody = document.getElementById('best-selling-tbody');
+        if (!tbody || !products) return;
 
-            if (response.ok) {
-                const products = await response.json();
-                this.updateProductStats(products.data || []);
-            }
-        } catch (error) {
-            console.error('Error loading products:', error);
-        }
-    }
-
-    // Update orders table with real data
-    updateOrdersTable(orders) {
-        const tbody = document.querySelector('table tbody');
-        if (!tbody || orders.length === 0) return;
-
-        tbody.innerHTML = orders.slice(0, 5).map(order => `
+        tbody.innerHTML = products.map(product => `
             <tr>
-                <td><a href="#" class="fw-medium link-primary">#NG${order.id}</a></td>
                 <td>
                     <div class="d-flex align-items-center">
-                        <div class="flex-shrink-0 me-2">
-                            <div class="avatar-xs rounded-circle bg-primary text-white d-flex align-items-center justify-content-center">
-                                ${order.customer_name ? order.customer_name.charAt(0).toUpperCase() : 'U'}
-                            </div>
+                        <div class="avatar-sm bg-light rounded p-1 me-2">
+                            <div class="perfume-icon">${this.getProductIcon(product.category)}</div>
                         </div>
-                        <div class="flex-grow-1">${order.customer_name || 'Unknown Customer'}</div>
+                        <div>
+                            <h5 class="fs-14 my-1">${product.name}</h5>
+                            <span class="text-muted">${this.getCategoryName(product.category)}</span>
+                        </div>
                     </div>
                 </td>
-                <td>${order.product_name || 'Product'}</td>
-                <td><span class="text-success">$${order.total_amount || '0.00'}</span></td>
-                <td><span class="badge ${this.getStatusBadgeClass(order.status)}">${order.status || 'Pending'}</span></td>
-                <td>${this.formatDate(order.created_at)}</td>
+                <td>
+                    <h5 class="fs-14 my-1 fw-normal">${this.formatCurrency(product.price)}</h5>
+                    <span class="text-muted">Price</span>
+                </td>
+                <td>
+                    <h5 class="fs-14 my-1 fw-normal">${product.total_sold || 0}</h5>
+                    <span class="text-muted">Sold</span>
+                </td>
+                <td>
+                    <h5 class="fs-14 my-1 fw-normal">${this.getStockBadge(product.stock_quantity)}</h5>
+                    <span class="text-muted">Stock</span>
+                </td>
+                <td>
+                    <h5 class="fs-14 my-1 fw-normal">${this.formatCurrency((product.total_sold || 0) * product.price)}</h5>
+                    <span class="text-muted">Revenue</span>
+                </td>
             </tr>
         `).join('');
     }
 
-    // Update product statistics
-    updateProductStats(products) {
-        // Calculate category distribution
-        const categories = {
-            'Men': products.filter(p => p.category === 'men').length,
-            'Women': products.filter(p => p.category === 'women').length,
-            'Unisex': products.filter(p => p.category === 'unisex').length,
-            'Gift Sets': products.filter(p => p.category === 'gift-sets').length
-        };
-
-        const total = Object.values(categories).reduce((sum, count) => sum + count, 0);
-        
-        if (total > 0) {
-            this.updateCategoryProgress(categories, total);
-        }
-    }
-
-    // Update category progress bars
-    updateCategoryProgress(categories, total) {
-        const categoryItems = document.querySelectorAll('.category-item');
-        const categoryNames = ['Women\'s Perfumes', 'Men\'s Perfumes', 'Unisex Perfumes', 'Gift Sets'];
-        const categoryKeys = ['Women', 'Men', 'Unisex', 'Gift Sets'];
-
-        categoryItems.forEach((item, index) => {
-            const percentage = Math.round((categories[categoryKeys[index]] / total) * 100);
-            const percentageSpan = item.querySelector('.fw-bold');
-            const progressBar = item.querySelector('.progress-bar');
-            
-            if (percentageSpan && progressBar) {
-                percentageSpan.textContent = `${percentage}%`;
-                progressBar.style.width = `${percentage}%`;
-            }
-        });
-    }
-
-    // Get status badge class
-    getStatusBadgeClass(status) {
-        const statusClasses = {
-            'delivered': 'bg-success-subtle text-success',
-            'shipped': 'bg-info-subtle text-info',
-            'processing': 'bg-warning-subtle text-warning',
-            'pending': 'bg-secondary-subtle text-secondary',
-            'cancelled': 'bg-danger-subtle text-danger'
-        };
-        
-        return statusClasses[status?.toLowerCase()] || 'bg-secondary-subtle text-secondary';
-    }
-
-    // Format date
-    formatDate(dateString) {
-        if (!dateString) return 'N/A';
-        
-        const date = new Date(dateString);
-        return date.toLocaleDateString('en-US', {
-            year: 'numeric',
-            month: 'short',
-            day: 'numeric'
-        });
-    }
-
-    // Setup event listeners
     setupEventListeners() {
-        // Add Product button
-        const addProductBtn = document.querySelector('.btn-soft-success');
+        const addProductForm = document.getElementById('add-product-form');
+        if (addProductForm) {
+            addProductForm.addEventListener('submit', this.handleAddProduct.bind(this));
+        }
+
+        const editProductForm = document.getElementById('edit-product-form');
+        if (editProductForm) {
+            editProductForm.addEventListener('submit', this.handleEditProduct.bind(this));
+        }
+
+        const addProductBtn = document.getElementById('add-product-btn');
         if (addProductBtn) {
             addProductBtn.addEventListener('click', () => {
-                this.showAddProductModal();
+                const modal = new bootstrap.Modal(document.getElementById('addProductModal'));
+                modal.show();
             });
         }
-
-        // Export buttons
-        const exportBtns = document.querySelectorAll('.btn-soft-primary, .btn-soft-info');
-        exportBtns.forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                e.preventDefault();
-                this.exportReport(btn.textContent.trim());
-            });
-        });
     }
 
-    // Show add product modal (placeholder)
-    showAddProductModal() {
-        alert('Add Product functionality would open a modal here.\nThis would integrate with the backend API to add new perfumes.');
+    async handleAddProduct(event) {
+        event.preventDefault();
+        
+        const formData = new FormData(event.target);
+        
+        // Handle image upload
+        const imageFile = formData.get('image');
+        let imageUrl = null;
+        
+        if (imageFile && imageFile.size > 0) {
+            // Create a unique filename
+            const fileName = `perfume-${Date.now()}-${imageFile.name}`;
+            imageUrl = `uploads/${fileName}`;
+            
+            // Save the file (in a real app, you'd upload to server)
+            // For now, we'll use a data URL as fallback
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                // Store the data URL in localStorage for demo purposes
+                localStorage.setItem(`image_${fileName}`, e.target.result);
+            };
+            reader.readAsDataURL(imageFile);
+        }
+        
+        const productData = {
+            name: formData.get('name'),
+            description: formData.get('description'),
+            category: formData.get('category'),
+            price: parseFloat(formData.get('price')),
+            stock_quantity: parseInt(formData.get('stock')),
+            image_url: imageUrl
+        };
+        
+        // Wait for image processing if file was uploaded
+        if (imageFile && imageFile.size > 0) {
+            await new Promise(resolve => setTimeout(resolve, 100));
+        }
+
+        try {
+            await window.api.createProduct(productData);
+            
+            const modal = bootstrap.Modal.getInstance(document.getElementById('addProductModal'));
+            modal.hide();
+            
+            event.target.reset();
+            await this.loadDashboardData();
+            await loadAllProducts();
+            
+            this.showNotification('Product added successfully!', 'success');
+        } catch (error) {
+            if (error.message === 'Unauthenticated.') {
+                alert('Session expired. Please login again.');
+                window.location.href = 'admin-login.html';
+                return;
+            }
+            this.showNotification('Failed to add product: ' + error.message, 'error');
+        }
     }
 
-    // Export report functionality
-    exportReport(reportType) {
-        console.log(`Exporting ${reportType}...`);
-        alert(`${reportType} functionality would generate and download a report here.`);
+    async handleEditProduct(event) {
+        event.preventDefault();
+        
+        const formData = new FormData(event.target);
+        const productId = formData.get('id');
+        
+        const productData = {
+            name: formData.get('name'),
+            description: formData.get('description'),
+            category: formData.get('category'),
+            price: parseFloat(formData.get('price')),
+            stock_quantity: parseInt(formData.get('stock_quantity'))
+        };
+
+        try {
+            await window.api.updateProduct(productId, productData);
+            
+            const modal = bootstrap.Modal.getInstance(document.getElementById('editProductModal'));
+            modal.hide();
+            
+            await this.loadDashboardData();
+            await loadAllProducts();
+            
+            this.showNotification('Product updated successfully!', 'success');
+        } catch (error) {
+            this.showNotification('Failed to update product: ' + error.message, 'error');
+        }
     }
 
-    // Refresh dashboard data
-    async refreshData() {
-        await this.loadDashboardData();
-        console.log('Dashboard data refreshed');
-    }
-}
-
-// Initialize dashboard when DOM is loaded
-document.addEventListener('DOMContentLoaded', () => {
-    const dashboard = new PerfumeDashboard();
-    
-    // Auto-refresh every 5 minutes
-    setInterval(() => {
-        dashboard.refreshData();
-    }, 300000);
-});
-
-// Utility functions for dashboard
-const DashboardUtils = {
-    // Format currency
     formatCurrency(amount) {
         return new Intl.NumberFormat('en-US', {
             style: 'currency',
             currency: 'USD'
         }).format(amount);
-    },
-
-    // Format number with commas
-    formatNumber(num) {
-        return num.toLocaleString();
-    },
-
-    // Calculate percentage change
-    calculatePercentageChange(current, previous) {
-        if (previous === 0) return 0;
-        return ((current - previous) / previous * 100).toFixed(1);
     }
-};
+
+    getProductIcon(category) {
+        const icons = {
+            'womens': '🌹',
+            'mens': '🍊',
+            'unisex': '🌙',
+            'gift_sets': '🎁'
+        };
+        return icons[category] || '💎';
+    }
+
+    getCategoryName(category) {
+        const names = {
+            'womens': "Women's Collection",
+            'mens': "Men's Collection", 
+            'unisex': 'Unisex Collection',
+            'gift_sets': 'Gift Sets'
+        };
+        return names[category] || 'Collection';
+    }
+
+    getStockBadge(quantity) {
+        if (quantity < 10) {
+            return '<span class="badge bg-danger-subtle text-danger">Low Stock</span>';
+        }
+        return quantity.toString();
+    }
+
+    showNotification(message, type) {
+        const alertClass = type === 'success' ? 'alert-success' : 'alert-danger';
+        const alertHtml = `
+            <div class="alert ${alertClass} alert-dismissible fade show" role="alert">
+                ${message}
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+        `;
+        
+        const container = document.querySelector('.container-fluid');
+        if (container) {
+            container.insertAdjacentHTML('afterbegin', alertHtml);
+            
+            setTimeout(() => {
+                const alert = container.querySelector('.alert');
+                if (alert) alert.remove();
+            }, 5000);
+        }
+    }
+}
+
+// Global functions for user management
+async function loadUsers() {
+    try {
+        const users = await window.api.getUsers();
+        updateUsersTable(users);
+    } catch (error) {
+        console.error('Failed to load users:', error);
+    }
+}
+
+function updateUsersTable(users) {
+    const tbody = document.getElementById('users-tbody');
+    if (!tbody) return;
+
+    tbody.innerHTML = users.map(user => `
+        <tr>
+            <td>
+                <div class="d-flex align-items-center">
+                    <div class="flex-shrink-0 me-2">
+                        <div class="avatar-xs rounded-circle bg-primary text-white d-flex align-items-center justify-content-center">
+                            ${user.username.charAt(0).toUpperCase()}
+                        </div>
+                    </div>
+                    <div class="flex-grow-1">${user.username}</div>
+                </div>
+            </td>
+            <td>${user.email}</td>
+            <td>${user.is_suspended ? '<span class="badge bg-danger-subtle text-danger">Suspended</span>' : '<span class="badge bg-success-subtle text-success">Active</span>'}</td>
+            <td>${user.last_login ? new Date(user.last_login).toLocaleDateString() : 'Never'}</td>
+            <td>
+                <button class="btn btn-sm btn-soft-warning me-1" onclick="suspendUser(${user.id})">
+                    ${user.is_suspended ? 'Unsuspend' : 'Suspend'}
+                </button>
+                <button class="btn btn-sm btn-soft-danger" onclick="forceLogoutUser(${user.id})">
+                    Force Logout
+                </button>
+            </td>
+        </tr>
+    `).join('');
+}
+
+async function suspendUser(userId) {
+    try {
+        await window.api.suspendUser(userId);
+        await loadUsers();
+    } catch (error) {
+        alert('Failed to suspend user: ' + error.message);
+    }
+}
+
+async function forceLogoutUser(userId) {
+    try {
+        await window.api.forceLogoutUser(userId);
+        await loadUsers();
+        alert('User logged out successfully');
+    } catch (error) {
+        alert('Failed to logout user: ' + error.message);
+    }
+}
+
+// Products management functions
+async function loadAllProducts() {
+    try {
+        const response = await window.api.getAllProducts();
+        updateProductsTable(response.data);
+    } catch (error) {
+        console.error('Failed to load products:', error);
+    }
+}
+
+function updateProductsTable(products) {
+    const tbody = document.getElementById('products-tbody');
+    if (!tbody) return;
+
+    tbody.innerHTML = products.map(product => `
+        <tr>
+            <td>
+                <div class="d-flex align-items-center">
+                    <div class="avatar-sm bg-light rounded p-1 me-2">
+                        <div class="perfume-icon">${getProductIcon(product.category)}</div>
+                    </div>
+                    <div>
+                        <h5 class="fs-14 my-1">${product.name}</h5>
+                        <span class="text-muted">${product.description || 'No description'}</span>
+                    </div>
+                </div>
+            </td>
+            <td><span class="badge bg-info-subtle text-info">${getCategoryName(product.category)}</span></td>
+            <td><span class="fw-semibold">$${product.price}</span></td>
+            <td>
+                <span class="${product.stock_quantity < 10 ? 'text-danger fw-bold' : 'text-success'}">
+                    ${product.stock_quantity} units
+                </span>
+            </td>
+            <td>
+                ${product.stock_quantity < 10 ? 
+                    '<span class="badge bg-danger-subtle text-danger">Low Stock</span>' : 
+                    '<span class="badge bg-success-subtle text-success">In Stock</span>'
+                }
+            </td>
+            <td>
+                <button class="btn btn-sm btn-soft-primary me-1" onclick="editProduct(${product.id})">
+                    <i class="ri-edit-line"></i>
+                </button>
+                <button class="btn btn-sm btn-soft-danger" onclick="deleteProduct(${product.id})">
+                    <i class="ri-delete-bin-line"></i>
+                </button>
+            </td>
+        </tr>
+    `).join('');
+}
+
+function getProductIcon(category) {
+    const icons = {
+        'womens': '🌹',
+        'mens': '🍊', 
+        'unisex': '🌙',
+        'gift_sets': '🎁'
+    };
+    return icons[category] || '💎';
+}
+
+function getCategoryName(category) {
+    const names = {
+        'womens': "Women's",
+        'mens': "Men's",
+        'unisex': 'Unisex',
+        'gift_sets': 'Gift Sets'
+    };
+    return names[category] || 'Other';
+}
+
+async function editProduct(productId) {
+    try {
+        const product = await window.api.getProduct(productId);
+        
+        document.getElementById('edit-product-id').value = product.id;
+        document.getElementById('edit-product-name').value = product.name;
+        document.getElementById('edit-product-description').value = product.description || '';
+        document.getElementById('edit-product-category').value = product.category;
+        document.getElementById('edit-product-price').value = product.price;
+        document.getElementById('edit-product-stock').value = product.stock_quantity;
+        
+        const modal = new bootstrap.Modal(document.getElementById('editProductModal'));
+        modal.show();
+    } catch (error) {
+        alert('Failed to load product: ' + error.message);
+    }
+}
+
+async function deleteProduct(productId) {
+    if (confirm('Are you sure you want to delete this product?')) {
+        try {
+            await window.api.deleteProduct(productId);
+            await loadAllProducts();
+            showNotification('Product deleted successfully', 'success');
+        } catch (error) {
+            showNotification('Failed to delete product: ' + error.message, 'error');
+        }
+    }
+}
+
+function showNotification(message, type) {
+    const alertClass = type === 'success' ? 'alert-success' : 'alert-danger';
+    const alertHtml = `
+        <div class="alert ${alertClass} alert-dismissible fade show" role="alert">
+            ${message}
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    `;
+    
+    const container = document.querySelector('.container-fluid');
+    if (container) {
+        container.insertAdjacentHTML('afterbegin', alertHtml);
+        setTimeout(() => {
+            const alert = container.querySelector('.alert');
+            if (alert) alert.remove();
+        }, 5000);
+    }
+}
+
+// Admin logout function
+async function adminLogout() {
+    try {
+        await window.api.logout();
+        window.location.href = 'admin-login.html';
+    } catch (error) {
+        console.error('Logout error:', error);
+        // Force logout even if API call fails
+        localStorage.removeItem('auth_token');
+        window.location.href = 'admin-login.html';
+    }
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    new AdminDashboard();
+    loadAllProducts();
+});

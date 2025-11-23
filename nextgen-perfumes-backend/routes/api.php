@@ -8,6 +8,7 @@ use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\NewsletterController;
+use App\Http\Controllers\AdminController;
 
 // Public routes
 Route::post('/register', [AuthController::class, 'register'])->middleware('throttle:5,1');
@@ -63,4 +64,11 @@ Route::middleware(['auth:sanctum', 'throttle:60,1'])->group(function () {
     Route::get('/newsletters/{newsletter}', [NewsletterController::class, 'show'])->middleware('verified');
     Route::put('/newsletters/{newsletter}', [NewsletterController::class, 'update'])->middleware('verified');
     Route::delete('/newsletters/{newsletter}', [NewsletterController::class, 'destroy']);
+
+    // Admin dashboard
+    Route::get('/admin/dashboard', [AdminController::class, 'dashboard'])->middleware('verified');
+    Route::get('/admin/users', [AdminController::class, 'getUsers'])->middleware('verified');
+    Route::post('/admin/users/{user}/suspend', [AdminController::class, 'suspendUser'])->middleware('verified');
+    Route::post('/admin/users/{user}/logout', [AdminController::class, 'forceLogout'])->middleware('verified');
+    Route::post('/admin/upload-image', [AdminController::class, 'uploadImage'])->middleware('verified');
 });

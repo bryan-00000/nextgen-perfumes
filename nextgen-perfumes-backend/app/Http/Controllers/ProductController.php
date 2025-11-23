@@ -20,7 +20,9 @@ class ProductController extends Controller
             $query->where('is_featured', true);
         }
 
-        return response()->json($query->get());
+        $perPage = $request->get('per_page', 10);
+        
+        return response()->json($query->paginate($perPage));
     }
 
     public function store(Request $request)
@@ -29,8 +31,8 @@ class ProductController extends Controller
             'name' => 'required|string|max:255',
             'price' => 'required|numeric|min:0',
             'category' => 'required|in:mens,womens,unisex,gift_sets',
-            'description' => 'nullable|string',
-            'image_url' => 'nullable|url',
+            'description' => 'nullable|string|max:1000',
+            'image_url' => 'nullable|string',
             'stock_quantity' => 'integer|min:0',
         ]);
 
@@ -50,8 +52,8 @@ class ProductController extends Controller
             'name' => 'string|max:255',
             'price' => 'numeric|min:0',
             'category' => 'in:mens,womens,unisex,gift_sets',
-            'description' => 'nullable|string',
-            'image_url' => 'nullable|url',
+            'description' => 'nullable|string|max:1000',
+            'image_url' => 'nullable|string',
             'stock_quantity' => 'integer|min:0',
         ]);
 

@@ -1,0 +1,13 @@
+{
+  "name": "nextgen-perfumes-frontend",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Frontend for NextGen Perfumes - static assets and admin UI",
+  "scripts": {
+    "serve": "http-server -p 5173",
+    "start": "npm run serve"
+  },
+  "devDependencies": {
+    "http-server": "^14.1.1"
+  }
+}
