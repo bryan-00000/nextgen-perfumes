@@ -184,11 +184,85 @@ If you encounter CORS errors:
 2. Deploy static files to web server
 3. Ensure HTTPS is configured for production
 
+## New Features Implemented
+
+✅ **Search Functionality with Filters**
+- Advanced product search with text, category, price range, brand, and rating filters
+- Sorting options (price, rating, newest)
+- Pagination with "Load More" functionality
+- Real-time search results
+
+✅ **Product Detail Pages with Image Galleries**
+- Dynamic product loading from API
+- Image gallery with thumbnail navigation
+- Product reviews and ratings display
+- Related products suggestions
+- Wishlist integration
+- Review submission for authenticated users
+
+✅ **User Account Pages for Order History**
+- Comprehensive account dashboard
+- Order history with detailed product information
+- Order status tracking
+- User profile information
+- Navigation between account sections
+
+✅ **Wishlist Functionality**
+- Add/remove products from wishlist
+- Dedicated wishlist page
+- Wishlist status indicators on product cards
+- Authentication-protected wishlist access
+- Wishlist integration across all product pages
+
+✅ **Review and Rating System**
+- Product reviews with star ratings
+- User review management
+- Review display on product pages
+- Authentication required for review submission
+- Review editing and deletion
+- Average rating calculations
+
+## API Endpoints Added
+
+### Search & Filters
+- `GET /api/products?search=term&category=mens&min_price=10&max_price=100&brand=brand&min_rating=4&sort_by=price&sort_order=asc`
+
+### Wishlist
+- `GET /api/wishlist` - Get user wishlist
+- `POST /api/wishlist` - Add product to wishlist
+- `DELETE /api/wishlist/{productId}` - Remove from wishlist
+- `GET /api/wishlist/check/{productId}` - Check if product in wishlist
+
+### Reviews
+- `GET /api/reviews?product_id=1` - Get product reviews
+- `POST /api/reviews` - Create review (auth required)
+- `PUT /api/reviews/{id}` - Update review (auth required)
+- `DELETE /api/reviews/{id}` - Delete review (auth required)
+- `GET /api/user/reviews` - Get user's reviews (auth required)
+
+### Orders
+- `GET /api/orders` - Get user orders (auth required)
+- `GET /api/orders/{id}` - Get specific order (auth required)
+- `POST /api/orders` - Create order (auth required)
+
+## Frontend Pages Added
+
+- **search.html** - Advanced product search with filters
+- **account.html** - User account dashboard with order history
+- **wishlist.html** - Dedicated wishlist management page
+- **Updated product-detail.html** - Enhanced with dynamic content, reviews, and wishlist
+
+## Database Changes
+
+- **wishlists table** - User wishlist storage
+- **Enhanced products table** - Added gallery_images, brand, size, fragrance_notes fields
+- **Review system** - Already existed, enhanced with user relationships
+
 ## Next Steps
 
-- Add shopping cart functionality
-- Implement order management
-- Add product image uploads
-- Implement email notifications
-- Add admin dashboard
 - Implement payment integration
+- Add email notifications
+- Implement inventory management
+- Add product recommendations
+- Implement advanced analytics
+- Add multi-language support

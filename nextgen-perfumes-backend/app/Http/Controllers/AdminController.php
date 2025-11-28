@@ -8,6 +8,8 @@ use App\Models\User;
 use App\Models\Review;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rules\Password;
 
 class AdminController extends Controller
 {
@@ -121,5 +123,27 @@ class AdminController extends Controller
         }
 
         return response()->json(['success' => false, 'message' => 'No image uploaded'], 400);
+    }
+
+    public function createAdmin(Request $request)
+    {
+        $request->validate([
+            'username' => 'required|string|max:255|unique:users',
+            'email' => 'required|string|email|max:255|unique:users',
+            'password' => ['required', 'confirmed', Password::min(8)],
+        ]);
+
+        $admin = User::create([
+            'username' => $request->username,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+            'is_admin' => true,
+            'email_verified_at' => now(),
+        ]);
+
+        return response()->json([
+            'message' => 'Admin created successfully',
+            'admin' => $admin->only(['id', 'username', 'email', 'is_admin', 'created_at'])
+        ], 201);
     }
 }

@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Products - NextGen Perfumes</title>
+    <meta name="description" content="Search and discover your perfect fragrance from our extensive collection of luxury perfumes.">
+    <link rel="stylesheet" href="css/main.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Header Section -->
+    <header class="header">
+        <div class="top-bar">Free Delivery on all orders within your region</div>
+        <nav class="navbar">
+            <div class="logo">NextGen Perfumes</div>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="mensperfume.html">Men's</a></li>
+                <li><a href="womensperfume.html">Women's</a></li>
+                <li><a href="unisexperfume.html">Unisex</a></li>
+                <li><a href="giftsets.html">Gift Sets</a></li>
+                <li><a href="reviews.html">Reviews</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+            <div class="nav-icons">
+                <a href="search.html" title="Search"><i class="bi bi-search"></i></a>
+                <a href="wishlist.html" title="Wishlist"><i class="bi bi-heart"></i></a>
+                <a href="account.html" title="Account" id="account-link"><i class="bi bi-person"></i></a>
+                <a href="checkout.html" title="Cart"><i class="bi bi-bag"></i></a>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Search Hero Section -->
+    <section style="padding: 140px 0 40px; background: linear-gradient(135deg, rgba(220, 18, 18, 0.9), rgba(0, 0, 0, 0.8)), url('images/background.jpg') center/cover;">
+        <div class="container">
+            <h1 style="color: white; font-size: 48px; font-weight: 700; text-align: center; margin-bottom: 1rem; text-transform: uppercase;">Search Products</h1>
+            <p style="color: rgba(255, 255, 255, 0.8); text-align: center; font-size: 20px; margin-bottom: 0;">Discover your perfect fragrance</p>
+        </div>
+    </section>
+
+    <!-- Search Content -->
+    <section style="padding: 80px 0; background: #ffffff;">
+        <div class="container">
+            
+            <!-- Search Form -->
+            <div style="background: #f8f9fa; padding: 2rem; border-radius: 15px; margin-bottom: 3rem; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
+                <div style="display: flex; gap: 1rem; margin-bottom: 2rem;">
+                    <input type="text" id="searchInput" placeholder="Search perfumes..." style="flex: 1; padding: 1rem; border: 1px solid #ddd; border-radius: 8px; font-size: 1rem;" />
+                    <button id="searchBtn" class="btn" style="padding: 1rem 2rem;">Search</button>
+                </div>
+                
+                <!-- Filters -->
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; align-items: end;">
+                    <div>
+                        <label style="display: block; margin-bottom: 0.5rem; font-weight: 600; color: #273d4e;">Category:</label>
+                        <select id="categoryFilter" style="width: 100%; padding: 0.8rem; border: 1px solid #ddd; border-radius: 8px; font-size: 1rem;">
+                            <option value="">All Categories</option>
+                            <option value="mens">Men's</option>
+                            <option value="womens">Women's</option>
+                            <option value="unisex">Unisex</option>
+                            <option value="gift_sets">Gift Sets</option>
+                        </select>
+                    </div>
+                    
+                    <div>
+                        <label style="display: block; margin-bottom: 0.5rem; font-weight: 600; color: #273d4e;">Price Range:</label>
+                        <div style="display: flex; gap: 0.5rem;">
+                            <input type="number" id="minPrice" placeholder="Min" style="flex: 1; padding: 0.8rem; border: 1px solid #ddd; border-radius: 8px;" />
+                            <input type="number" id="maxPrice" placeholder="Max" style="flex: 1; padding: 0.8rem; border: 1px solid #ddd; border-radius: 8px;" />
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <label style="display: block; margin-bottom: 0.5rem; font-weight: 600; color: #273d4e;">Brand:</label>
+                        <input type="text" id="brandFilter" placeholder="Brand name" style="width: 100%; padding: 0.8rem; border: 1px solid #ddd; border-radius: 8px;" />
+                    </div>
+                    
+                    <div>
+                        <label style="display: block; margin-bottom: 0.5rem; font-weight: 600; color: #273d4e;">Min Rating:</label>
+                        <select id="ratingFilter" style="width: 100%; padding: 0.8rem; border: 1px solid #ddd; border-radius: 8px;">
+                            <option value="">Any Rating</option>
+                            <option value="4">4+ Stars</option>
+                            <option value="3">3+ Stars</option>
+                            <option value="2">2+ Stars</option>
+                            <option value="1">1+ Stars</option>
+                        </select>
+                    </div>
+                    
+                    <div>
+                        <label style="display: block; margin-bottom: 0.5rem; font-weight: 600; color: #273d4e;">Sort By:</label>
+                        <div style="display: flex; gap: 0.5rem;">
+                            <select id="sortBy" style="flex: 1; padding: 0.8rem; border: 1px solid #ddd; border-radius: 8px;">
+                                <option value="created_at">Newest</option>
+                                <option value="price">Price</option>
+                                <option value="rating">Rating</option>
+                            </select>
+                            <select id="sortOrder" style="flex: 1; padding: 0.8rem; border: 1px solid #ddd; border-radius: 8px;">
+                                <option value="desc">High to Low</option>
+                                <option value="asc">Low to High</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <button id="clearFilters" style="background: #6c757d; color: white; border: none; padding: 0.8rem 1.5rem; border-radius: 8px; cursor: pointer; font-weight: 500;">Clear Filters</button>
+                </div>
+            </div>
+            
+            <!-- Results -->
+            <div>
+                <div id="resultsCount" style="margin-bottom: 2rem; font-size: 1.2rem; font-weight: 600; color: #273d4e; text-align: center;"></div>
+                <div id="productsGrid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 2rem; margin-bottom: 3rem;"></div>
+                <div id="loadMore" style="display: none; text-align: center;">
+                    <button id="loadMoreBtn" class="btn" style="padding: 1rem 2rem; font-size: 1.1rem;">Load More Products</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="trust">
+            <span>Free Delivery</span>
+            <span>Secure Payments</span>
+            <span>Easy Returns</span>
+        </div>
+        <div class="footer-links">
+            <div>
+                <h4>Company</h4>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Careers</a></li>
+                    <li><a href="#">Press</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4>Support</h4>
+                <ul>
+                    <li><a href="#">FAQ</a></li>
+                    <li><a href="#">Shipping & Returns</a></li>
+                    <li><a href="contact.html">Contact Us</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4>Connect</h4>
+                <ul>
+                    <li><a href="#">Instagram</a></li>
+                    <li><a href="#">Facebook</a></li>
+                    <li><a href="#">Twitter</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">©2025 NextGen Perfumes — All Rights Reserved | Privacy Policy | Terms & Conditions</div>
+    </footer>
+
+    <script src="../js/api.js"></script>
+    <script src="../js/auth.js"></script>
+    <script>
+        let currentPage = 1;
+        let currentFilters = {};
+        let totalPages = 1;
+
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeSearch();
+            setupEventListeners();
+        });
+
+        function initializeSearch() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const searchTerm = urlParams.get('q');
+            const category = urlParams.get('category');
+            
+            if (searchTerm) {
+                document.getElementById('searchInput').value = searchTerm;
+                currentFilters.search = searchTerm;
+            }
+            
+            if (category) {
+                document.getElementById('categoryFilter').value = category;
+                currentFilters.category = category;
+            }
+            
+            searchProducts();
+        }
+
+        function setupEventListeners() {
+            document.getElementById('searchBtn').addEventListener('click', handleSearch);
+            document.getElementById('searchInput').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') handleSearch();
+            });
+            
+            document.getElementById('categoryFilter').addEventListener('change', handleFilterChange);
+            document.getElementById('minPrice').addEventListener('input', handleFilterChange);
+            document.getElementById('maxPrice').addEventListener('input', handleFilterChange);
+            document.getElementById('brandFilter').addEventListener('input', handleFilterChange);
+            document.getElementById('ratingFilter').addEventListener('change', handleFilterChange);
+            document.getElementById('sortBy').addEventListener('change', handleFilterChange);
+            document.getElementById('sortOrder').addEventListener('change', handleFilterChange);
+            
+            document.getElementById('clearFilters').addEventListener('click', clearFilters);
+            document.getElementById('loadMoreBtn').addEventListener('click', loadMore);
+        }
+
+        function handleSearch() {
+            currentPage = 1;
+            currentFilters.search = document.getElementById('searchInput').value;
+            searchProducts();
+        }
+
+        function handleFilterChange() {
+            currentPage = 1;
+            updateFilters();
+            searchProducts();
+        }
+
+        function updateFilters() {
+            currentFilters = {
+                search: document.getElementById('searchInput').value || null,
+                category: document.getElementById('categoryFilter').value || null,
+                min_price: document.getElementById('minPrice').value || null,
+                max_price: document.getElementById('maxPrice').value || null,
+                brand: document.getElementById('brandFilter').value || null,
+                min_rating: document.getElementById('ratingFilter').value || null,
+                sort_by: document.getElementById('sortBy').value,
+                sort_order: document.getElementById('sortOrder').value,
+                page: currentPage
+            };
+        }
+
+        async function searchProducts() {
+            try {
+                updateFilters();
+                const response = await api.getProducts(currentFilters);
+                
+                if (currentPage === 1) {
+                    displayProducts(response.data);
+                } else {
+                    appendProducts(response.data);
+                }
+                
+                updateResultsCount(response.total);
+                updatePagination(response);
+                
+            } catch (error) {
+                console.error('Search error:', error);
+                document.getElementById('productsGrid').innerHTML = '<p>Error loading products. Please try again.</p>';
+            }
+        }
+
+        function displayProducts(products) {
+            const grid = document.getElementById('productsGrid');
+            
+            if (products.length === 0) {
+                grid.innerHTML = '<p>No products found matching your criteria.</p>';
+                return;
+            }
+            
+            grid.innerHTML = products.map(product => `
+                <div onclick="viewProduct(${product.id})" style="background: white; border-radius: 15px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.1); transition: transform 0.3s ease; cursor: pointer;" onmouseover="this.style.transform='translateY(-5px)'" onmouseout="this.style.transform='translateY(0)'">
+                    <div style="height: 200px; background: url('${product.image_url || 'images/default-perfume.jpg'}') center/cover; position: relative;">
+                        <div style="position: absolute; top: 10px; right: 10px; background: rgba(220, 18, 18, 0.9); color: white; padding: 0.3rem 0.8rem; border-radius: 15px; font-size: 0.8rem; font-weight: 600;">
+                            ${product.is_featured ? 'Featured' : 'New'}
+                        </div>
+                    </div>
+                    <div style="padding: 1.5rem;">
+                        <h3 style="margin: 0 0 0.5rem; color: #273d4e; font-size: 1.2rem;">${product.name}</h3>
+                        <p style="color: #666; font-size: 0.9rem; margin: 0 0 0.5rem;">${product.brand || ''}</p>
+                        <div style="color: #ffc107; margin: 0.5rem 0; font-size: 0.9rem;">
+                            ${generateStars(product.average_rating || 0)}
+                            <span style="color: #666; margin-left: 0.5rem;">(${product.review_count || 0})</span>
+                        </div>
+                        <p style="color: #dc1212; font-weight: 700; font-size: 1.3rem; margin: 1rem 0;">$${product.price}</p>
+                        <div style="display: flex; gap: 0.5rem;">
+                            <button onclick="event.stopPropagation(); addToCart('${product.id}', ${product.price}, '${product.name}')" class="btn" style="flex: 1; padding: 0.8rem; font-size: 0.9rem;">Add to Cart</button>
+                            <button onclick="event.stopPropagation(); toggleWishlist(${product.id})" style="padding: 0.8rem; border: 2px solid #dc1212; background: white; color: #dc1212; border-radius: 8px; cursor: pointer; transition: all 0.3s;" data-product-id="${product.id}" title="Add to Wishlist">
+                                <i class="bi bi-heart"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+            
+            // Update wishlist buttons for authenticated users
+            if (api.isAuthenticated()) {
+                updateWishlistButtons(products);
+            }
+        }
+
+        function appendProducts(products) {
+            const grid = document.getElementById('productsGrid');
+            const newProducts = products.map(product => `
+                <div class="product-card">
+                    <img src="${product.image_url || 'images/default-perfume.jpg'}" alt="${product.name}" />
+                    <h3>${product.name}</h3>
+                    <p class="brand">${product.brand || ''}</p>
+                    <p class="price">$${product.price}</p>
+                    <div class="rating">
+                        ${generateStars(product.average_rating || 0)}
+                        <span>(${product.review_count || 0} reviews)</span>
+                    </div>
+                    <div class="product-actions">
+                        <button onclick="viewProduct(${product.id})">View Details</button>
+                        <button onclick="toggleWishlist(${product.id})" class="wishlist-btn" data-product-id="${product.id}">
+                            ♡ Wishlist
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+            
+            grid.innerHTML += newProducts;
+            
+            if (api.isAuthenticated()) {
+                updateWishlistButtons(products);
+            }
+        }
+
+        function updateResultsCount(total) {
+            document.getElementById('resultsCount').textContent = `${total} products found`;
+        }
+
+        function updatePagination(response) {
+            totalPages = response.last_page;
+            const loadMoreBtn = document.getElementById('loadMore');
+            
+            if (currentPage < totalPages) {
+                loadMoreBtn.style.display = 'block';
+            } else {
+                loadMoreBtn.style.display = 'none';
+            }
+        }
+
+        function loadMore() {
+            currentPage++;
+            searchProducts();
+        }
+
+        function clearFilters() {
+            document.getElementById('searchInput').value = '';
+            document.getElementById('categoryFilter').value = '';
+            document.getElementById('minPrice').value = '';
+            document.getElementById('maxPrice').value = '';
+            document.getElementById('brandFilter').value = '';
+            document.getElementById('ratingFilter').value = '';
+            document.getElementById('sortBy').value = 'created_at';
+            document.getElementById('sortOrder').value = 'desc';
+            
+            currentPage = 1;
+            currentFilters = {};
+            searchProducts();
+        }
+
+        function generateStars(rating) {
+            const fullStars = Math.floor(rating);
+            const hasHalfStar = rating % 1 !== 0;
+            let stars = '';
+            
+            for (let i = 0; i < fullStars; i++) {
+                stars += '★';
+            }
+            
+            if (hasHalfStar) {
+                stars += '☆';
+            }
+            
+            const emptyStars = 5 - Math.ceil(rating);
+            for (let i = 0; i < emptyStars; i++) {
+                stars += '☆';
+            }
+            
+            return stars;
+        }
+
+        function viewProduct(id) {
+            window.location.href = `product-detail.html?id=${id}`;
+        }
+        
+        function addToCart(productId, price, name) {
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const existingItem = cart.find(item => item.product_id == productId);
+            
+            if (existingItem) {
+                existingItem.quantity += 1;
+            } else {
+                cart.push({
+                    id: `${productId}-default`,
+                    product_id: productId,
+                    name: name,
+                    price: price,
+                    quantity: 1
+                });
+            }
+            
+            localStorage.setItem('cart', JSON.stringify(cart));
+            showNotification(`${name} added to cart!`);
+        }
+        
+        function showNotification(message) {
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                position: fixed; top: 20px; right: 20px; background: #28a745; color: white;
+                padding: 1rem 1.5rem; border-radius: 5px; z-index: 10000;
+            `;
+            notification.textContent = message;
+            document.body.appendChild(notification);
+            setTimeout(() => notification.remove(), 3000);
+        }
+
+        async function toggleWishlist(productId) {
+            if (!api.isAuthenticated()) {
+                alert('Please login to add items to wishlist');
+                return;
+            }
+            
+            try {
+                const btn = document.querySelector(`[data-product-id="${productId}"]`);
+                const isInWishlist = btn.textContent.includes('♥');
+                
+                if (isInWishlist) {
+                    await api.removeFromWishlist(productId);
+                    btn.innerHTML = '♡ Wishlist';
+                } else {
+                    await api.addToWishlist(productId);
+                    btn.innerHTML = '♥ In Wishlist';
+                }
+            } catch (error) {
+                console.error('Wishlist error:', error);
+                alert('Error updating wishlist');
+            }
+        }
+
+        async function updateWishlistButtons(products) {
+            for (const product of products) {
+                try {
+                    const response = await api.checkWishlist(product.id);
+                    const btn = document.querySelector(`[data-product-id="${product.id}"]`);
+                    if (btn && response.in_wishlist) {
+                        btn.innerHTML = '♥ In Wishlist';
+                    }
+                } catch (error) {
+                    console.error('Error checking wishlist:', error);
+                }
+            }
+        }
+    </script>
+</body>
+</html>

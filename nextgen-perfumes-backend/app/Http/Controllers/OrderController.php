@@ -3,87 +3,63 @@
 namespace App\Http\Controllers;
 
 use App\Models\Order;
-use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class OrderController extends Controller
 {
-    public function index(Request $request)
+    public function index()
     {
-        $query = Order::with(['user', 'products']);
-
-        // Only show user's own orders unless admin
-        $userId = (int) auth()->id();
-        if ($userId > 0) {
-            $query->where('user_id', $userId);
-        } else {
-            return response()->json(['message' => 'Unauthenticated.'], 401);
-        }
-
-        return response()->json($query->get());
-    }
-
-    public function store(Request $request)
-    {
-        $request->validate([
-            'customer_name' => 'required|string|max:255',
-            'customer_email' => 'required|email',
-            'customer_phone' => 'required|string',
-            'customer_location' => 'required|string',
-            'products' => 'required|array',
-            'products.*.id' => 'required|exists:products,id',
-            'products.*.quantity' => 'required|integer|min:1',
-        ]);
-
-        $totalAmount = 0;
-        $orderProducts = [];
-
-        foreach ($request->products as $productData) {
-            $product = Product::find($productData['id']);
-            $quantity = $productData['quantity'];
-            $price = $product->price;
-            
-            $totalAmount += $price * $quantity;
-            $orderProducts[$product->id] = [
-                'quantity' => $quantity,
-                'price' => $price,
-            ];
-        }
-
-        $order = Order::create([
-            'user_id' => auth()->id(),
-            'customer_name' => $request->customer_name,
-            'customer_email' => $request->customer_email,
-            'customer_phone' => $request->customer_phone,
-            'customer_location' => $request->customer_location,
-            'total_amount' => $totalAmount,
-        ]);
-
-        $order->products()->attach($orderProducts);
-
-        return response()->json($order->load(['user', 'products']), 201);
+        $orders = Auth::user()->orders()
+                     ->with('products')
+                     ->orderBy('created_at', 'desc')
+                     ->get();
+        
+        return response()->json($orders);
     }
 
     public function show(Order $order)
     {
-        return response()->json($order->load(['user', 'products']));
+        if ($order->user_id !== Auth::id()) {
+            return response()->json(['message' => 'Unauthorized'], 403);
+        }
+
+        return response()->json($order->load('products'));
     }
 
-    public function update(Request $request, Order $order)
+    public function store(Request $request)
     {
-        $request->validate([
-            'status' => 'in:pending,confirmed,shipped,delivered,cancelled',
+        $validated = $request->validate([
+            'customer_name' => 'required|string|max:255',
+            'customer_email' => 'required|email',
+            'customer_phone' => 'required|string|max:20',
+            'customer_location' => 'required|string|max:255',
+            'products' => 'required|array',
+            'products.*.id' => 'required|exists:products,id',
+            'products.*.quantity' => 'required|integer|min:1',
+            'total_amount' => 'required|numeric|min:0'
         ]);
 
-        $order->update($request->only(['status']));
+        $order = Order::create([
+            'user_id' => Auth::id(),
+            'customer_name' => $validated['customer_name'],
+            'customer_email' => $validated['customer_email'],
+            'customer_phone' => $validated['customer_phone'],
+            'customer_location' => $validated['customer_location'],
+            'total_amount' => $validated['total_amount'],
+            'status' => 'pending'
+        ]);
 
-        return response()->json($order->load(['user', 'products']));
-    }
+        foreach ($validated['products'] as $product) {
+            $order->products()->attach($product['id'], [
+                'quantity' => $product['quantity'],
+                'price' => $product['price'] ?? 0
+            ]);
+        }
 
-    public function destroy(Order $order)
-    {
-        $order->delete();
-
-        return response()->json(['message' => 'Order deleted successfully']);
+        return response()->json([
+            'message' => 'Order created successfully',
+            'order' => $order->load('products')
+        ], 201);
     }
 }

@@ -8,12 +8,13 @@ use Illuminate\Support\Facades\Mail;
 
 class InventoryCheck extends Command
 {
-    protected $signature = 'inventory:check';
+    protected $signature = 'inventory:check {--threshold=10 : Stock threshold for low stock alerts}';
     protected $description = 'Check inventory levels and send alerts';
 
     public function handle()
     {
-        $lowStockProducts = Product::where('stock', '<', 10)->where('stock', '>', 0)->get();
+        $threshold = $this->option('threshold') ?: env('LOW_STOCK_THRESHOLD', 10);
+        $lowStockProducts = Product::where('stock', '<', $threshold)->where('stock', '>', 0)->get();
         $outOfStockProducts = Product::where('stock', '<=', 0)->get();
 
         // Deactivate out of stock products
@@ -26,7 +27,7 @@ class InventoryCheck extends Command
             Mail::raw(
                 "Low stock alert:\n" . $lowStockProducts->pluck('name', 'stock')->implode("\n"),
                 function ($message) {
-                    $message->to('admin@nextgenperfumes.com')
+                    $message->to(env('ADMIN_EMAIL', config('mail.admin_email')))
                            ->subject('Low Stock Alert - NextGen Perfumes');
                 }
             );

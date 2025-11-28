@@ -17,6 +17,7 @@ class User extends Authenticatable
         'password',
         'is_suspended',
         'last_login',
+        'is_admin',
     ];
 
     protected $hidden = [
@@ -28,6 +29,7 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'last_login' => 'datetime',
         'is_suspended' => 'boolean',
+        'is_admin' => 'boolean',
     ];
 
     public function reviews()
@@ -38,5 +40,10 @@ class User extends Authenticatable
     public function orders()
     {
         return $this->hasMany(Order::class);
+    }
+
+    public function wishlists()
+    {
+        return $this->hasMany(Wishlist::class);
     }
 }

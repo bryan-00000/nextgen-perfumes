@@ -94,10 +94,51 @@
                     <!-- Size Selection -->
                     <div style="margin-bottom: 2rem;">
                         <h4 style="color: #273d4e; margin-bottom: 1rem;">Size</h4>
-                        <div style="display: flex; gap: 1rem;">
+                        <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
                             <button class="size-btn active" data-size="30ml" data-price="45" style="padding: 0.8rem 1.5rem; border: 2px solid #dc1212; background: #dc1212; color: white; border-radius: 8px; cursor: pointer;">30ml - $45</button>
                             <button class="size-btn" data-size="50ml" data-price="65" style="padding: 0.8rem 1.5rem; border: 2px solid #ddd; background: white; color: #666; border-radius: 8px; cursor: pointer;">50ml - $65</button>
                             <button class="size-btn" data-size="100ml" data-price="95" style="padding: 0.8rem 1.5rem; border: 2px solid #ddd; background: white; color: #666; border-radius: 8px; cursor: pointer;">100ml - $95</button>
+                        </div>
+                    </div>
+                    
+                    <!-- Gift Wrapping Option -->
+                    <div style="margin-bottom: 2rem;">
+                        <h4 style="color: #273d4e; margin-bottom: 1rem;">Gift Options</h4>
+                        <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
+                            <input type="checkbox" id="giftWrap" style="margin: 0;">
+                            <span>Add Gift Wrapping (+$5)</span>
+                        </label>
+                        <div id="giftMessage" style="display: none; margin-top: 1rem;">
+                            <label style="display: block; margin-bottom: 0.5rem; color: #273d4e; font-weight: 600;">Gift Message (Optional)</label>
+                            <textarea id="giftMessageText" placeholder="Enter your gift message..." style="width: 100%; padding: 0.8rem; border: 1px solid #ddd; border-radius: 8px; min-height: 80px; resize: vertical;"></textarea>
+                        </div>
+                    </div>
+                    
+                    <!-- Delivery Options -->
+                    <div style="margin-bottom: 2rem;">
+                        <h4 style="color: #273d4e; margin-bottom: 1rem;">Delivery Options</h4>
+                        <div style="display: flex; flex-direction: column; gap: 0.5rem;">
+                            <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer; padding: 0.5rem; border: 1px solid #ddd; border-radius: 8px;">
+                                <input type="radio" name="delivery" value="standard" checked style="margin: 0;">
+                                <div>
+                                    <div style="font-weight: 600;">Standard Delivery (Free)</div>
+                                    <div style="font-size: 0.9rem; color: #666;">5-7 business days</div>
+                                </div>
+                            </label>
+                            <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer; padding: 0.5rem; border: 1px solid #ddd; border-radius: 8px;">
+                                <input type="radio" name="delivery" value="express" style="margin: 0;">
+                                <div>
+                                    <div style="font-weight: 600;">Express Delivery (+$10)</div>
+                                    <div style="font-size: 0.9rem; color: #666;">2-3 business days</div>
+                                </div>
+                            </label>
+                            <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer; padding: 0.5rem; border: 1px solid #ddd; border-radius: 8px;">
+                                <input type="radio" name="delivery" value="overnight" style="margin: 0;">
+                                <div>
+                                    <div style="font-weight: 600;">Overnight Delivery (+$25)</div>
+                                    <div style="font-size: 0.9rem; color: #666;">Next business day</div>
+                                </div>
+                            </label>
                         </div>
                     </div>
                     
@@ -155,18 +196,10 @@
             
             <div id="description" class="tab-content">
                 <div style="max-width: 800px; margin: 0 auto; text-align: center;">
-                    <h3 style="color: #273d4e; margin-bottom: 1rem;">About Velvet Rose</h3>
-                    <p style="color: #666; line-height: 1.8; margin-bottom: 2rem;">
-                        Velvet Rose is a masterpiece of perfumery, crafted for the modern woman who appreciates timeless elegance. 
-                        This sophisticated fragrance opens with sparkling bergamot and fresh pear, leading to a heart of exquisite 
-                        Bulgarian rose and jasmine. The base notes of sandalwood, vanilla, and white musk create a lasting impression 
-                        that's both romantic and contemporary.
-                    </p>
-                    <p style="color: #666; line-height: 1.8;">
-                        Perfect for both day and evening wear, Velvet Rose embodies femininity and grace. Each bottle is carefully 
-                        crafted with premium ingredients sourced from the finest perfume houses in France, ensuring exceptional 
-                        quality and longevity.
-                    </p>
+                    <h3 id="productAboutTitle" style="color: #273d4e; margin-bottom: 1rem;">About This Fragrance</h3>
+                    <div id="productDescription" style="color: #666; line-height: 1.8;">
+                        <p>Loading product description...</p>
+                    </div>
                 </div>
             </div>
             
@@ -287,14 +320,428 @@
     </footer>
 
     <!-- Scripts -->
-    <script src="js/api.js"></script>
-    <script src="js/main.js"></script>
-    <script src="js/auth.js"></script>
+    <script src="../js/api.js"></script>
+    <script src="../js/auth.js"></script>
+    <script src="../js/main.js"></script>
     
     <script>
+        let currentProduct = null;
         let currentPrice = 45;
         let currentSize = '30ml';
         let quantity = 1;
+        let giftWrapPrice = 0;
+        let deliveryPrice = 0;
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            loadProductDetails();
+            updateCartCount();
+            checkLayout();
+            setupCustomizationListeners();
+        });
+        
+        function setupCustomizationListeners() {
+            // Gift wrap checkbox
+            document.getElementById('giftWrap').addEventListener('change', function() {
+                const giftMessage = document.getElementById('giftMessage');
+                if (this.checked) {
+                    giftMessage.style.display = 'block';
+                    giftWrapPrice = 5;
+                } else {
+                    giftMessage.style.display = 'none';
+                    giftWrapPrice = 0;
+                }
+                updateTotalPrice();
+            });
+            
+            // Delivery options
+            document.querySelectorAll('input[name="delivery"]').forEach(radio => {
+                radio.addEventListener('change', function() {
+                    switch(this.value) {
+                        case 'standard': deliveryPrice = 0; break;
+                        case 'express': deliveryPrice = 10; break;
+                        case 'overnight': deliveryPrice = 25; break;
+                    }
+                    updateTotalPrice();
+                });
+            });
+        }
+        
+        function updateTotalPrice() {
+            const totalPrice = (currentPrice + giftWrapPrice + deliveryPrice) * quantity;
+            const priceDisplay = document.querySelector('span[style*="font-size: 2rem"]');
+            if (priceDisplay) {
+                priceDisplay.innerHTML = `$${totalPrice.toFixed(2)} <span style="font-size: 1rem; color: #666;">(Base: $${currentPrice})</span>`;
+            }
+        }
+        
+        async function loadProductDetails() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const productId = urlParams.get('id');
+            
+            if (!productId) {
+                document.querySelector('.container').innerHTML = '<p>Product not found</p>';
+                return;
+            }
+            
+            try {
+                currentProduct = await api.getProduct(productId);
+                displayProduct(currentProduct);
+                loadProductReviews(productId);
+                loadRelatedProducts(currentProduct.category);
+                
+                if (api.isAuthenticated()) {
+                    checkWishlistStatus(productId);
+                }
+            } catch (error) {
+                console.error('Error loading product:', error);
+                document.querySelector('.container').innerHTML = '<p>Error loading product details</p>';
+            }
+        }
+        
+        function displayProduct(product) {
+            document.title = `${product.name} - NextGen Perfumes`;
+            
+            // Update breadcrumb
+            const breadcrumb = document.querySelector('nav');
+            breadcrumb.innerHTML = `
+                <a href="index.html" style="color: #dc1212; text-decoration: none;">Home</a> 
+                <span style="margin: 0 0.5rem;">/</span>
+                <a href="${getCategoryPage(product.category)}" style="color: #dc1212; text-decoration: none;">${getCategoryName(product.category)}</a>
+                <span style="margin: 0 0.5rem;">/</span>
+                <span>${product.name}</span>
+            `;
+            
+            // Update main image and gallery
+            const mainImage = document.getElementById('main-image');
+            const productImageUrl = product.full_image_url || product.image_url || 'images/perfume 3.jpg';
+            mainImage.src = productImageUrl;
+            mainImage.alt = product.name;
+            
+            // Update gallery if available
+            const thumbnailContainer = document.querySelector('div[style*="display: flex; gap: 1rem;"]');
+            if (product.gallery_images && product.gallery_images.length > 0) {
+                thumbnailContainer.innerHTML = product.gallery_images.map((img, index) => `
+                    <img src="${img}" alt="${product.name}" 
+                         style="width: 80px; height: 80px; object-fit: cover; border-radius: 8px; cursor: pointer; border: 2px solid ${index === 0 ? '#dc1212' : 'transparent'};" 
+                         onclick="changeImage(this)">
+                `).join('');
+            } else {
+                // Use main product image as thumbnail
+                thumbnailContainer.innerHTML = `
+                    <img src="${productImageUrl}" alt="${product.name}" 
+                         style="width: 80px; height: 80px; object-fit: cover; border-radius: 8px; cursor: pointer; border: 2px solid #dc1212;" 
+                         onclick="changeImage(this)">
+                `;
+            }
+            
+            // Update product info
+            document.querySelector('span[style*="text-transform: uppercase"]').textContent = getCategoryName(product.category);
+            document.querySelector('h1').textContent = product.name;
+            
+            // Update rating
+            const ratingDiv = document.querySelector('div[style*="color: #ffc107"]');
+            ratingDiv.innerHTML = `
+                ${generateStars(product.average_rating || 0)}
+                <span style="color: #666; font-size: 0.9rem; margin-left: 0.5rem;">(${product.review_count || 0} reviews)</span>
+            `;
+            
+            // Update price
+            document.querySelector('span[style*="font-size: 2rem"]').textContent = `$${product.price}`;
+            currentPrice = parseFloat(product.price);
+            
+            // Update description in main section
+            const descriptionElement = document.querySelector('p[style*="line-height: 1.6"]');
+            if (descriptionElement) {
+                descriptionElement.textContent = product.description || 'Experience the luxury and elegance of this premium fragrance, carefully crafted with the finest ingredients.';
+            }
+            
+            // Update detailed description in tabs
+            const aboutTitle = document.getElementById('productAboutTitle');
+            const descriptionTab = document.getElementById('productDescription');
+            if (aboutTitle && descriptionTab) {
+                aboutTitle.textContent = `About ${product.name}`;
+                descriptionTab.innerHTML = `
+                    <p style="margin-bottom: 2rem;">${product.description || 'This exquisite fragrance represents the pinnacle of perfumery craftsmanship.'}</p>
+                    ${product.brand ? `<p style="margin-bottom: 1rem;"><strong>Brand:</strong> ${product.brand}</p>` : ''}
+                    ${product.size ? `<p style="margin-bottom: 1rem;"><strong>Available Sizes:</strong> ${product.size}</p>` : ''}
+                    <p>Each bottle is carefully crafted with premium ingredients, ensuring exceptional quality and longevity. Perfect for those who appreciate luxury and sophistication in their fragrance collection.</p>
+                `;
+            }
+            
+            // Update fragrance notes if available
+            if (product.fragrance_notes) {
+                updateFragranceNotes(product.fragrance_notes);
+            }
+            
+            // Update brand info
+            if (product.brand) {
+                const existingBrand = document.querySelector('.brand-info');
+                if (!existingBrand) {
+                    const brandSpan = document.createElement('p');
+                    brandSpan.className = 'brand-info';
+                    brandSpan.style.cssText = 'color: #666; font-weight: 600; margin-bottom: 1rem;';
+                    brandSpan.textContent = `Brand: ${product.brand}`;
+                    document.querySelector('h1').after(brandSpan);
+                }
+            }
+            
+            // Update size options based on product data
+            if (product.size) {
+                updateSizeOptions(product);
+            }
+        }
+        
+        function updateSizeOptions(product) {
+            const sizeContainer = document.querySelector('.size-btn').parentElement;
+            const basePrice = parseFloat(product.price);
+            
+            // Create size options based on product data or defaults
+            const sizes = [
+                { size: '30ml', price: Math.round(basePrice * 0.7) },
+                { size: '50ml', price: basePrice },
+                { size: '100ml', price: Math.round(basePrice * 1.5) }
+            ];
+            
+            sizeContainer.innerHTML = sizes.map((option, index) => `
+                <button class="size-btn ${index === 1 ? 'active' : ''}" data-size="${option.size}" data-price="${option.price}" 
+                        style="padding: 0.8rem 1.5rem; border: 2px solid ${index === 1 ? '#dc1212' : '#ddd'}; 
+                               background: ${index === 1 ? '#dc1212' : 'white'}; color: ${index === 1 ? 'white' : '#666'}; 
+                               border-radius: 8px; cursor: pointer;">
+                    ${option.size} - $${option.price}
+                </button>
+            `).join('');
+            
+            // Re-attach event listeners
+            document.querySelectorAll('.size-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    document.querySelectorAll('.size-btn').forEach(b => {
+                        b.style.background = 'white';
+                        b.style.color = '#666';
+                        b.style.borderColor = '#ddd';
+                        b.classList.remove('active');
+                    });
+                    
+                    this.style.background = '#dc1212';
+                    this.style.color = 'white';
+                    this.style.borderColor = '#dc1212';
+                    this.classList.add('active');
+                    
+                    currentPrice = parseInt(this.dataset.price);
+                    currentSize = this.dataset.size;
+                    updateTotalPrice();
+                });
+            });
+        }
+        
+        function generateStars(rating) {
+            const fullStars = Math.floor(rating);
+            const hasHalfStar = rating % 1 !== 0;
+            let stars = '';
+            
+            for (let i = 0; i < fullStars; i++) {
+                stars += '★';
+            }
+            
+            if (hasHalfStar) {
+                stars += '☆';
+            }
+            
+            const emptyStars = 5 - Math.ceil(rating);
+            for (let i = 0; i < emptyStars; i++) {
+                stars += '☆';
+            }
+            
+            return stars;
+        }
+        
+        function getCategoryPage(category) {
+            const pages = {
+                'mens': 'mensperfume.html',
+                'womens': 'womensperfume.html',
+                'unisex': 'unisexperfume.html',
+                'gift_sets': 'giftsets.html'
+            };
+            return pages[category] || 'index.html';
+        }
+        
+        function getCategoryName(category) {
+            const names = {
+                'mens': "Men's Perfumes",
+                'womens': "Women's Perfumes",
+                'unisex': 'Unisex Perfumes',
+                'gift_sets': 'Gift Sets'
+            };
+            return names[category] || 'Products';
+        }
+        
+        function updateFragranceNotes(notes) {
+            if (notes.top || notes.heart || notes.base) {
+                const notesTab = document.getElementById('notes');
+                notesTab.innerHTML = `
+                    <div style="max-width: 600px; margin: 0 auto;">
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 2rem; text-align: center;">
+                            <div>
+                                <h4 style="color: #dc1212; margin-bottom: 1rem;">Top Notes</h4>
+                                <p style="color: #666;">${notes.top || 'Not specified'}</p>
+                            </div>
+                            <div>
+                                <h4 style="color: #dc1212; margin-bottom: 1rem;">Heart Notes</h4>
+                                <p style="color: #666;">${notes.heart || 'Not specified'}</p>
+                            </div>
+                            <div>
+                                <h4 style="color: #dc1212; margin-bottom: 1rem;">Base Notes</h4>
+                                <p style="color: #666;">${notes.base || 'Not specified'}</p>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }
+        }
+        
+        async function loadProductReviews(productId) {
+            try {
+                const response = await api.getReviews(productId);
+                displayReviews(response.data || response);
+            } catch (error) {
+                console.error('Error loading reviews:', error);
+            }
+        }
+        
+        function displayReviews(reviews) {
+            const reviewsTab = document.getElementById('reviews');
+            const reviewCount = reviews.length;
+            const averageRating = reviewCount > 0 ? reviews.reduce((sum, r) => sum + r.rating, 0) / reviewCount : 0;
+            
+            // Update tab title
+            document.querySelector('button[onclick="showTab(\'reviews\')"]').textContent = `Reviews (${reviewCount})`;
+            
+            reviewsTab.innerHTML = `
+                <div style="max-width: 800px; margin: 0 auto;">
+                    <div style="text-align: center; margin-bottom: 2rem;">
+                        <div style="font-size: 3rem; color: #dc1212; margin-bottom: 0.5rem;">${averageRating.toFixed(1)}</div>
+                        <div style="color: #ffc107; font-size: 1.5rem; margin-bottom: 0.5rem;">${generateStars(averageRating)}</div>
+                        <p style="color: #666;">Based on ${reviewCount} reviews</p>
+                        ${api.isAuthenticated() ? '<button onclick="showReviewForm()" class="btn" style="margin-top: 1rem;">Write a Review</button>' : '<p style="color: #666; margin-top: 1rem;"><a href="login.html">Login</a> to write a review</p>'}
+                    </div>
+                    
+                    <div id="reviewForm" style="display: none; background: white; padding: 1.5rem; border-radius: 8px; margin-bottom: 2rem;">
+                        <h4>Write a Review</h4>
+                        <div style="margin-bottom: 1rem;">
+                            <label>Rating:</label>
+                            <select id="reviewRating" style="margin-left: 1rem; padding: 0.5rem;">
+                                <option value="5">5 Stars</option>
+                                <option value="4">4 Stars</option>
+                                <option value="3">3 Stars</option>
+                                <option value="2">2 Stars</option>
+                                <option value="1">1 Star</option>
+                            </select>
+                        </div>
+                        <div style="margin-bottom: 1rem;">
+                            <label>Comment:</label>
+                            <textarea id="reviewComment" style="width: 100%; padding: 0.5rem; margin-top: 0.5rem; min-height: 100px;"></textarea>
+                        </div>
+                        <button onclick="submitReview()" class="btn">Submit Review</button>
+                        <button onclick="hideReviewForm()" style="margin-left: 1rem; background: #ccc; color: #333; border: none; padding: 0.5rem 1rem; border-radius: 4px;">Cancel</button>
+                    </div>
+                    
+                    <div style="display: grid; gap: 1.5rem;">
+                        ${reviews.map(review => `
+                            <div style="background: white; padding: 1.5rem; border-radius: 8px;">
+                                <div style="display: flex; align-items: center; margin-bottom: 1rem;">
+                                    <div style="width: 40px; height: 40px; background: #dc1212; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: 600; margin-right: 1rem;">
+                                        ${(review.user?.username || review.name || 'U')[0].toUpperCase()}
+                                    </div>
+                                    <div>
+                                        <h5 style="margin: 0; color: #273d4e;">${review.user?.username || review.name || 'Anonymous'}</h5>
+                                        <div style="color: #ffc107; font-size: 0.9rem;">${generateStars(review.rating)}</div>
+                                        <div style="color: #999; font-size: 0.8rem;">${new Date(review.created_at).toLocaleDateString()}</div>
+                                    </div>
+                                </div>
+                                <p style="color: #666; margin: 0;">${review.comment}</p>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+        }
+        
+        async function loadRelatedProducts(category) {
+            try {
+                const response = await api.getProducts({ category, per_page: 3 });
+                const relatedProducts = response.data.filter(p => p.id !== currentProduct.id).slice(0, 3);
+                displayRelatedProducts(relatedProducts);
+            } catch (error) {
+                console.error('Error loading related products:', error);
+            }
+        }
+        
+        function displayRelatedProducts(products) {
+            const container = document.querySelector('section[style*="padding: 80px 0;"] div[style*="display: grid;"]');
+            container.innerHTML = products.map(product => {
+                const imageUrl = product.full_image_url || product.image_url || 'images/perfume 3.jpg';
+                return `
+                    <div style="background: white; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
+                        <div style="height: 200px; background: url('${imageUrl}') center/cover;"></div>
+                        <div style="padding: 1.5rem;">
+                            <h4 style="margin: 0 0 0.5rem; color: #273d4e;">${product.name}</h4>
+                            <p style="color: #666; font-size: 0.9rem; margin: 0 0 0.5rem;">${product.brand || ''}</p>
+                            <p style="color: #dc1212; font-weight: 600; margin: 0 0 1rem;">$${product.price}</p>
+                            <button class="btn" style="width: 100%; padding: 0.8rem;" onclick="viewProduct(${product.id})">View Details</button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+        
+        function viewProduct(id) {
+            window.location.href = `product-detail.html?id=${id}`;
+        }
+        
+        async function checkWishlistStatus(productId) {
+            try {
+                const response = await api.checkWishlist(productId);
+                const icon = document.getElementById('wishlist-icon');
+                if (response.in_wishlist) {
+                    icon.classList.remove('bi-heart');
+                    icon.classList.add('bi-heart-fill');
+                }
+            } catch (error) {
+                console.error('Error checking wishlist:', error);
+            }
+        }
+        
+        function showReviewForm() {
+            document.getElementById('reviewForm').style.display = 'block';
+        }
+        
+        function hideReviewForm() {
+            document.getElementById('reviewForm').style.display = 'none';
+        }
+        
+        async function submitReview() {
+            const rating = document.getElementById('reviewRating').value;
+            const comment = document.getElementById('reviewComment').value;
+            
+            if (!comment.trim()) {
+                alert('Please enter a comment');
+                return;
+            }
+            
+            try {
+                await api.createReview({
+                    product_id: currentProduct.id,
+                    rating: parseInt(rating),
+                    comment: comment.trim()
+                });
+                
+                alert('Review submitted successfully!');
+                hideReviewForm();
+                loadProductReviews(currentProduct.id);
+            } catch (error) {
+                console.error('Error submitting review:', error);
+                alert('Error submitting review: ' + error.message);
+            }
+        }
         
         // Size selection
         document.querySelectorAll('.size-btn').forEach(btn => {
@@ -313,6 +760,7 @@
                 
                 currentPrice = parseInt(this.dataset.price);
                 currentSize = this.dataset.size;
+                updateTotalPrice();
             });
         });
         
@@ -320,6 +768,7 @@
         function changeQuantity(change) {
             quantity = Math.max(1, quantity + change);
             document.getElementById('quantity').textContent = quantity;
+            updateTotalPrice();
         }
         
         // Image gallery
@@ -350,37 +799,67 @@
         
         // Add to cart
         function addToCart() {
-            let cart = JSON.parse(localStorage.getItem('cart')) || [];
-            const productId = `velvet-rose-${currentSize}`;
-            const existingItem = cart.find(item => item.id === productId);
+            if (!currentProduct) return;
             
-            if (existingItem) {
-                existingItem.quantity += quantity;
-            } else {
-                cart.push({
-                    id: productId,
-                    name: `Velvet Rose EDP ${currentSize}`,
-                    price: currentPrice,
-                    quantity: quantity
-                });
-            }
+            const giftWrap = document.getElementById('giftWrap').checked;
+            const giftMessage = document.getElementById('giftMessageText').value;
+            const delivery = document.querySelector('input[name="delivery"]:checked').value;
+            const totalPrice = currentPrice + giftWrapPrice + deliveryPrice;
+            
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const productId = `${currentProduct.id}-${currentSize}-${Date.now()}`;
+            
+            cart.push({
+                id: productId,
+                product_id: currentProduct.id,
+                name: `${currentProduct.name} ${currentSize}`,
+                price: totalPrice,
+                base_price: currentPrice,
+                quantity: quantity,
+                image: currentProduct.image_url,
+                customization: {
+                    size: currentSize,
+                    gift_wrap: giftWrap,
+                    gift_message: giftMessage,
+                    delivery: delivery,
+                    gift_wrap_price: giftWrapPrice,
+                    delivery_price: deliveryPrice
+                }
+            });
             
             localStorage.setItem('cart', JSON.stringify(cart));
-            showNotification(`Added ${quantity} x Velvet Rose ${currentSize} to cart!`);
+            showNotification(`Added ${quantity} x ${currentProduct.name} ${currentSize} to cart!`);
             updateCartCount();
         }
         
         // Wishlist toggle
-        function toggleWishlist() {
-            const icon = document.getElementById('wishlist-icon');
-            if (icon.classList.contains('bi-heart')) {
-                icon.classList.remove('bi-heart');
-                icon.classList.add('bi-heart-fill');
-                showNotification('Added to wishlist!');
-            } else {
-                icon.classList.remove('bi-heart-fill');
-                icon.classList.add('bi-heart');
-                showNotification('Removed from wishlist!');
+        async function toggleWishlist() {
+            if (!api.isAuthenticated()) {
+                alert('Please login to add items to wishlist');
+                window.location.href = 'login.html';
+                return;
+            }
+            
+            if (!currentProduct) return;
+            
+            try {
+                const icon = document.getElementById('wishlist-icon');
+                const isInWishlist = icon.classList.contains('bi-heart-fill');
+                
+                if (isInWishlist) {
+                    await api.removeFromWishlist(currentProduct.id);
+                    icon.classList.remove('bi-heart-fill');
+                    icon.classList.add('bi-heart');
+                    showNotification('Removed from wishlist!');
+                } else {
+                    await api.addToWishlist(currentProduct.id);
+                    icon.classList.remove('bi-heart');
+                    icon.classList.add('bi-heart-fill');
+                    showNotification('Added to wishlist!');
+                }
+            } catch (error) {
+                console.error('Wishlist error:', error);
+                alert('Error updating wishlist: ' + error.message);
             }
         }
         

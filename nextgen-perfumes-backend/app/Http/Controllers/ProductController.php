@@ -9,20 +9,80 @@ class ProductController extends Controller
 {
     public function index(Request $request)
     {
-        $query = Product::query();
+        $query = Product::with(['reviews']);
 
+        // Search functionality
+        if ($request->has('search')) {
+            $search = $request->get('search');
+            $query->where(function($q) use ($search) {
+                $q->where('name', 'LIKE', "%{$search}%")
+                  ->orWhere('description', 'LIKE', "%{$search}%")
+                  ->orWhere('brand', 'LIKE', "%{$search}%");
+            });
+        }
+
+        // Category filter
         if ($request->has('category')) {
             $validated = $request->validate(['category' => 'in:mens,womens,unisex,gift_sets']);
             $query->where('category', '=', $validated['category']);
         }
 
+        // Price range filter
+        if ($request->has('min_price')) {
+            $query->where('price', '>=', $request->get('min_price'));
+        }
+        if ($request->has('max_price')) {
+            $query->where('price', '<=', $request->get('max_price'));
+        }
+
+        // Brand filter
+        if ($request->has('brand')) {
+            $query->where('brand', $request->get('brand'));
+        }
+
+        // Rating filter
+        if ($request->has('min_rating')) {
+            $minRating = $request->get('min_rating');
+            $query->whereHas('reviews', function($q) use ($minRating) {
+                $q->havingRaw('AVG(rating) >= ?', [$minRating]);
+            });
+        }
+
+        // Featured filter
         if ($request->has('featured')) {
             $query->where('is_featured', true);
         }
 
-        $perPage = $request->get('per_page', 10);
+        // Sorting
+        $sort = $request->get('sort');
+        if ($sort === 'price_asc') {
+            $query->orderBy('price', 'asc');
+        } elseif ($sort === 'price_desc') {
+            $query->orderBy('price', 'desc');
+        } else {
+            $sortBy = $request->get('sort_by', 'created_at');
+            $sortOrder = $request->get('sort_order', 'desc');
+            
+            if ($sortBy === 'rating') {
+                $query->withAvg('reviews', 'rating')->orderBy('reviews_avg_rating', $sortOrder);
+            } elseif ($sortBy === 'price') {
+                $query->orderBy('price', $sortOrder);
+            } else {
+                $query->orderBy($sortBy, $sortOrder);
+            }
+        }
+
+        $perPage = $request->get('per_page', 12);
+        $products = $query->paginate($perPage);
         
-        return response()->json($query->paginate($perPage));
+        // Add average rating to each product
+        $products->getCollection()->transform(function ($product) {
+            $product->average_rating = $product->averageRating();
+            $product->review_count = $product->reviewCount();
+            return $product;
+        });
+        
+        return response()->json($products);
     }
 
     public function store(Request $request)
@@ -34,6 +94,10 @@ class ProductController extends Controller
                 'category' => 'required|in:mens,womens,unisex,gift_sets',
                 'description' => 'nullable|string|max:1000',
                 'image_url' => 'nullable|string',
+                'gallery_images' => 'nullable|array',
+                'brand' => 'nullable|string|max:100',
+                'size' => 'nullable|string|max:50',
+                'fragrance_notes' => 'nullable|array',
                 'stock_quantity' => 'sometimes|integer|min:0',
             ]);
 
@@ -54,7 +118,11 @@ class ProductController extends Controller
 
     public function show(Product $product)
     {
-        return response()->json($product->load('reviews'));
+        $product->load(['reviews.user']);
+        $product->average_rating = $product->averageRating();
+        $product->review_count = $product->reviewCount();
+        
+        return response()->json($product);
     }
 
     public function update(Request $request, Product $product)
@@ -66,6 +134,10 @@ class ProductController extends Controller
                 'category' => 'sometimes|in:mens,womens,unisex,gift_sets',
                 'description' => 'nullable|string|max:1000',
                 'image_url' => 'nullable|string',
+                'gallery_images' => 'nullable|array',
+                'brand' => 'nullable|string|max:100',
+                'size' => 'nullable|string|max:50',
+                'fragrance_notes' => 'nullable|array',
                 'stock_quantity' => 'sometimes|integer|min:0',
             ]);
 
@@ -89,5 +161,31 @@ class ProductController extends Controller
         $product->delete();
 
         return response()->json(['message' => 'Product deleted successfully']);
+    }
+
+    public function random(Request $request)
+    {
+        $query = Product::with(['reviews']);
+
+        // Category filter
+        if ($request->has('category')) {
+            $validated = $request->validate(['category' => 'in:mens,womens,unisex,gift_sets']);
+            $query->where('category', '=', $validated['category']);
+        }
+
+        $limit = $request->get('limit', 10);
+        $products = $query->inRandomOrder()->limit($limit)->get();
+        
+        // Add average rating to each product
+        $products->transform(function ($product) {
+            $product->average_rating = $product->averageRating();
+            $product->review_count = $product->reviewCount();
+            return $product;
+        });
+        
+        return response()->json([
+            'data' => $products,
+            'total' => $products->count()
+        ]);
     }
 }

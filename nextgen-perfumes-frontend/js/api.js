@@ -24,15 +24,29 @@ class NextGenAPI {
         try {
             const response = await fetch(url, config);
             
+            // Get raw response text first
+            const text = await response.text();
+            
+            // Log for debugging
+            console.log('Response status:', response.status);
+            console.log('Response text:', text.substring(0, 500));
+            
             // Check if response is JSON
             const contentType = response.headers.get('content-type');
             if (!contentType || !contentType.includes('application/json')) {
-                const text = await response.text();
                 console.error('Non-JSON response:', text);
-                throw new Error('Server returned non-JSON response');
+                throw new Error(`Server returned non-JSON response: ${text.substring(0, 200)}`);
             }
             
-            const data = await response.json();
+            // Try to parse JSON
+            let data;
+            try {
+                data = JSON.parse(text);
+            } catch (parseError) {
+                console.error('JSON Parse Error:', parseError);
+                console.error('Raw response:', text);
+                throw new Error(`Invalid JSON response: ${text.substring(0, 200)}`);
+            }
             
             if (!response.ok) {
                 throw new Error(data.message || `HTTP ${response.status}: ${response.statusText}`);
@@ -40,10 +54,6 @@ class NextGenAPI {
             
             return data;
         } catch (error) {
-            if (error instanceof SyntaxError) {
-                console.error('JSON Parse Error:', error);
-                throw new Error('Invalid JSON response from server');
-            }
             console.error('API Error:', error);
             throw error;
         }
@@ -85,11 +95,34 @@ class NextGenAPI {
     }
 
     // Product methods
-    async getProducts(category = null, per_page = 12, page = 1) {
+    async getProducts(filters = {}) {
         const params = new URLSearchParams();
+        
+        // Default values
+        const {
+            category = null,
+            search = null,
+            min_price = null,
+            max_price = null,
+            brand = null,
+            min_rating = null,
+            sort_by = 'created_at',
+            sort_order = 'desc',
+            per_page = 12,
+            page = 1
+        } = filters;
+        
         if (category) params.append('category', category);
+        if (search) params.append('search', search);
+        if (min_price) params.append('min_price', min_price);
+        if (max_price) params.append('max_price', max_price);
+        if (brand) params.append('brand', brand);
+        if (min_rating) params.append('min_rating', min_rating);
+        params.append('sort_by', sort_by);
+        params.append('sort_order', sort_order);
         params.append('per_page', per_page);
         params.append('page', page);
+        
         return await this.request(`/products?${params}`);
     }
 
@@ -101,15 +134,56 @@ class NextGenAPI {
         return await this.request('/products?per_page=100');
     }
 
+    async getRandomProducts(category = null, limit = 10) {
+        const params = new URLSearchParams();
+        if (category) params.append('category', category);
+        params.append('limit', limit);
+        
+        return await this.request(`/products/random?${params}`);
+    }
+
+    async getProductOfTheMonth() {
+        try {
+            const response = await this.getAllProducts();
+            const products = response.data || [];
+            if (products.length === 0) return null;
+            
+            // Select random product
+            const randomIndex = Math.floor(Math.random() * products.length);
+            return products[randomIndex];
+        } catch (error) {
+            console.error('Error getting product of the month:', error);
+            return null;
+        }
+    }
+
     // Review methods
-    async getReviews() {
-        return await this.request('/reviews');
+    async getReviews(productId = null) {
+        const params = productId ? `?product_id=${productId}` : '';
+        return await this.request(`/reviews${params}`);
     }
 
     async createReview(reviewData) {
         return await this.request('/reviews', {
             method: 'POST',
             body: JSON.stringify(reviewData)
+        });
+    }
+
+    async getUserReviews() {
+        return await this.request('/user/reviews');
+    }
+
+    async updateReview(id, reviewData) {
+        return await this.request(`/reviews/${id}`, {
+            method: 'PUT',
+            body: JSON.stringify(reviewData)
+        });
+    }
+
+    async deleteReview(id) {
+        return await this.request(`/reviews/${id}`, {
+            method: 'DELETE'
         });
     }
 
@@ -141,6 +215,32 @@ class NextGenAPI {
         return await this.request('/orders');
     }
 
+    async getOrder(id) {
+        return await this.request(`/orders/${id}`);
+    }
+
+    // Wishlist methods
+    async getWishlist() {
+        return await this.request('/wishlist');
+    }
+
+    async addToWishlist(productId) {
+        return await this.request('/wishlist', {
+            method: 'POST',
+            body: JSON.stringify({ product_id: productId })
+        });
+    }
+
+    async removeFromWishlist(productId) {
+        return await this.request(`/wishlist/${productId}`, {
+            method: 'DELETE'
+        });
+    }
+
+    async checkWishlist(productId) {
+        return await this.request(`/wishlist/check/${productId}`);
+    }
+
     // Admin methods
     async getDashboardStats() {
         return await this.request('/admin/dashboard');
@@ -154,10 +254,29 @@ class NextGenAPI {
     }
 
     async updateProduct(id, productData) {
-        return await this.request(`/products/${id}`, {
+        // Bypass complex request method for debugging
+        const response = await fetch(`${this.baseURL}/products/${id}`, {
             method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+                'Authorization': this.token ? `Bearer ${this.token}` : ''
+            },
             body: JSON.stringify(productData)
         });
+        
+        const text = await response.text();
+        console.log('Update response:', text.substring(0, 500));
+        
+        if (!response.ok) {
+            throw new Error(`HTTP ${response.status}: ${text.substring(0, 200)}`);
+        }
+        
+        try {
+            return JSON.parse(text);
+        } catch (error) {
+            throw new Error(`JSON Parse Error: ${text.substring(0, 200)}`);
+        }
     }
 
     async deleteProduct(id) {

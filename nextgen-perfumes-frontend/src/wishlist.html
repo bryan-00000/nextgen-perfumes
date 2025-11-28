@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Wishlist - NextGen Perfumes</title>
+    <meta name="description" content="Your saved favorite perfumes - manage your wishlist and discover new fragrances.">
+    <link rel="stylesheet" href="css/main.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Header Section -->
+    <header class="header">
+        <div class="top-bar">Free Delivery on all orders within your region</div>
+        <nav class="navbar">
+            <div class="logo">NextGen Perfumes</div>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="mensperfume.html">Men's</a></li>
+                <li><a href="womensperfume.html">Women's</a></li>
+                <li><a href="unisexperfume.html">Unisex</a></li>
+                <li><a href="giftsets.html">Gift Sets</a></li>
+                <li><a href="reviews.html">Reviews</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+            <div class="nav-icons">
+                <a href="search.html" title="Search"><i class="bi bi-search"></i></a>
+                <a href="wishlist.html" title="Wishlist"><i class="bi bi-heart"></i></a>
+                <a href="account.html" title="Account" id="account-link"><i class="bi bi-person"></i></a>
+                <a href="checkout.html" title="Cart"><i class="bi bi-bag"></i></a>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Wishlist Hero Section -->
+    <section style="padding: 140px 0 40px; background: linear-gradient(135deg, rgba(220, 18, 18, 0.9), rgba(0, 0, 0, 0.8)), url('images/background.jpg') center/cover;">
+        <div class="container">
+            <h1 style="color: white; font-size: 48px; font-weight: 700; text-align: center; margin-bottom: 1rem; text-transform: uppercase;">My Wishlist</h1>
+            <p style="color: rgba(255, 255, 255, 0.8); text-align: center; font-size: 20px; margin-bottom: 0;">Save your favorite perfumes for later</p>
+        </div>
+    </section>
+
+    <!-- Wishlist Content -->
+    <section style="padding: 80px 0; background: #f8f9fa;">
+        <div class="container">
+            
+            <div id="wishlistContainer">
+                <div style="text-align: center; padding: 3rem; background: white; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">Loading your wishlist...</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="trust">
+            <span>Free Delivery</span>
+            <span>Secure Payments</span>
+            <span>Easy Returns</span>
+        </div>
+        <div class="footer-links">
+            <div>
+                <h4>Company</h4>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Careers</a></li>
+                    <li><a href="#">Press</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4>Support</h4>
+                <ul>
+                    <li><a href="#">FAQ</a></li>
+                    <li><a href="#">Shipping & Returns</a></li>
+                    <li><a href="contact.html">Contact Us</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4>Connect</h4>
+                <ul>
+                    <li><a href="#">Instagram</a></li>
+                    <li><a href="#">Facebook</a></li>
+                    <li><a href="#">Twitter</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">©2025 NextGen Perfumes — All Rights Reserved | Privacy Policy | Terms & Conditions</div>
+    </footer>
+
+    <script src="../js/api.js"></script>
+    <script src="../js/auth.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            if (!api.isAuthenticated()) {
+                showLoginPrompt();
+                return;
+            }
+            
+            loadWishlist();
+        });
+
+        function showLoginPrompt() {
+            document.getElementById('wishlistContainer').innerHTML = `
+                <div style="text-align: center; padding: 4rem; background: white; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
+                    <i class="bi bi-heart" style="font-size: 4rem; color: #dc1212; margin-bottom: 2rem;"></i>
+                    <h2 style="color: #273d4e; font-size: 2rem; margin-bottom: 1rem;">Please Login</h2>
+                    <p style="color: #666; margin-bottom: 2rem;">You need to be logged in to view your wishlist.</p>
+                    <a href="login.html" class="btn" style="margin-bottom: 1rem;">Login</a>
+                    <p style="color: #666;">Don't have an account? <a href="signup.html" style="color: #dc1212;">Sign up here</a></p>
+                </div>
+            `;
+        }
+
+        async function loadWishlist() {
+            try {
+                const wishlist = await api.getWishlist();
+                displayWishlist(wishlist);
+            } catch (error) {
+                console.error('Error loading wishlist:', error);
+                document.getElementById('wishlistContainer').innerHTML = `
+                    <div class="error-message">
+                        <h2>Error Loading Wishlist</h2>
+                        <p>There was an error loading your wishlist. Please try again.</p>
+                        <button onclick="loadWishlist()" class="btn">Retry</button>
+                    </div>
+                `;
+            }
+        }
+
+        function displayWishlist(wishlist) {
+            const container = document.getElementById('wishlistContainer');
+            
+            if (wishlist.length === 0) {
+                container.innerHTML = `
+                    <div style="text-align: center; padding: 4rem; background: white; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
+                        <i class="bi bi-heart" style="font-size: 4rem; color: #ddd; margin-bottom: 2rem;"></i>
+                        <h2 style="color: #273d4e; font-size: 2rem; margin-bottom: 1rem;">Your wishlist is empty</h2>
+                        <p style="color: #666; margin-bottom: 2rem;">Start adding products to your wishlist by clicking the heart icon on any product.</p>
+                        <a href="index.html" class="btn">Browse Products</a>
+                    </div>
+                `;
+                return;
+            }
+            
+            container.innerHTML = `
+                <div class="wishlist-header">
+                    <h2>${wishlist.length} item${wishlist.length !== 1 ? 's' : ''} in your wishlist</h2>
+                    <button onclick="clearWishlist()" class="clear-btn">Clear All</button>
+                </div>
+                <div class="wishlist-grid">
+                    ${wishlist.map(item => `
+                        <div class="wishlist-item" data-product-id="${item.product.id}">
+                            <div class="item-image">
+                                <img src="${item.product.image_url || 'images/default-perfume.jpg'}" alt="${item.product.name}">
+                                <button class="remove-btn" onclick="removeFromWishlist(${item.product.id})" title="Remove from wishlist">
+                                    ×
+                                </button>
+                            </div>
+                            <div class="item-details">
+                                <h3>${item.product.name}</h3>
+                                <p class="brand">${item.product.brand || ''}</p>
+                                <div class="rating">
+                                    ${generateStars(item.product.average_rating || 0)}
+                                    <span>(${item.product.review_count || 0} reviews)</span>
+                                </div>
+                                <p class="price">$${item.product.price}</p>
+                                <p class="stock-status ${item.product.stock_quantity > 0 ? 'in-stock' : 'out-of-stock'}">
+                                    ${item.product.stock_quantity > 0 ? 'In Stock' : 'Out of Stock'}
+                                </p>
+                                <div class="item-actions">
+                                    <button onclick="viewProduct(${item.product.id})" class="btn view-btn">View Details</button>
+                                    <button onclick="addToCart(${item.product.id}, '${item.product.name}', ${item.product.price})" 
+                                            class="btn add-to-cart-btn" 
+                                            ${item.product.stock_quantity <= 0 ? 'disabled' : ''}>
+                                        Add to Cart
+                                    </button>
+                                </div>
+                                <p class="added-date">Added ${formatDate(item.created_at)}</p>
+                            </div>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+        }
+
+        function generateStars(rating) {
+            const fullStars = Math.floor(rating);
+            const hasHalfStar = rating % 1 !== 0;
+            let stars = '';
+            
+            for (let i = 0; i < fullStars; i++) {
+                stars += '★';
+            }
+            
+            if (hasHalfStar) {
+                stars += '☆';
+            }
+            
+            const emptyStars = 5 - Math.ceil(rating);
+            for (let i = 0; i < emptyStars; i++) {
+                stars += '☆';
+            }
+            
+            return stars;
+        }
+
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            const now = new Date();
+            const diffTime = Math.abs(now - date);
+            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+            
+            if (diffDays === 1) {
+                return 'yesterday';
+            } else if (diffDays < 7) {
+                return `${diffDays} days ago`;
+            } else if (diffDays < 30) {
+                const weeks = Math.floor(diffDays / 7);
+                return `${weeks} week${weeks !== 1 ? 's' : ''} ago`;
+            } else {
+                return date.toLocaleDateString();
+            }
+        }
+
+        async function removeFromWishlist(productId) {
+            try {
+                await api.removeFromWishlist(productId);
+                
+                // Remove item from DOM with animation
+                const item = document.querySelector(`[data-product-id="${productId}"]`);
+                if (item) {
+                    item.style.opacity = '0';
+                    item.style.transform = 'scale(0.8)';
+                    setTimeout(() => {
+                        item.remove();
+                        updateWishlistCount();
+                    }, 300);
+                }
+                
+                showNotification('Item removed from wishlist');
+            } catch (error) {
+                console.error('Error removing from wishlist:', error);
+                showNotification('Error removing item from wishlist', 'error');
+            }
+        }
+
+        async function clearWishlist() {
+            if (!confirm('Are you sure you want to remove all items from your wishlist?')) {
+                return;
+            }
+            
+            try {
+                const wishlist = await api.getWishlist();
+                
+                for (const item of wishlist) {
+                    await api.removeFromWishlist(item.product.id);
+                }
+                
+                loadWishlist();
+                showNotification('Wishlist cleared');
+            } catch (error) {
+                console.error('Error clearing wishlist:', error);
+                showNotification('Error clearing wishlist', 'error');
+            }
+        }
+
+        function viewProduct(productId) {
+            window.location.href = `product-detail.html?id=${productId}`;
+        }
+
+        function addToCart(productId, productName, price) {
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const existingItem = cart.find(item => item.product_id === productId);
+            
+            if (existingItem) {
+                existingItem.quantity += 1;
+            } else {
+                cart.push({
+                    id: `${productId}-default`,
+                    product_id: productId,
+                    name: productName,
+                    price: price,
+                    quantity: 1
+                });
+            }
+            
+            localStorage.setItem('cart', JSON.stringify(cart));
+            showNotification(`${productName} added to cart`);
+            updateCartCount();
+        }
+
+        function updateWishlistCount() {
+            const items = document.querySelectorAll('.wishlist-item');
+            const count = items.length;
+            
+            if (count === 0) {
+                loadWishlist(); // Reload to show empty state
+            } else {
+                document.querySelector('.wishlist-header h2').textContent = 
+                    `${count} item${count !== 1 ? 's' : ''} in your wishlist`;
+            }
+        }
+
+        function updateCartCount() {
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+            
+            // Update cart badge if it exists
+            const cartBadge = document.querySelector('.cart-badge');
+            if (cartBadge) {
+                cartBadge.textContent = totalItems;
+            }
+        }
+
+        function showNotification(message, type = 'success') {
+            const notification = document.createElement('div');
+            notification.className = `notification ${type}`;
+            notification.textContent = message;
+            
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                padding: 1rem 1.5rem;
+                border-radius: 5px;
+                color: white;
+                font-weight: 500;
+                z-index: 10000;
+                animation: slideIn 0.3s ease;
+                background: ${type === 'error' ? '#dc3545' : '#28a745'};
+            `;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.style.animation = 'slideOut 0.3s ease';
+                setTimeout(() => notification.remove(), 300);
+            }, 3000);
+        }
+    </script>
+
+
+</body>
+</html>

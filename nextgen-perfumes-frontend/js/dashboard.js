@@ -49,12 +49,17 @@ class AdminDashboard {
         const tbody = document.getElementById('best-selling-tbody');
         if (!tbody || !products) return;
 
-        tbody.innerHTML = products.map(product => `
+        tbody.innerHTML = products.map(product => {
+            const imageUrl = product.full_image_url || product.image_url;
+            return `
             <tr>
                 <td>
                     <div class="d-flex align-items-center">
                         <div class="avatar-sm bg-light rounded p-1 me-2">
-                            <div class="perfume-icon">${this.getProductIcon(product.category)}</div>
+                            ${imageUrl ? 
+                                `<img src="${imageUrl}" alt="${product.name}" style="width: 40px; height: 40px; object-fit: cover; border-radius: 4px;">` : 
+                                `<div class="perfume-icon">${this.getProductIcon(product.category)}</div>`
+                            }
                         </div>
                         <div>
                             <h5 class="fs-14 my-1">${product.name}</h5>
@@ -62,6 +67,25 @@ class AdminDashboard {
                         </div>
                     </div>
                 </td>
+                <td>
+                    <h5 class="fs-14 my-1 fw-normal">${this.formatCurrency(product.price)}</h5>
+                    <span class="text-muted">Price</span>
+                </td>
+                <td>
+                    <h5 class="fs-14 my-1 fw-normal">${product.total_sold || 0}</h5>
+                    <span class="text-muted">Sold</span>
+                </td>
+                <td>
+                    <h5 class="fs-14 my-1 fw-normal">${this.getStockBadge(product.stock_quantity)}</h5>
+                    <span class="text-muted">Stock</span>
+                </td>
+                <td>
+                    <h5 class="fs-14 my-1 fw-normal">${this.formatCurrency((product.total_sold || 0) * product.price)}</h5>
+                    <span class="text-muted">Revenue</span>
+                </td>
+            </tr>`;
+        }).join('');
+    }
                 <td>
                     <h5 class="fs-14 my-1 fw-normal">${this.formatCurrency(product.price)}</h5>
                     <span class="text-muted">Price</span>
@@ -319,12 +343,17 @@ function updateProductsTable(products) {
     const tbody = document.getElementById('products-tbody');
     if (!tbody) return;
 
-    tbody.innerHTML = products.map(product => `
+    tbody.innerHTML = products.map(product => {
+        const imageUrl = product.full_image_url || product.image_url;
+        return `
         <tr>
             <td>
                 <div class="d-flex align-items-center">
                     <div class="avatar-sm bg-light rounded p-1 me-2">
-                        <div class="perfume-icon">${getProductIcon(product.category)}</div>
+                        ${imageUrl ? 
+                            `<img src="${imageUrl}" alt="${product.name}" style="width: 40px; height: 40px; object-fit: cover; border-radius: 4px;">` : 
+                            `<div class="perfume-icon">${getProductIcon(product.category)}</div>`
+                        }
                     </div>
                     <div>
                         <h5 class="fs-14 my-1">${product.name}</h5>
@@ -332,6 +361,30 @@ function updateProductsTable(products) {
                     </div>
                 </div>
             </td>
+            <td><span class="badge bg-info-subtle text-info">${getCategoryName(product.category)}</span></td>
+            <td><span class="fw-semibold">$${product.price}</span></td>
+            <td>
+                <span class="${product.stock_quantity < 10 ? 'text-danger fw-bold' : 'text-success'}">
+                    ${product.stock_quantity} units
+                </span>
+            </td>
+            <td>
+                ${product.stock_quantity < 10 ? 
+                    '<span class="badge bg-danger-subtle text-danger">Low Stock</span>' : 
+                    '<span class="badge bg-success-subtle text-success">In Stock</span>'
+                }
+            </td>
+            <td>
+                <button class="btn btn-sm btn-soft-primary me-1" onclick="editProduct(${product.id})">
+                    <i class="ri-edit-line"></i>
+                </button>
+                <button class="btn btn-sm btn-soft-danger" onclick="deleteProduct(${product.id})">
+                    <i class="ri-delete-bin-line"></i>
+                </button>
+            </td>
+        </tr>`;
+    }).join('');
+}
             <td><span class="badge bg-info-subtle text-info">${getCategoryName(product.category)}</span></td>
             <td><span class="fw-semibold">$${product.price}</span></td>
             <td>
@@ -409,9 +462,13 @@ async function deleteProduct(productId) {
 
 function showNotification(message, type) {
     const alertClass = type === 'success' ? 'alert-success' : 'alert-danger';
+    const sanitizedMessage = message.replace(/[&<>"']/g, function(match) {
+        const escapeMap = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#x27;' };
+        return escapeMap[match];
+    });
     const alertHtml = `
         <div class="alert ${alertClass} alert-dismissible fade show" role="alert">
-            ${message}
+            ${sanitizedMessage}
             <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
         </div>
     `;

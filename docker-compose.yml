@@ -19,8 +19,10 @@ services:
     depends_on:
       db:
         condition: service_healthy
+        restart: true
       redis:
         condition: service_started
+        restart: true
     volumes:
       - ./nextgen-perfumes-backend:/var/www/html
       - backend_storage:/var/www/html/storage
